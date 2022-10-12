@@ -3,7 +3,7 @@
 import React from "react";
 import "./posts.styles.scss";
 
-const Posts = () => {
+const Posts = ({ item }) => {
   return (
     <div className="post-container">
       <div className="post-contents">
@@ -11,11 +11,9 @@ const Posts = () => {
           <div className="post-image">
             <img src="" alt="err" />
           </div>
-          <div className="post-desp">
-            <h2>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa,
-              nesciunt.
-            </h2>
+          <div className="post-text">
+            <h2>{item.title}</h2>
+            <p className="post-desp">{item.desp}</p>
             <span className="post-createdate"></span>
             <span className="post-update"></span>
           </div>

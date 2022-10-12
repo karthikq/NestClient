@@ -1,0 +1,40 @@
+/** @format */
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 2rem;
+}
+.profile-nav img {
+  width: 30px;
+  height: 30px;
+  background-color: rebeccapurple;
+}
+.profile-dropdown {
+  width: 140px;
+  height: auto;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.116);
+  padding: 5px;
+  position: absolute;
+  display: none;
+}
+.profile-nav {
+  position: relative;
+}
+.profile-nav:hover .profile-dropdown {
+  display: block;
+}
+.profile-dropdown ul {
+  padding-left: 9px;
+}
+.profile-dropdown ul li {
+  list-style-type: none;
+  margin: 8px 0;
+}
+.profile-dropdown ul li a {
+  text-decoration: none;
+  color: black;
+}
+.profile-dropdown ul li:not(:hover) {
+  opacity: 0.5;
+}

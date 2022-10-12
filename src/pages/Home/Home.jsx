@@ -1,12 +1,14 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { backendApi } from "../../Api";
+import Navbar from "../../components/Navbar/Navbar";
 import Posts from "../../components/posts/posts";
 import "./home.styles.scss";
 
 const Home = () => {
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -14,14 +16,18 @@ const Home = () => {
     try {
       const { data } = await backendApi.get("/post/all");
       console.log(data);
+      setPosts(data);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div className="home-container">
+      <Navbar />
       <div className="home-posts">
-        <Posts />
+        {posts?.posts?.map((item) => (
+          <Posts item={item} key={item.id} />
+        ))}
       </div>
       <div className="home-userdetails"></div>
     </div>

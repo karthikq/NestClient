@@ -19,11 +19,15 @@
   height: 100%;
 }
 
-.post-desp h2 {
+.post-text h2 {
   font-size: 24px;
   font-family: "Roboto", sans-serif;
   line-height: 1.4;
   font-weight: 600;
+  margin-bottom: 5px;
+}
+.post-text p {
+  margin-top: 8px;
 }
 
 .author .author-image {
