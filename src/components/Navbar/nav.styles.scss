@@ -3,38 +3,91 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding-top: 2rem;
-}
-.profile-nav img {
-  width: 30px;
-  height: 30px;
-  background-color: rebeccapurple;
-}
-.profile-dropdown {
-  width: 140px;
-  height: auto;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.116);
-  padding: 5px;
-  position: absolute;
-  display: none;
+  padding: 1rem 0;
+  height: 50px;
 }
 .profile-nav {
   position: relative;
 }
-.profile-nav:hover .profile-dropdown {
-  display: block;
+
+.profile-dropdown {
+  width: 100%;
+  height: auto;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.116);
+  padding: 5px;
+  position: absolute;
+  background: #424f55;
+  border-radius: 5px;
+  top: 120%;
+  left: 0.4rem;
+  height: 0;
+  padding: 0;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  ul {
+    padding-left: 9px;
+    display: none;
+  }
 }
-.profile-dropdown ul {
-  padding-left: 9px;
+
+.profile-nav {
+  width: 155px;
+  position: relative;
 }
+.profile-dropdown_active {
+  height: auto;
+  padding-bottom: 8px;
+  ul {
+    display: block;
+  }
+}
+
 .profile-dropdown ul li {
   list-style-type: none;
-  margin: 8px 0;
+  margin: 12px 0;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    gap: 0 0.45rem;
+  }
+  .dropdown-list_icon {
+    font-size: 20px;
+  }
 }
-.profile-dropdown ul li a {
-  text-decoration: none;
-  color: black;
+
+.profile-img-wrapper {
+  width: 100%;
+  background: #424f55;
+  padding: 0.35rem 0.45rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 0 0.5rem;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  &:hover {
+    box-shadow: 0px 0px 20px #424f55;
+  }
 }
-.profile-dropdown ul li:not(:hover) {
-  opacity: 0.5;
+
+.profile-img-arrow {
+  color: white;
+  margin-top: 0.4px;
+}
+
+.profile-name {
+  color: white;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
 }

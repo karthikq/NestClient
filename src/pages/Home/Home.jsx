@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { backendApi } from "../../Api";
+import AuthorStatus from "../../components/AuthorStatus/AuthorStatus";
+import HomeUser from "../../components/HomeUser/HomeUser";
 import Navbar from "../../components/Navbar/Navbar";
 import Posts from "../../components/posts/posts";
 import "./home.styles.scss";
@@ -23,8 +25,13 @@ const Home = () => {
   };
   return (
     <div className="home-container">
-      <Navbar />
-      <div className="home-posts">
+      <div className="home-user_details">
+        <HomeUser />
+      </div>
+      <div className="home-center">
+        <div className="home-author-status">
+          <AuthorStatus />
+        </div>
         {posts?.posts?.map((item) => (
           <Posts item={item} key={item.id} />
         ))}
