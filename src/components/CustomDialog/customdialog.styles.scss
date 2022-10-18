@@ -16,22 +16,23 @@
   transform: translate(-50%, -50%);
   width: 400px;
   min-height: 120px;
-  color: rgb(0, 0, 0);
-  background: #dbeaee;
+  color: #06080a;
+  background: #85a3b9;
   border-radius: 15px;
   padding: 0.5rem 0.8rem;
   padding-bottom: 20px;
-  box-shadow: 0px 0px 50px #dbeaee3b;
+  box-shadow: 0px 0px 50px #85a3b941;
   h1 {
-    font-size: 27px;
+    font-size: 29px;
     margin-bottom: 18px;
-    margin-top: 8px;
+    margin-top: 7px;
   }
   form {
     .fileinput {
       display: block;
       width: 100px;
       height: 20px;
+      border-radius: 12px;
       padding: 3px 0;
       border: 2px solid #000000;
       color: #000000;
@@ -49,6 +50,7 @@
       }
       &:hover {
         box-shadow: 0px 0px 20px #0000001a;
+        border: 2px solid rgb(22, 22, 22);
       }
     }
     #fileinput {

@@ -5,13 +5,20 @@ import "./customdialog.styles.scss";
 import CloseIcon from "@mui/icons-material/Close";
 
 const CustomDialog = ({ setOpen }) => {
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState({});
   const [localUrl, setLocalUrl] = useState("");
   const handleFile = (file) => {
+    const { name, size, type, lastModifiedDate } = file;
+    setFile({
+      name,
+      lastModifiedDate,
+      size,
+      type,
+    });
     const fileUrl = URL.createObjectURL(file);
     setLocalUrl(fileUrl);
   };
-
+  console.log(file);
   return (
     <div className="custom-dialog_wrapper">
       <div className="custom-dialog-contents">
@@ -28,7 +35,13 @@ const CustomDialog = ({ setOpen }) => {
             placeholder="Choose a file"
           />
           {localUrl ? (
-            <input type="text" placeholder="fileName" className="filename" />
+            <input
+              type="text"
+              placeholder="fileName"
+              className="filename"
+              value={file.name}
+              onChange={(e) => setFile({ ...file, name: e.target.value })}
+            />
           ) : (
             ""
           )}
