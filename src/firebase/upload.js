@@ -7,13 +7,26 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { fireBaseApp } from "./index";
-
+import imageCompression from "browser-image-compression";
 fireBaseApp();
-const storage = getStorage();
 
-export const CreateNewFile = (file) => {
-  const storageRef = ref(storage, file.name);
-  const uploadTask = uploadBytesResumable(storageRef, file);
+export const CreateNewFile = async (file, name) => {
+  const storage = getStorage();
+  const storageRef = ref(storage, name);
+  const metadata = {
+    contentType: "image/jpeg",
+  };
+  const compressedImage = await imageCompression(file, {
+    maxSizeMB: 0.5,
+    maxWidthOrHeight: 1280,
+    useWebWorker: true,
+    initialQuality: 1,
+  });
+  const uploadTask = uploadBytesResumable(
+    storageRef,
+    compressedImage,
+    metadata
+  );
 
   uploadTask.on(
     "state_changed",
