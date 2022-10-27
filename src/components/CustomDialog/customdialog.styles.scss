@@ -16,29 +16,30 @@
   transform: translate(-50%, -50%);
   width: 400px;
   min-height: 120px;
-  color: hsl(0, 11%, 2%);
-  background: #efeff0;
+  color: hsl(0, 0%, 100%);
+  background: #202e38;
   border-radius: 15px;
-  padding: 0.5rem 0.8rem;
+  padding: 0.7rem 0.8rem;
+  padding-left: 1.4rem;
   padding-bottom: 20px;
-  box-shadow: 0px 0px 50px #85a3b941;
-  text-align: center;
+  box-shadow: 0px 0px 50px #202e38;
+
   h1 {
     font-family: "Open Sans", sans-serif;
-    font-size: 29px;
-    margin-bottom: 24px;
+    font-size: 30px;
+    margin-bottom: 20px;
     margin-top: 7px;
     letter-spacing: 0.2px;
   }
   form {
     .fileinput {
       display: block;
-      width: 33px;
-      height: 33px;
-      margin: auto;
-      border-radius: 50%;
+      width: 60px;
+      height: 30px;
 
-      border: 2px solid #000000;
+      border-radius: 5px;
+
+      border: 2px solid #c4c3c3;
       color: #161616;
       text-align: center;
       display: flex;
@@ -51,80 +52,22 @@
       position: relative;
       z-index: 1;
       cursor: pointer;
+      .upload-icon {
+        color: #c4c4c4;
+      }
       &:active {
         transform: scale(0.95);
       }
       &:hover {
         box-shadow: 0px 0px 20px #0000001a;
-        border: 2px solid rgb(22, 22, 22);
-      }
-    }
-    .circle-wrap {
-      margin: 150px auto;
-      width: 150px;
-      height: 150px;
-      background: #fefcff;
-      border-radius: 50%;
-      border: 1px solid #cdcbd0;
-      position: absolute;
-      transform: scale(-0.35) rotate(180deg);
-    }
-
-    .circle-wrap .circle .mask,
-    .circle-wrap .circle .fill {
-      width: 150px;
-      height: 150px;
-      position: absolute;
-      border-radius: 50%;
-    }
-
-    .circle-wrap .circle .mask {
-      clip: rect(0px, 150px, 150px, 75px);
-    }
-
-    .circle-wrap .inside-circle {
-      width: 122px;
-      height: 122px;
-      border-radius: 50%;
-      background: #d2eaf1;
-      line-height: 120px;
-      text-align: center;
-      margin-top: 14px;
-      margin-left: 14px;
-      color: #1e51dc;
-      position: absolute;
-      z-index: 100;
-      font-weight: 700;
-      font-size: 2em;
-    }
-
-    /* color animation */
-
-    /* 3rd progress bar */
-    .mask .fill {
-      clip: rect(0px, 75px, 150px, 0px);
-      background-color: #227ded;
-    }
-
-    .mask.full,
-    .circle .fill {
-      animation: fill ease-in-out 3s;
-      transform: rotate(135deg);
-    }
-
-    @keyframes fill {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(135deg);
+        border: 2px solid rgb(255, 255, 255);
+        transform: translateY(-2px);
+        .upload-icon {
+          color: white;
+        }
       }
     }
 
-    .mask .fill {
-      clip: rect(0px, 75px, 150px, 0px);
-      background-color: #227ded;
-    }
     #fileinput {
       width: 0;
       height: 0;

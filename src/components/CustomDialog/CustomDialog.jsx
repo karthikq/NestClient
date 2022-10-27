@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { CreateNewFile } from "../../firebase/upload";
 import UploadIcon from "@mui/icons-material/Upload";
 
-const CustomDialog = ({ setOpen }) => {
+const CustomDialog = ({ setOpen, setItems }) => {
   const [file, setFile] = useState({});
   const [fileName, setFileName] = useState("");
   const [localUrl, setLocalUrl] = useState("");
@@ -14,33 +14,31 @@ const CustomDialog = ({ setOpen }) => {
   const handleFile = (file) => {
     setFile(file);
     setFileName(file.name);
+
     const fileUrl = URL.createObjectURL(file);
     setLocalUrl(fileUrl);
+    setItems((preValue) => ({
+      ...preValue,
+      urls: [...preValue.urls, fileUrl],
+    }));
   };
   const handleUpload = (e) => {
     e.preventDefault();
-    console.log("S");
-    CreateNewFile(file, fileName);
+    setItems((preValue) => ({
+      ...preValue,
+      files: [...preValue.files, file],
+      names: [...preValue.names, fileName],
+    }));
+    setOpen(false);
   };
-  console.log(file);
+
   return (
     <div className="custom-dialog_wrapper">
       <div className="custom-dialog-contents">
         <h1>Choose a file to upload</h1>
         <form onSubmit={handleUpload}>
           <label className="fileinput" htmlFor="fileinput">
-            <div class="circle-wrap">
-              <div class="circle">
-                <div class="mask full">
-                  <div class="fill"></div>
-                </div>
-                <div class="mask half">
-                  <div class="fill"></div>
-                </div>
-                <div class="inside-circle"> 75% </div>
-              </div>
-            </div>
-            <UploadIcon />
+            <UploadIcon className="upload-icon" />
           </label>
           <input
             onChange={(e) => handleFile(e.target.files[0])}
@@ -68,7 +66,7 @@ const CustomDialog = ({ setOpen }) => {
           {localUrl ? (
             <div className="upload-btn-wrapper">
               <button type="submit" className="upload-btn">
-                Upload
+                Ok
               </button>
             </div>
           ) : (
