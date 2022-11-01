@@ -7,7 +7,7 @@ import { CreateNewFile } from "../../firebase/upload";
 import UploadIcon from "@mui/icons-material/Upload";
 
 const CustomDialog = ({ setOpen, setItems }) => {
-  const [file, setFile] = useState({});
+  const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
   const [localUrl, setLocalUrl] = useState("");
 
@@ -24,18 +24,20 @@ const CustomDialog = ({ setOpen, setItems }) => {
   };
   const handleUpload = (e) => {
     e.preventDefault();
-    setItems((preValue) => ({
-      ...preValue,
-      files: [...preValue.files, file],
-      names: [...preValue.names, fileName],
-    }));
-    setOpen(false);
+    if (fileName) {
+      setItems((preValue) => ({
+        ...preValue,
+        files: [...preValue.files, file],
+        names: [...preValue.names, fileName],
+      }));
+      setOpen(false);
+    }
   };
 
   return (
     <div className="custom-dialog_wrapper">
       <div className="custom-dialog-contents">
-        <h1>Choose a file to upload</h1>
+        <h1> {file ? "Choose another file" : "Choose a file to upload"}</h1>
         <form onSubmit={handleUpload}>
           <label className="fileinput" htmlFor="fileinput">
             <UploadIcon className="upload-icon" />
@@ -57,6 +59,9 @@ const CustomDialog = ({ setOpen, setItems }) => {
             />
           ) : (
             ""
+          )}
+          {file && !fileName && (
+            <span className="error-span">filename is required</span>
           )}
           {localUrl && (
             <div className="uploaded-file">

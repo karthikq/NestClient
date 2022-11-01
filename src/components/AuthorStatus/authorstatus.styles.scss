@@ -5,7 +5,7 @@
   border-radius: 10px;
   background: #202e38;
   min-height: 110px;
-  padding: 1rem 0;
+  padding: 1.8rem 2.8rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -17,7 +17,7 @@
   justify-content: center;
   align-items: center;
   gap: 0 0.8rem;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   form {
     width: 100%;
@@ -36,23 +36,39 @@
     }
   }
 }
+.upload-item-status {
+  color: white;
+}
 .uploaded-items-wrapper {
-  width: 90%;
-  margin: 18px auto 10px;
-
+  width: 100%;
+  margin: 5px auto 10px;
+  display: flex;
+  gap: 0.8rem 1rem;
   .uploaded-item {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 0 0.2rem;
     color: rgb(184, 184, 184);
-    width: 152px;
-    padding: 0.2rem 0.3rem;
-    border: 2px solid rgb(124, 123, 123);
+    width: 160px;
+    padding: 0.3rem 0.5rem;
+    padding-left: 0.5rem;
+    border: 2px solid rgba(124, 123, 123, 0.712);
     border-radius: 10px;
     cursor: pointer;
+
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     &:hover {
+      box-shadow: 0px 0px 20px #424f555b;
       color: white;
       border: 2px solid rgb(172, 172, 172);
+    }
+  }
+  .cancel-upload-icon {
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    font-size: 19px;
+    &:active {
+      transform: scale(0.9);
     }
   }
   p {
@@ -60,6 +76,11 @@
     margin: 0;
     display: flex;
     align-items: center;
-    white-space: none;
+    white-space: nowrap;
+    overflow: hidden;
+
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-size: 13.2px;
   }
 }
