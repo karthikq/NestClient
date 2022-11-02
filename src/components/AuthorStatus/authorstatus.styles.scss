@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  position: relative;
 }
 
 .author-status-contents {
@@ -33,54 +34,143 @@
       font-weight: 500;
       color: white;
       font-size: 15.5px;
+      border: 2px solid rgba(255, 0, 0, 0);
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+  }
+}
+.author-no-status {
+  form {
+    input {
+      border: 2px solid rgba(255, 0, 0, 0.61);
     }
   }
 }
 .upload-item-status {
   color: white;
+  font-size: 12.5px;
+  font-family: "Poppins", sans-serif;
 }
 .uploaded-items-wrapper {
   width: 100%;
-  margin: 5px auto 10px;
+  margin: 10px auto 10px;
   display: flex;
+
   gap: 0.8rem 1rem;
-  .uploaded-item {
+  .uploaded-item-details {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    margin: 0.45rem 0 0.4rem;
+    gap: 0 0.3rem;
+    p {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
+
+      color: white;
+      font-family: "Poppins", sans-serif;
+      font-size: 12.5px;
+    }
+  }
+  .upload-progress-status {
+    position: relative;
+    z-index: 1;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: rgba(8, 8, 8, 0.589);
+  }
+  .uploaded-checkicon {
+    position: relative;
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .uploaded-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 0 0.2rem;
     color: rgb(184, 184, 184);
     width: 160px;
     padding: 0.3rem 0.5rem;
     padding-left: 0.5rem;
+    padding-top: 0.5rem;
     border: 2px solid rgba(124, 123, 123, 0.712);
     border-radius: 10px;
     cursor: pointer;
-
+    position: relative;
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     &:hover {
       box-shadow: 0px 0px 20px #424f555b;
       color: white;
-      border: 2px solid rgb(172, 172, 172);
+      border: 2px solid rgba(172, 172, 172, 0.26);
     }
   }
   .cancel-upload-icon {
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-    font-size: 19px;
+    font-size: 17.5px;
+    position: relative;
+    top: 0.5px;
+    position: absolute;
+    z-index: 2;
+    top: -0.5rem;
+    right: -0.5rem;
+    background-color: white;
+    border-radius: 50%;
+    color: black;
+    &:hover {
+      color: white;
+      background-color: rgb(102, 102, 102);
+    }
     &:active {
       transform: scale(0.9);
     }
   }
-  p {
-    font-size: 0.85rem;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    overflow: hidden;
 
+  .uploaded-img {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+.error-content {
+  color: white;
+  font-size: 12px;
+  margin-top: 12px;
+  font-family: "Poppins", sans-serif;
+}
+.send-icon-wrapper {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.8rem;
+  color: white;
+  button {
+    border: 0;
+    outline: 0;
+    background: transparent;
     color: white;
-    font-family: "Poppins", sans-serif;
-    font-size: 13.2px;
+  }
+  .send-icon {
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    &:active {
+      transform: scale(0.9);
+    }
   }
 }

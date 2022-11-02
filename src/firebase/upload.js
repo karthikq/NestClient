@@ -10,7 +10,7 @@ import { fireBaseApp } from "./index";
 import imageCompression from "browser-image-compression";
 fireBaseApp();
 
-export const CreateNewFile = async (file, name) => {
+export const CreateNewFile = async (file, name, index) => {
   const storage = getStorage();
   const storageRef = ref(storage, name);
   const metadata = {
@@ -33,6 +33,10 @@ export const CreateNewFile = async (file, name) => {
     (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log("Upload is " + progress + "% done");
+      document.querySelectorAll(".upload-progress-status")[index].style.height =
+        progress + "%";
+      document.querySelectorAll(".uploaded-checkicon")[index].style.display =
+        "none";
     },
     (error) => {
       console.log(error);
@@ -42,6 +46,12 @@ export const CreateNewFile = async (file, name) => {
       // Handle successful uploads on complete
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log(document.querySelector(".uploaded-items-wrapper"));
+        if (downloadURL) {
+          document.querySelectorAll(".uploaded-checkicon")[
+            index
+          ].style.display = "block";
+        }
         console.log("File available at", downloadURL);
       });
     }
