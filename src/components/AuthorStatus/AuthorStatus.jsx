@@ -1,6 +1,13 @@
 /** @format */
 
-import { Avatar, Dialog, DialogTitle, List } from "@mui/material";
+import {
+  Avatar,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  LinearProgress,
+  List,
+} from "@mui/material";
 import React, { useState } from "react";
 import CustomDialog from "../CustomDialog/CustomDialog";
 import Uploaditems from "../UploadItems/Uploaditems";
@@ -8,12 +15,21 @@ import "./authorstatus.styles.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import SendIcon from "@mui/icons-material/Send";
 import { CreateNewFile } from "../../firebase/upload";
+import toast from "react-hot-toast";
+import Backdrop from "@mui/material/Backdrop";
+import { Box } from "@mui/system";
+import { useEffect } from "react";
 
 const AuthorStatus = () => {
   const [openDialogbox, setOpenDialogBox] = useState(false);
   const [userstatus, setUserStatus] = useState("");
   const [contentErr, setContentErr] = useState(false);
   const [activeClose, setactiveClose] = useState(true);
+  const [backdropstate, setBackdropstate] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [buffer, setBuffer] = useState(0);
+  const [uploadedUrl, setUploadedUrl] = useState([]);
+
   const [items, setItems] = useState({
     files: [],
     urls: [],
@@ -33,21 +49,64 @@ const AuthorStatus = () => {
     console.log(items);
   };
 
+  const handleCallback = (val) => {
+    if (val > 100) {
+      setProgress(0);
+      setBuffer(10);
+    } else {
+      setProgress(val);
+      setBuffer(val + 10);
+    }
+  };
+  const callback = (url) => {
+    setUploadedUrl((prevalue) => [...prevalue, url]);
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    toast.dismiss();
+
     if (!userstatus) {
       return setContentErr(true);
+    } else {
+      toast.loading("Creating post");
+      setBackdropstate(true);
+      setactiveClose(false);
+      items.names.map(async (item, index) => {
+        await CreateNewFile(
+          items.files[index],
+          item,
+          index,
+          handleCallback,
+          callback
+        );
+      });
     }
-    items.names.map(async (item, index) => {
-      await CreateNewFile(items.files[index], item, index);
-    });
-    setactiveClose(false);
   };
   const handleUploadprogres = (val) => {
     console.log(val);
   };
+  useEffect(() => {
+    if (
+      uploadedUrl?.length !== 0 &&
+      uploadedUrl?.length === items?.files?.length
+    ) {
+      setBackdropstate(false);
+      toast.dismiss();
+      toast.success("Post created");
+    }
+    console.log("S");
+  }, [uploadedUrl, items]);
   return (
     <div className="author-status-wrapper">
+      <Backdrop
+        open={backdropstate}
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div
         className={
           contentErr && userstatus.length === 0

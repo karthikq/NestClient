@@ -22,6 +22,7 @@
   left: 0.4rem;
   height: 0;
   padding: 0;
+  z-index: 50;
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   ul {
     padding-left: 9px;

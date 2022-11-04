@@ -10,7 +10,13 @@ import { fireBaseApp } from "./index";
 import imageCompression from "browser-image-compression";
 fireBaseApp();
 
-export const CreateNewFile = async (file, name, index) => {
+export const CreateNewFile = async (
+  file,
+  name,
+  index,
+  progressCallback,
+  uploadcallback
+) => {
   const storage = getStorage();
   const storageRef = ref(storage, name);
   const metadata = {
@@ -33,6 +39,7 @@ export const CreateNewFile = async (file, name, index) => {
     (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log("Upload is " + progress + "% done");
+      progressCallback(progress);
       document.querySelectorAll(".upload-progress-status")[index].style.height =
         progress + "%";
       document.querySelectorAll(".uploaded-checkicon")[index].style.display =
@@ -53,6 +60,7 @@ export const CreateNewFile = async (file, name, index) => {
           ].style.display = "block";
         }
         console.log("File available at", downloadURL);
+        uploadcallback(downloadURL);
       });
     }
   );
