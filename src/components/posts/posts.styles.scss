@@ -6,10 +6,11 @@
 }
 
 .post-contents {
-  width: 100%;
+  padding: 0 35px;
 }
 .post-details {
   margin: 20px 0;
+  color: white;
 }
 .post-image {
   width: 100%;
@@ -31,10 +32,21 @@
   margin-top: 8px;
 }
 
+.author {
+  padding: 25px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0 0.7rem;
+}
 .author .author-image {
-  width: 40px;
+  width: 42px;
+  height: 42px;
+  max-width: 42px;
+  min-width: 42px;
+  border-radius: 50%;
 }
 
 .author-name {
-  font-size: 12px;
+  font-size: 12.5px;
+  font-family: "Poppins";
 }

@@ -9,8 +9,12 @@ const Posts = ({ item }) => {
       <div className="post-contents">
         <div className="post-details">
           <div className="author">
-            <img className="author-image" src="" alt="" />
-            <p className="author-name"></p>
+            <img
+              className="author-image"
+              src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
+              alt="err"
+            />
+            <p className="author-name">{item.user.username}</p>
           </div>
           <div className="post-text">
             <h2>{item.title}</h2>

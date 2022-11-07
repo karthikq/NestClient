@@ -2,27 +2,29 @@
 
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { backendApi } from "../../Api";
 import AuthorStatus from "../../components/AuthorStatus/AuthorStatus";
 import HomeUser from "../../components/HomeUser/HomeUser";
 import Navbar from "../../components/Navbar/Navbar";
 import Posts from "../../components/posts/posts";
+import { fetchposts } from "../../store/postsSlice";
 import "./home.styles.scss";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state?.posts);
   useEffect(() => {
     fetchPosts();
   }, []);
   const fetchPosts = async () => {
     try {
-      const { data } = await backendApi.get("/post/all");
-      console.log(data);
-      setPosts(data);
+      await dispatch(fetchposts());
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(data);
   return (
     <div className="home-container">
       <div className="home-user_details">
@@ -32,7 +34,7 @@ const Home = () => {
         <div className="home-author-status">
           <AuthorStatus />
         </div>
-        {posts?.posts?.map((item) => (
+        {data?.map((item) => (
           <Posts item={item} key={item.id} />
         ))}
       </div>

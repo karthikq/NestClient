@@ -19,6 +19,8 @@ import toast from "react-hot-toast";
 import Backdrop from "@mui/material/Backdrop";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchposts } from "../../store/postsSlice";
 
 const AuthorStatus = () => {
   const [openDialogbox, setOpenDialogBox] = useState(false);
@@ -29,7 +31,7 @@ const AuthorStatus = () => {
   const [progress, setProgress] = useState(0);
   const [buffer, setBuffer] = useState(0);
   const [uploadedUrl, setUploadedUrl] = useState([]);
-
+  const dispatch = useDispatch();
   const [items, setItems] = useState({
     files: [],
     urls: [],
