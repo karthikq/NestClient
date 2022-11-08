@@ -31,12 +31,14 @@ const Home = () => {
         <HomeUser />
       </div>
       <div className="home-center">
-        <div className="home-author-status">
-          <AuthorStatus />
+        <div className="home-center-contents">
+          <div className="home-author-status">
+            <AuthorStatus />
+          </div>
+          {data?.map((item) => (
+            <Posts item={item} key={item.id} />
+          ))}
         </div>
-        {data?.map((item) => (
-          <Posts item={item} key={item.id} />
-        ))}
       </div>
       <div className="home-userdetails"></div>
     </div>
