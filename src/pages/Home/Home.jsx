@@ -24,7 +24,10 @@ const Home = () => {
       console.log(error);
     }
   };
-  console.log(data);
+  let sortedArr = [...data].sort(function (a, b) {
+    return new Date(b.date) - new Date(a.date);
+  });
+
   return (
     <div className="home-container">
       <div className="home-user_details">
@@ -35,9 +38,8 @@ const Home = () => {
           <div className="home-author-status">
             <AuthorStatus />
           </div>
-          {data?.map((item) => (
-            <Posts item={item} key={item.id} />
-          ))}
+          {sortedArr.length &&
+            sortedArr?.map((item) => <Posts item={item} key={item.id} />)}
         </div>
       </div>
       <div className="home-userdetails"></div>

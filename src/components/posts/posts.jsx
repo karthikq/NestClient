@@ -1,12 +1,15 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import "./posts.styles.scss";
 
 import Postinteraction from "../PostInteraction/Post-interaction";
 import AddCommentIcon from "@mui/icons-material/AddComment";
+import Comments from "../../Comments/Comments";
 
 const Posts = ({ item }) => {
+  const [openComments, setOpenComments] = useState(false);
+
   return (
     <div className="post-container">
       <div className="post-contents">
@@ -37,33 +40,10 @@ const Posts = ({ item }) => {
             <span>likes</span>
             <span>comments</span>
           </div>
-          <Postinteraction />
+          <Postinteraction setOpenComments={setOpenComments} />
         </div>
       </div>
-      <div className="post-comments-wrapper">
-        <div className="comments">
-          {item.comments.map((comment) => (
-            <div className="comment-details-wrapper">
-              <div className="author-comment">
-                <img
-                  src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
-                  alt="err"
-                />
-              </div>
-              <div className="comment-details">
-                <span>{comment.user.username}</span>
-                <p>{comment.message}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="create-comment">
-          <form>
-            <input type="text" placeholder="Add comment" />
-            <AddCommentIcon className="addcomment-icon" />
-          </form>
-        </div>
-      </div>
+      {openComments && item?.comments?.length && <Comments item={item} />}
     </div>
   );
 };

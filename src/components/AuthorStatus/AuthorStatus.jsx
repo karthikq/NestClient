@@ -20,7 +20,7 @@ import Backdrop from "@mui/material/Backdrop";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchposts } from "../../store/postsSlice";
+import { createPostdata, fetchposts } from "../../store/postsSlice";
 
 const AuthorStatus = () => {
   const [openDialogbox, setOpenDialogBox] = useState(false);
@@ -60,8 +60,8 @@ const AuthorStatus = () => {
       setBuffer(val + 10);
     }
   };
-  const callback = (url) => {
-    setUploadedUrl((prevalue) => [...prevalue, url]);
+  const callback = (url, name) => {
+    setUploadedUrl((prevalue) => [...prevalue, { name, url }]);
   };
 
   const handleFormSubmit = async (e) => {
@@ -95,9 +95,14 @@ const AuthorStatus = () => {
     ) {
       setBackdropstate(false);
       toast.dismiss();
+      const data = {
+        title: userstatus,
+        desp: "qweqw eqweq weqwe qwewqe",
+        images: uploadedUrl,
+      };
+      dispatch(createPostdata(data));
       toast.success("Post created");
     }
-    console.log("S");
   }, [uploadedUrl, items]);
   return (
     <div className="author-status-wrapper">

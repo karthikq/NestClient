@@ -60,7 +60,7 @@ export const CreateNewFile = async (
           ].style.display = "block";
         }
         console.log("File available at", downloadURL);
-        uploadcallback(downloadURL);
+        uploadcallback(downloadURL, name);
       });
     }
   );
