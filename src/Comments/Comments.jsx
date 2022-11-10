@@ -1,10 +1,20 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import "./comments.styles.scss";
 import AddCommentIcon from "@mui/icons-material/AddComment";
+import { createComment } from "../store/postsSlice";
+import { useDispatch } from "react-redux";
 
 const Comments = ({ item }) => {
+  const [userComment, setUserComment] = useState("");
+  const dispatch = useDispatch();
+  const handleComment = (e) => {
+    e.preventDefault();
+    if (userComment) {
+      dispatch(createComment(userComment, item.id));
+    }
+  };
   return (
     <div className="post-comments-wrapper">
       <div className="comments">
@@ -27,8 +37,12 @@ const Comments = ({ item }) => {
         ))}
       </div>
       <div className="create-comment">
-        <form>
-          <input type="text" placeholder="Add comment" />
+        <form onSubmit={handleComment}>
+          <input
+            type="text"
+            onChange={(e) => setUserComment(e.target.value)}
+            placeholder="Add comment"
+          />
           <AddCommentIcon className="addcomment-icon" />
         </form>
       </div>

@@ -13,6 +13,12 @@ const postsSlice = createSlice({
     createPost: (state, action) => {
       state.push(action.payload);
     },
+    updatePost: (state, action) => {
+      console.log(action.payload);
+      return state.map((item) => {
+        return item.id === action.payload.id ? action.payload : item;
+      });
+    },
   },
 });
 
@@ -36,5 +42,19 @@ export function createPostdata(postdata) {
     }
   };
 }
-export const { getPosts, createPost } = postsSlice.actions;
+
+export function createComment(message, postid) {
+  return async function createCommentthunk(dispatch, getState) {
+    try {
+      const { data } = await backendApi.patch("/comment/post/" + postid, {
+        message,
+      });
+      console.log(data);
+      dispatch(updatePost(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export const { getPosts, createPost, updatePost } = postsSlice.actions;
 export default postsSlice.reducer;

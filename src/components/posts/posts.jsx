@@ -43,7 +43,7 @@ const Posts = ({ item }) => {
           <Postinteraction setOpenComments={setOpenComments} />
         </div>
       </div>
-      {openComments && item?.comments?.length && <Comments item={item} />}
+      {openComments && <Comments item={item} />}
     </div>
   );
 };

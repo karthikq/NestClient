@@ -13,8 +13,8 @@
   flex-direction: column;
   color: white;
   gap: 0.5rem 0;
-  max-height: 150px;
-  min-height: 150px;
+  max-height: 10px;
+  min-height: 135px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
