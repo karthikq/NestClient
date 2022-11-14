@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import "./auth.styles.scss";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
-
+import { toast } from "react-hot-toast";
+import Inputbar from "../../components/Inputbar/Inputbar";
 const Auth = () => {
   const [userdetails, setUserDetails] = useState({
     email: "",
@@ -12,57 +13,53 @@ const Auth = () => {
     username: "",
     cpassword: "",
   });
-
+  const [error, setError] = useState({
+    type: "",
+    status: "",
+  });
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(userdetails);
+
+    if (userdetails.password !== userdetails.cpassword) {
+      setError({
+        type: "password",
+        status: "password doesn't match",
+      });
+      toast.error("Passwords doesn't match");
+    }
   };
+  console.log(userdetails);
   return (
     <div className="auth-container">
       <div className="auth-contents">
         <div className="auth-form">
           <h2>Sign up</h2>
           <form onSubmit={onSubmit}>
-            <div>
-              <label>Username</label>
-              <input
-                type="text"
-                placeholder="username"
-                onChange={(e) =>
-                  setUserDetails({ ...userdetails, username: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <label>Email</label>
-              <input
-                type="text"
-                placeholder="email"
-                onChange={(e) =>
-                  setUserDetails({ ...userdetails, email: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <label>Password</label>
-              <input
-                type="text"
-                placeholder="password"
-                onChange={(e) =>
-                  setUserDetails({ ...userdetails, password: e.target.value })
-                }
-              />
-            </div>
-            <div>
-              <label>Confirm Password</label>
-              <input
-                type="text"
-                placeholder="Confirm password"
-                onChange={(e) =>
-                  setUserDetails({ ...userdetails, cpassword: e.target.value })
-                }
-              />
-            </div>
+            <Inputbar
+              setUserDetails={setUserDetails}
+              userdetails={userdetails}
+              name={"username"}
+              label={"Username"}
+            />
+            <Inputbar
+              setUserDetails={setUserDetails}
+              userdetails={userdetails}
+              name={"email"}
+              label={"Email"}
+            />
+            <Inputbar
+              setUserDetails={setUserDetails}
+              userdetails={userdetails}
+              name={"password"}
+              label={"Password"}
+            />
+            <Inputbar
+              setUserDetails={setUserDetails}
+              userdetails={userdetails}
+              name={"cpassword"}
+              label={"Confirm password"}
+            />
+
             <div className="auth-btn-wrapper">
               <button>Submit</button>
             </div>
