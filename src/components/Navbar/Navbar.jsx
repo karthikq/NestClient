@@ -41,7 +41,9 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/auth/login">
+                <Link
+                  to="/auth/login"
+                  onClick={() => setDropdownState(!dropDownState)}>
                   <LoginIcon className="dropdown-list_icon" /> Login
                 </Link>
               </li>

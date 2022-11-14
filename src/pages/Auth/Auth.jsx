@@ -10,29 +10,58 @@ const Auth = () => {
     email: "",
     password: "",
     username: "",
-    confirmPassword: "",
+    cpassword: "",
   });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(userdetails);
+  };
   return (
     <div className="auth-container">
       <div className="auth-contents">
         <div className="auth-form">
           <h2>Sign up</h2>
-          <form>
+          <form onSubmit={onSubmit}>
             <div>
               <label>Username</label>
-              <input type="text" placeholder="email" />
+              <input
+                type="text"
+                placeholder="username"
+                onChange={(e) =>
+                  setUserDetails({ ...userdetails, username: e.target.value })
+                }
+              />
             </div>
             <div>
               <label>Email</label>
-              <input type="text" placeholder="email" />
+              <input
+                type="text"
+                placeholder="email"
+                onChange={(e) =>
+                  setUserDetails({ ...userdetails, email: e.target.value })
+                }
+              />
             </div>
             <div>
               <label>Password</label>
-              <input type="text" placeholder="password" />
+              <input
+                type="text"
+                placeholder="password"
+                onChange={(e) =>
+                  setUserDetails({ ...userdetails, password: e.target.value })
+                }
+              />
             </div>
             <div>
               <label>Confirm Password</label>
-              <input type="text" placeholder="Confirm password" />
+              <input
+                type="text"
+                placeholder="Confirm password"
+                onChange={(e) =>
+                  setUserDetails({ ...userdetails, cpassword: e.target.value })
+                }
+              />
             </div>
             <div className="auth-btn-wrapper">
               <button>Submit</button>

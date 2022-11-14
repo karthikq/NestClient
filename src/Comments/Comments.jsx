@@ -17,9 +17,6 @@ const Comments = ({ item }) => {
 
   const data = item.comments;
 
-  useEffect(() => {
-    const len = [...data].length - 1;
-  }, []);
   const handleComment = (e) => {
     e.preventDefault();
     if (userComment) {
