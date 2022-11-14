@@ -1,17 +1,34 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./posts.styles.scss";
 
 import Postinteraction from "../PostInteraction/Post-interaction";
-import AddCommentIcon from "@mui/icons-material/AddComment";
+
 import Comments from "../../Comments/Comments";
+import Slider from "../Slider/Slider";
 
 const Posts = ({ item }) => {
   const [openComments, setOpenComments] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    function handleClickoutside(e) {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpenComments(false);
+      }
+    }
+    document.addEventListener("click", handleClickoutside);
+    return () => {
+      document.removeEventListener("click", handleClickoutside);
+    };
+  }, []);
+  let imagelist = item.images.length > 0 && item.images;
+
+  let parsedImage = imagelist && imagelist.map((el) => JSON.parse(el));
 
   return (
-    <div className="post-container">
+    <div ref={ref} className="post-container">
       <div className="post-contents">
         <div className="author">
           <img
@@ -31,16 +48,18 @@ const Posts = ({ item }) => {
             <span className="post-update"></span>
           </div>
 
-          {item.imageUrls && (
-            <div className="post-image">
-              <img src="" alt="err" />
-            </div>
-          )}
+          <div className="post-image-wrapper">
+            <Slider images={parsedImage} />
+          </div>
+
           <div className="post-likes-wrapper">
             <span>likes</span>
-            <span>comments</span>
+            <span>{item?.comments?.length} comments</span>
           </div>
-          <Postinteraction setOpenComments={setOpenComments} />
+          <Postinteraction
+            setOpenComments={setOpenComments}
+            openComments={openComments}
+          />
         </div>
       </div>
       {openComments && <Comments item={item} />}

@@ -1,20 +1,37 @@
 /** @format */
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import "./post-interaction.scss";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import { useEffect } from "react";
 
-const Postinteraction = ({ setOpenComments }) => {
+const Postinteraction = ({ setOpenComments, openComments }) => {
+  const [selectedState, setselectedState] = useState();
+
   return (
     <div className="post-interations-wrapper">
-      <div className="post-interaction">
+      <div
+        className={
+          selectedState === "like"
+            ? "post-interaction post-int-active"
+            : "post-interaction"
+        }>
         <FavoriteIcon className="interaction-icon" />
-        <span>Like</span>
+        <span
+          onClick={() => {
+            setselectedState("like");
+          }}>
+          Like
+        </span>
       </div>
       <div
-        className="post-interaction"
-        onClick={() => setOpenComments((preValue) => !preValue)}>
+        className={
+          openComments ? "post-interaction post-int-active" : "post-interaction"
+        }
+        onClick={(e) => {
+          setOpenComments((preValue) => !preValue);
+        }}>
         <ChatBubbleOutlineIcon className="interaction-icon" />
         <span>Comment</span>
       </div>

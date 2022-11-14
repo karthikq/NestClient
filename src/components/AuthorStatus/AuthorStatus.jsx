@@ -101,6 +101,12 @@ const AuthorStatus = () => {
         images: uploadedUrl,
       };
       dispatch(createPostdata(data));
+      setItems({
+        files: [],
+        items: [],
+        names: [],
+      });
+      setUserStatus("");
       toast.success("Post created");
     }
   }, [uploadedUrl, items]);

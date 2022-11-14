@@ -17,10 +17,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
+    "react-onclickoutside": "^6.12.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-timeago": "^7.1.0",
     "sass": "^1.55.0",
+    "swiper": "^8.4.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

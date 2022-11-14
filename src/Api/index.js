@@ -8,7 +8,7 @@ export const backendApi = axios.create({
     function (data, headers) {
       headers[
         "Authorization"
-      ] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhZGFmZmdhIiwic3ViIjoiZW1haXJzZUBtYWlsLmNvbSIsImlhdCI6MTY2ODA1NDEyMSwiZXhwIjoxNjY4MTQwNTIxfQ.EnK-mkkvvc-_A_IyPiNmvTfvf9agQPGxreq-ywSiUIE`;
+      ] = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1N2I0OWMwMy00OWY5LTQzNGItOGY4Ni04MGM4M2JiNjg1M2UiLCJzdWIiOiJlbWFpcnNlQG1haWwuY29tIiwiaWF0IjoxNjY4NDAxMjI0LCJleHAiOjE2Njg0ODc2MjR9.PpfdklxGgCs365YSA9IaBzeLofYXV4UbyGwX9NIu7VI`;
       return data;
     },
     ...axios.defaults.transformRequest,
