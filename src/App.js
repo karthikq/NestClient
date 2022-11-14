@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import Auth from "./pages/Auth/Auth";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create/post" element={<Create />} />
+          <Route path="/auth/login" element={<Auth />} />
         </Routes>
         <Toaster />
       </Router>

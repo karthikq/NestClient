@@ -41,7 +41,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/login">
+                <Link to="/auth/login">
                   <LoginIcon className="dropdown-list_icon" /> Login
                 </Link>
               </li>

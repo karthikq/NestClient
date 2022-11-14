@@ -27,7 +27,7 @@ const Home = () => {
   let sortedArr =
     data &&
     [...data].sort(function (a, b) {
-      return new Date(b.date) - new Date(a.date);
+      return new Date(b.created_at) - new Date(a.created_at);
     });
 
   return (
