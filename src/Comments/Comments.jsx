@@ -7,6 +7,7 @@ import { createComment } from "../store/postsSlice";
 import { useDispatch } from "react-redux";
 import TimeAgo from "react-timeago";
 import { useEffect } from "react";
+import { Avatar } from "@mui/material";
 
 const Comments = ({ item }) => {
   const [userComment, setUserComment] = useState("");
@@ -42,8 +43,8 @@ const Comments = ({ item }) => {
           {sortedComments.map((comment) => (
             <div className="comment-details-wrapper">
               <div className="author-comment">
-                <img
-                  src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
+                <Avatar
+                  src={comment.user?.url ? comment.user.url : ""}
                   alt="err"
                 />
               </div>

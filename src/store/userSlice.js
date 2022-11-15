@@ -32,7 +32,7 @@ export function createUserdata(userdetails, navigate) {
 export function getUserData() {
   return async function CreateUserthunk(dispatch, getState) {
     try {
-      const { data } = await backendApi.get(`/user/auth`);
+      const { data } = await backendApi.get(`/auth/user`);
       console.log(data);
       await dispatch(getUser(data));
     } catch (error) {

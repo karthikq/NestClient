@@ -23,7 +23,10 @@
   width: 100%;
   margin: 18px 0;
 }
-
+.post-text {
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
 .post-title {
   font-size: 21px;
   font-family: "Open Sans", sans-serif;
@@ -44,18 +47,20 @@
   color: white;
 }
 .author .author-image {
-  width: 46px;
-  height: 46px;
-  max-width: 46px;
-  min-width: 46px;
+  width: 42px;
+  height: 42px;
+
   border-radius: 50%;
 }
 
 .author-name {
-  margin-bottom: 3px;
+  margin-bottom: 4px;
   font-size: 17px;
   font-weight: 600;
   font-family: "Open Sans", sans-serif;
+  color: rgba(9, 140, 247, 0.918);
+  text-transform: capitalize;
+  letter-spacing: 0.4px;
 }
 .post-duration {
   font-family: "Open Sans", sans-serif;

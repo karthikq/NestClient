@@ -7,6 +7,7 @@ import Postinteraction from "../PostInteraction/Post-interaction";
 
 import Comments from "../../Comments/Comments";
 import Slider from "../Slider/Slider";
+import { Avatar } from "@mui/material";
 
 const Posts = ({ item }) => {
   const [openComments, setOpenComments] = useState(false);
@@ -31,9 +32,9 @@ const Posts = ({ item }) => {
     <div ref={ref} className="post-container">
       <div className="post-contents">
         <div className="author">
-          <img
+          <Avatar
             className="author-image"
-            src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
+            src={item.user?.url ? item.user.url : ""}
             alt="err"
           />
         </div>

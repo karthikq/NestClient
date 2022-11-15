@@ -7,9 +7,12 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import AddIcon from "@mui/icons-material/Add";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LoginIcon from "@mui/icons-material/Login";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [dropDownState, setDropdownState] = useState(false);
+  const userData = useSelector((state) => state.user);
+
   return (
     <div className="nav">
       <div className="nav-left"></div>
@@ -18,8 +21,14 @@ const Navbar = () => {
           <div
             className="profile-img-wrapper"
             onClick={() => setDropdownState(!dropDownState)}>
-            <Avatar src="" alt="text" sx={{ width: 24, height: 24 }} />
-            <span className="profile-name">Author name</span>
+            <Avatar
+              src={userData ? userData.url : ""}
+              alt="text"
+              sx={{ width: 24, height: 24 }}
+            />
+            <span className="profile-name">
+              {userData ? userData.username : ""}{" "}
+            </span>
             <ArrowDropDownIcon className="profile-img-arrow" />
           </div>
 

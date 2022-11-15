@@ -80,7 +80,8 @@ const AuthorStatus = () => {
           item,
           index,
           handleCallback,
-          callback
+          callback,
+          true
         );
       });
     }
@@ -131,6 +132,7 @@ const AuthorStatus = () => {
           <input
             type="text"
             value={userstatus}
+            maxLength={50}
             placeholder="Whats happening?"
             onChange={(e) => setUserStatus(e.target.value)}
           />

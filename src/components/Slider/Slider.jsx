@@ -27,7 +27,7 @@ const Slider = ({ images }) => {
         className="myswiper">
         {images &&
           images?.map((item) => (
-            <SwiperSlide>
+            <SwiperSlide key={item.url}>
               <div className="image-wrapper">
                 <img className="post-image" src={item.url} alt="err" />
               </div>
