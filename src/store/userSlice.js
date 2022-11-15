@@ -5,7 +5,9 @@ import { backendApi } from "../Api";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {},
+  initialState: {
+    user: {},
+  },
   reducers: {
     getUser: (state, action) => {
       return (state = action.payload);
@@ -21,7 +23,8 @@ export function createUserdata(userdetails) {
     try {
       const { data } = await backendApi.post("/auth/signup", userdetails);
       console.log(data);
-      dispatch(createUser(data));
+      localStorage.setItem("authtoken", data.access_token);
+      dispatch(createUser(data.newUser));
     } catch (error) {
       console.log(error);
     }
