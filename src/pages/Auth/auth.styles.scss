@@ -34,27 +34,29 @@
   &:hover input:not(:focus) {
     opacity: 0.8;
   }
+  .auth-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
   h2 {
     color: white;
     font-size: 28.5px;
     margin: 0;
     text-decoration: underline;
-    margin-bottom: 24px;
+    position: relative;
+    bottom: 1px;
   }
   form {
     width: 100%;
   }
-  div {
-    display: flex;
 
-    flex-direction: column;
-    margin: 12px 0;
-  }
   label {
     margin: 9px 0;
     font-size: 15px;
     letter-spacing: 0.4px;
-    color: rgb(255, 255, 255);
+    color: #359eab;
   }
   input {
     font-family: "Open Sans", sans-serif;
@@ -105,6 +107,8 @@
   width: 100%;
   text-align: center;
   color: white;
+  display: flex;
+  flex-direction: column;
   span {
     font-size: 17px;
   }

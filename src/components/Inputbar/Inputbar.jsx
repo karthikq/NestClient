@@ -2,17 +2,30 @@
 import React from "react";
 import "./inputbar.styles.scss";
 
-const Inputbar = ({ setUserDetails, userdetails, name, label }) => {
+const Inputbar = ({
+  setUserDetails,
+  userdetails,
+  name,
+  label,
+  type,
+  errclass,
+  setError,
+  inputRef,
+}) => {
   return (
-    <div>
-      <label>{label}</label>
+    <div ref={inputRef} className="auth-input">
+      <label>{type === "file" ? label : label + " *"}</label>
       <input
-        type="text"
-        placeholder="username"
-        onChange={(e) =>
-          setUserDetails({ ...userdetails, [name]: e.target.value })
-        }
-      />
+        className={errclass}
+        type={type}
+        placeholder={label.toLowerCase()}
+        onChange={(e) => {
+          setError("");
+          type === "file"
+            ? setUserDetails({ ...userdetails, [name]: e.target.files[0] })
+            : setUserDetails({ ...userdetails, [name]: e.target.value });
+        }}
+      />{" "}
     </div>
   );
 };
