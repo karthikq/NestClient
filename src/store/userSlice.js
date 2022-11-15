@@ -5,9 +5,7 @@ import { backendApi } from "../Api";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    user: {},
-  },
+  initialState: {},
   reducers: {
     getUser: (state, action) => {
       return (state = action.payload);
@@ -18,18 +16,29 @@ const userSlice = createSlice({
   },
 });
 
-export function createUserdata(userdetails) {
+export function createUserdata(userdetails, navigate) {
   return async function CreateUserthunk(dispatch) {
     try {
       const { data } = await backendApi.post("/auth/signup", userdetails);
       console.log(data);
       localStorage.setItem("authtoken", data.access_token);
-      dispatch(createUser(data.newUser));
+      await dispatch(createUser(data.newUser));
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 }
-
+export function getUserData() {
+  return async function CreateUserthunk(dispatch, getState) {
+    try {
+      const { data } = await backendApi.get(`/user/auth`);
+      console.log(data);
+      await dispatch(getUser(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export const { getUser, createUser } = userSlice.actions;
 export default userSlice.reducer;

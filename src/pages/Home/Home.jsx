@@ -9,6 +9,7 @@ import HomeUser from "../../components/HomeUser/HomeUser";
 import Navbar from "../../components/Navbar/Navbar";
 import Posts from "../../components/posts/posts";
 import { fetchposts } from "../../store/postsSlice";
+import { getUserData } from "../../store/userSlice";
 import "./home.styles.scss";
 
 const Home = () => {
@@ -20,6 +21,8 @@ const Home = () => {
   const fetchPosts = async () => {
     try {
       await dispatch(fetchposts());
+
+      await dispatch(getUserData());
     } catch (error) {
       console.log(error);
     }

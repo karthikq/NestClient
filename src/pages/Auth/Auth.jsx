@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import CustomAvatar from "../../components/Avatar/Avatar";
 import { createUserdata } from "../../store/userSlice";
 import { CreateNewFile } from "../../firebase/upload";
+import { useNavigate } from "react-router-dom";
 const Auth = () => {
   const [userdetails, setUserDetails] = useState({
     email: "",
@@ -29,6 +30,7 @@ const Auth = () => {
   const inputRef = useRef();
   const imageRef = useRef();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -77,12 +79,12 @@ const Auth = () => {
 
     if (userImage) {
       data.url = userImage;
-      dispatch(createUserdata(data));
+      dispatch(createUserdata(data, navigate));
     } else {
       const file = userdetails.profileUrl;
       const uploadcallback = (url) => {
         data.url = url;
-        dispatch(createUserdata(data));
+        dispatch(createUserdata(data, navigate));
       };
       CreateNewFile(file, file.name, "", "", uploadcallback);
     }
