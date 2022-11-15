@@ -15,7 +15,8 @@ export const CreateNewFile = async (
   name,
   index,
   progressCallback,
-  uploadcallback
+  uploadcallback,
+  state
 ) => {
   const storage = getStorage();
   const storageRef = ref(storage, name);
@@ -39,11 +40,14 @@ export const CreateNewFile = async (
     (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log("Upload is " + progress + "% done");
-      progressCallback(progress);
-      document.querySelectorAll(".upload-progress-status")[index].style.height =
-        progress + "%";
-      document.querySelectorAll(".uploaded-checkicon")[index].style.display =
-        "none";
+      if (state) {
+        progressCallback(progress);
+        document.querySelectorAll(".upload-progress-status")[
+          index
+        ].style.height = progress + "%";
+        document.querySelectorAll(".uploaded-checkicon")[index].style.display =
+          "none";
+      }
     },
     (error) => {
       console.log(error);
@@ -54,12 +58,15 @@ export const CreateNewFile = async (
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log(document.querySelector(".uploaded-items-wrapper"));
-        if (downloadURL) {
-          document.querySelectorAll(".uploaded-checkicon")[
-            index
-          ].style.display = "block";
+        if (state) {
+          if (downloadURL) {
+            document.querySelectorAll(".uploaded-checkicon")[
+              index
+            ].style.display = "block";
+          }
+          console.log("File available at", downloadURL);
         }
-        console.log("File available at", downloadURL);
+
         uploadcallback(downloadURL, name);
       });
     }

@@ -7,8 +7,10 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import { toast } from "react-hot-toast";
 import Inputbar from "../../components/Inputbar/Inputbar";
 import validator from "validator";
-
+import { useDispatch } from "react-redux";
 import CustomAvatar from "../../components/Avatar/Avatar";
+import { createUserdata } from "../../store/userSlice";
+import { CreateNewFile } from "../../firebase/upload";
 const Auth = () => {
   const [userdetails, setUserDetails] = useState({
     email: "",
@@ -17,25 +19,46 @@ const Auth = () => {
     cpassword: "",
     profileUrl: "",
   });
+
+  const [userImage, setUserImage] = useState("");
+
   const [error, setError] = useState({
     type: "",
     status: "",
   });
   const inputRef = useRef();
+  const imageRef = useRef();
+  const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     const isEmail = validator.isEmail(userdetails.email);
 
+    const checkusername = userdetails.username.length > 10;
+
+    if (checkusername) {
+      setError({
+        type: "username",
+        status: "username cannot be more than 10 character's",
+      });
+      inputRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+
+      return toast.error("Name cannot be more than 10 character's");
+    }
+
     if (!isEmail) {
       setError({
         type: "email",
-        status: "not a valid format",
+        status: "Email is not valid",
       });
-      return inputRef.current.scrollIntoView({
+      inputRef.current.scrollIntoView({
         behavior: "smooth",
       });
+
+      return toast.error("Email is not valid");
     }
 
     if (userdetails.password !== userdetails.cpassword) {
@@ -49,6 +72,20 @@ const Auth = () => {
 
       return toast.error("Passwords doesn't match");
     }
+
+    const data = userdetails;
+
+    if (userImage) {
+      data.url = userImage;
+      dispatch(createUserdata(data));
+    } else {
+      const file = userdetails.profileUrl;
+      const uploadcallback = (url) => {
+        data.url = url;
+        dispatch(createUserdata(data));
+      };
+      CreateNewFile(file, file.name, "", "", uploadcallback);
+    }
   };
 
   return (
@@ -58,11 +95,13 @@ const Auth = () => {
           <div className="auth-form-header">
             <h2>Sign up</h2>
             <CustomAvatar
+              imageRef={imageRef}
               username={userdetails?.username}
               url={userdetails?.profileUrl}
+              setuserimage={setUserImage}
             />
           </div>
-          <form onSubmit={onSubmit} noValidate>
+          <form onSubmit={onSubmit}>
             <Inputbar
               setUserDetails={setUserDetails}
               userdetails={userdetails}
@@ -71,6 +110,7 @@ const Auth = () => {
               type="text"
               setError={setError}
               inputRef={inputRef}
+              errclass={error.type === "username" ? "input-err" : ""}
             />
 
             <Inputbar
@@ -81,7 +121,7 @@ const Auth = () => {
               type="email"
               setError={setError}
               inputRef={inputRef}
-              errclass={error.type === "email" && "input-err"}
+              errclass={error.type === "email" ? "input-err" : ""}
             />
             <Inputbar
               setUserDetails={setUserDetails}
@@ -89,7 +129,7 @@ const Auth = () => {
               name={"password"}
               label={"Password"}
               type="password"
-              errclass={error.type === "password" && "input-err"}
+              errclass={error.type === "password" ? "input-err" : ""}
               setError={setError}
               inputRef={inputRef}
             />
@@ -99,7 +139,7 @@ const Auth = () => {
               name={"cpassword"}
               label={"Confirm password"}
               type="password"
-              errclass={error.type === "password" && "input-err"}
+              errclass={error.type === "password" ? "input-err" : ""}
               setError={setError}
               inputRef={inputRef}
             />
@@ -111,6 +151,7 @@ const Auth = () => {
               type="file"
               setError={setError}
               inputRef={inputRef}
+              imageRef={imageRef}
             />
             <div className="auth-btn-wrapper">
               <button>Submit</button>
