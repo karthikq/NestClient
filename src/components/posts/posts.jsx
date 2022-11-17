@@ -31,39 +31,44 @@ const Posts = ({ item }) => {
   return (
     <div ref={ref} className="post-container">
       <div className="post-contents">
-        <div className="author">
-          <Avatar
-            className="author-image"
-            src={item.user?.url ? item.user.url : ""}
-            alt="err"
-          />
-        </div>
-        <div className="post-details">
-          <p className="author-name">{item.user.username}</p>
-          <span className="post-duration">
-            {new Date().toLocaleDateString()}
-          </span>
-          <div className="post-text">
-            <h2 className="post-title">{item.title}</h2>
-            <span className="post-createdate"></span>
-            <span className="post-update"></span>
+        <div className="post-wrapper">
+          <div className="author">
+            <Avatar
+              className="author-image"
+              src={item.user?.url ? item.user.url : ""}
+              alt="err"
+            />
           </div>
+          <div className="post-details">
+            <div>
+              <p className="author-name">{item.user.username}</p>
+              <span className="post-duration">
+                {new Date().toLocaleDateString()}
+              </span>
+            </div>
 
-          <div className="post-image-wrapper">
-            <Slider images={parsedImage} />
-          </div>
+            <div className="post-text">
+              <h2 className="post-title">{item.title}</h2>
+              <span className="post-createdate"></span>
+              <span className="post-update"></span>
+            </div>
 
-          <div className="post-likes-wrapper">
-            <span>likes</span>
-            <span>{item?.comments?.length} comments</span>
+            <div className="post-image-wrapper">
+              <Slider images={parsedImage} />
+            </div>
+
+            <div className="post-likes-wrapper">
+              <span>likes</span>
+              <span>{item?.comments?.length} comments</span>
+            </div>
+            <Postinteraction
+              setOpenComments={setOpenComments}
+              openComments={openComments}
+            />
           </div>
-          <Postinteraction
-            setOpenComments={setOpenComments}
-            openComments={openComments}
-          />
         </div>
+        {openComments && <Comments item={item} />}{" "}
       </div>
-      {openComments && <Comments item={item} />}
     </div>
   );
 };
