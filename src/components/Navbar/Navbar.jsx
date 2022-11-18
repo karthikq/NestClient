@@ -1,5 +1,5 @@
 /** @format */
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./nav.styles.scss";
 import Avatar from "@mui/material/Avatar";
@@ -9,13 +9,21 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import LoginIcon from "@mui/icons-material/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserData } from "../../store/userSlice";
+import listenForOutsideClicks from "./listenForOutsideClicks";
 
 const Navbar = () => {
   const [dropDownState, setDropdownState] = useState(false);
   const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const menuRef = useRef(null);
+
+  const [listening, setListening] = useState(false);
+
+  useEffect(
+    listenForOutsideClicks(listening, setListening, menuRef, setDropdownState)
+  );
   return (
-    <div className="nav">
+    <div ref={menuRef} className="nav">
       <div className="nav-left"></div>
       <div className="nav-right">
         <div className="profile-nav">
@@ -41,12 +49,14 @@ const Navbar = () => {
             }>
             <ul>
               <li>
-                <Link to="/create/post">
+                <Link
+                  to="/create/post"
+                  onClick={() => setDropdownState(!dropDownState)}>
                   <AddIcon className="dropdown-list_icon" /> Create post
                 </Link>
               </li>
               <li>
-                <Link to="">
+                <Link to="" onClick={() => setDropdownState(!dropDownState)}>
                   <SettingsIcon className="dropdown-list_icon" /> Settings
                 </Link>
               </li>

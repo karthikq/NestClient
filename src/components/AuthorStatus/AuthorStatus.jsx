@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 import Backdrop from "@mui/material/Backdrop";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPostdata, fetchposts } from "../../store/postsSlice";
 
 const AuthorStatus = () => {
@@ -32,12 +32,13 @@ const AuthorStatus = () => {
   const [buffer, setBuffer] = useState(0);
   const [uploadedUrl, setUploadedUrl] = useState([]);
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user);
   const [items, setItems] = useState({
     files: [],
     urls: [],
     names: [],
   });
-  console.log(items);
+
   const handleRemove = (itemIndex) => {
     const newFiles = items.files.filter((item, index) => index !== itemIndex);
     const newUrls = items.urls.filter((item, index) => index !== itemIndex);
@@ -127,7 +128,7 @@ const AuthorStatus = () => {
             ? "author-status-contents author-no-status"
             : "author-status-contents"
         }>
-        <Avatar />
+        <Avatar src={userData?.url ? userData.url : ""} />
         <form onSubmit={handleFormSubmit}>
           <input
             type="text"

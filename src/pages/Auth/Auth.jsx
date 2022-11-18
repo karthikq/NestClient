@@ -39,8 +39,12 @@ const Auth = ({ state }) => {
 
   const Callback = (val) => {
     if (val === -1) {
-      navigate("/");
+      setTimeout(() => {
+        setLoaderstate(false);
+        navigate("/");
+      }, 700);
     } else {
+      setLoaderstate(false);
       setBackendError([val]);
 
       window.scrollTo({
@@ -48,7 +52,6 @@ const Auth = ({ state }) => {
         behavior: "smooth",
       });
     }
-    setLoaderstate(false);
   };
 
   const onSubmit = (e) => {
@@ -97,13 +100,13 @@ const Auth = ({ state }) => {
       }
 
       const data = userdetails;
-
+      setLoaderstate(true);
       if (userImage) {
         data.url = userImage;
         dispatch(createUserdata(data, Callback));
       } else {
         const file = userdetails.profileUrl;
-        setLoaderstate(true);
+
         const uploadcallback = (url) => {
           data.url = url;
           dispatch(createUserdata(data, Callback));
@@ -113,15 +116,6 @@ const Auth = ({ state }) => {
     }
   };
 
-  console.log(
-    backendError?.map((err) =>
-      typeof err.message !== "string"
-        ? err.message?.find((messages) =>
-            messages.includes("username") ? true : false
-          )
-        : err?.message?.includes("username")
-    )
-  );
   return (
     <div className="auth-container">
       {loaderState && (
