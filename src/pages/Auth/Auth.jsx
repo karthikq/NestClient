@@ -9,9 +9,10 @@ import Inputbar from "../../components/Inputbar/Inputbar";
 import validator from "validator";
 import { useDispatch } from "react-redux";
 import CustomAvatar from "../../components/Avatar/Avatar";
-import { createUserdata } from "../../store/userSlice";
+import { createUserdata, loginuserdata } from "../../store/userSlice";
 import { CreateNewFile } from "../../firebase/upload";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CustomrLottie from "../../components/Lottie/Lottie";
 const Auth = ({ state }) => {
   const [userdetails, setUserDetails] = useState({
     email: "",
@@ -27,30 +28,33 @@ const Auth = ({ state }) => {
     type: "",
     status: "",
   });
+  const [loaderState, setLoaderstate] = useState(false);
+  const [backendError, setBackendError] = useState([]);
   const inputRef = useRef();
   const imageRef = useRef();
+  const errDiv = useRef();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const Callback = (val) => {
+    if (val === -1) {
+      navigate("/");
+    } else {
+      setBackendError([val]);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+    setLoaderstate(false);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     const isEmail = validator.isEmail(userdetails.email);
-
-    const checkusername = userdetails.username.length > 10;
-
-    if (checkusername) {
-      setError({
-        type: "username",
-        status: "username cannot be more than 10 character's",
-      });
-      inputRef.current.scrollIntoView({
-        behavior: "smooth",
-      });
-
-      return toast.error("Name cannot be more than 10 character's");
-    }
-
     if (!isEmail) {
       setError({
         type: "email",
@@ -62,36 +66,61 @@ const Auth = ({ state }) => {
 
       return toast.error("Email is not valid");
     }
-
-    if (userdetails.password !== userdetails.cpassword) {
-      setError({
-        type: "password",
-        status: "password doesn't match",
-      });
-      inputRef.current.scrollIntoView({
-        behavior: "smooth",
-      });
-
-      return toast.error("Passwords doesn't match");
-    }
-
-    const data = userdetails;
-
-    if (userImage) {
-      data.url = userImage;
-      dispatch(createUserdata(data, navigate));
+    if (state) {
+      setLoaderstate(true);
+      dispatch(loginuserdata(userdetails, Callback));
     } else {
-      const file = userdetails.profileUrl;
-      const uploadcallback = (url) => {
-        data.url = url;
-        dispatch(createUserdata(data, navigate));
-      };
-      CreateNewFile(file, file.name, "", "", uploadcallback);
+      const checkusername = userdetails.username.length > 10;
+
+      if (checkusername) {
+        setError({
+          type: "username",
+          status: "username cannot be more than 10 character's",
+        });
+        inputRef.current.scrollIntoView({
+          behavior: "smooth",
+        });
+
+        return toast.error("Name cannot be more than 10 character's");
+      }
+
+      if (userdetails.password !== userdetails.cpassword) {
+        setError({
+          type: "password",
+          status: "password doesn't match",
+        });
+        inputRef.current.scrollIntoView({
+          behavior: "smooth",
+        });
+
+        toast.error("Passwords doesn't match");
+      }
+
+      const data = userdetails;
+
+      if (userImage) {
+        data.url = userImage;
+        dispatch(createUserdata(data, Callback));
+      } else {
+        const file = userdetails.profileUrl;
+        setLoaderstate(true);
+        const uploadcallback = (url) => {
+          data.url = url;
+          dispatch(createUserdata(data, Callback));
+        };
+        CreateNewFile(file, file.name, "", "", uploadcallback);
+      }
     }
   };
 
+  console.log(backendError);
   return (
     <div className="auth-container">
+      {loaderState && (
+        <div className="loader-wrapper">
+          <CustomrLottie />
+        </div>
+      )}
       <div className="auth-contents">
         <div className="auth-form">
           <div className="auth-form-header">
@@ -105,6 +134,17 @@ const Auth = ({ state }) => {
               />
             )}
           </div>
+          {backendError.length !== 0 && (
+            <div ref={errDiv} className="errors-list">
+              {backendError?.map((err) =>
+                err?.message?.length > 0 ? (
+                  err.message?.map((messages) => <span>{"* " + messages}</span>)
+                ) : (
+                  <span>{"* " + err.message}</span>
+                )
+              )}
+            </div>
+          )}
           <form onSubmit={onSubmit}>
             {!state && (
               <Inputbar
@@ -114,8 +154,21 @@ const Auth = ({ state }) => {
                 label={"Username"}
                 type="text"
                 setError={setError}
+                setBackendError={setBackendError}
                 inputRef={inputRef}
-                errclass={error.type === "username" ? "input-err" : ""}
+                errclass={
+                  error.type === "username" ||
+                  (backendError.length !== 0 &&
+                    backendError?.map((err) =>
+                      err?.message?.length > 0
+                        ? err.message?.find((messages) =>
+                            messages.includes("username")
+                          )
+                        : err?.message?.includes("username")
+                    ))
+                    ? "input-err"
+                    : ""
+                }
               />
             )}
             <Inputbar
@@ -126,15 +179,41 @@ const Auth = ({ state }) => {
               type="email"
               setError={setError}
               inputRef={inputRef}
-              errclass={error.type === "email" ? "input-err" : ""}
+              setBackendError={setBackendError}
+              errclass={
+                error.type === "email" ||
+                (backendError.length !== 0 &&
+                  backendError?.map((err) =>
+                    err?.message?.length > 0
+                      ? err.message?.find((messages) =>
+                          messages.includes("email")
+                        )
+                      : err?.message?.includes("email")
+                  ))
+                  ? "input-err"
+                  : ""
+              }
             />
             <Inputbar
               setUserDetails={setUserDetails}
               userdetails={userdetails}
               name={"password"}
               label={"Password"}
+              setBackendError={setBackendError}
               type="password"
-              errclass={error.type === "password" ? "input-err" : ""}
+              errclass={
+                error.type === "password" ||
+                (backendError.length !== 0 &&
+                  backendError?.map((err) =>
+                    err?.message?.length > 0
+                      ? err.message?.find((messages) =>
+                          messages.includes("password")
+                        )
+                      : err?.message?.includes("password")
+                  ))
+                  ? "input-err"
+                  : ""
+              }
               setError={setError}
               inputRef={inputRef}
             />
@@ -143,6 +222,7 @@ const Auth = ({ state }) => {
                 setUserDetails={setUserDetails}
                 userdetails={userdetails}
                 name={"cpassword"}
+                setBackendError={setBackendError}
                 label={"Confirm password"}
                 type="password"
                 errclass={error.type === "password" ? "input-err" : ""}
@@ -165,7 +245,19 @@ const Auth = ({ state }) => {
             <div className="auth-btn-wrapper">
               <button>Submit</button>
             </div>
-          </form>{" "}
+          </form>
+          <div className="no-account">
+            {!state ? (
+              <span>
+                Have an account <Link to="/auth/login">login</Link>
+              </span>
+            ) : (
+              <span>
+                Don't have account <Link to="/auth/register">Register</Link>
+              </span>
+            )}
+          </div>
+
           <div className="social-logins">
             <span>Or</span>
             <span>Continue with </span>

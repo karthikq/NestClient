@@ -7,12 +7,13 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import AddIcon from "@mui/icons-material/Add";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LoginIcon from "@mui/icons-material/Login";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUserData } from "../../store/userSlice";
 
 const Navbar = () => {
   const [dropDownState, setDropdownState] = useState(false);
   const userData = useSelector((state) => state.user);
-
+  const dispatch = useDispatch();
   return (
     <div className="nav">
       <div className="nav-left"></div>
@@ -50,11 +51,22 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/auth/login"
-                  onClick={() => setDropdownState(!dropDownState)}>
-                  <LoginIcon className="dropdown-list_icon" /> Login
-                </Link>
+                {!userData.username ? (
+                  <Link
+                    to="/auth/login"
+                    onClick={() => setDropdownState(!dropDownState)}>
+                    <LoginIcon className="dropdown-list_icon" /> Login
+                  </Link>
+                ) : (
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      setDropdownState(!dropDownState);
+                      dispatch(logoutUserData());
+                    }}>
+                    <LoginIcon className="dropdown-list_icon" /> Logout
+                  </Link>
+                )}
               </li>
             </ul>
           </div>

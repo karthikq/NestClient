@@ -12,9 +12,11 @@ const Inputbar = ({
   setError,
   inputRef,
   imageRef,
+  setBackendError,
 }) => {
   const handleChange = (e) => {
     setError("");
+    setBackendError([]);
     if (type === "file") {
       setUserDetails({ ...userdetails, [name]: e.target.files[0] });
       imageRef.current.scrollIntoView({

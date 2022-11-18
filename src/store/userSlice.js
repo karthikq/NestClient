@@ -13,19 +13,23 @@ const userSlice = createSlice({
     createUser: (state, action) => {
       return (state = action.payload);
     },
+    logoutUser: (state, action) => {
+      return (state = {});
+    },
   },
 });
 
-export function createUserdata(userdetails, navigate) {
+export function createUserdata(userdetails, Callback) {
   return async function CreateUserthunk(dispatch) {
     try {
       const { data } = await backendApi.post("/auth/signup", userdetails);
-      console.log(data);
+
       localStorage.setItem("authtoken", data.access_token);
       await dispatch(createUser(data.newUser));
-      navigate("/");
+      Callback(-1);
     } catch (error) {
       console.log(error);
+      Callback(error.response.data);
     }
   };
 }
@@ -33,12 +37,32 @@ export function getUserData() {
   return async function CreateUserthunk(dispatch, getState) {
     try {
       const { data } = await backendApi.get(`/auth/user`);
-      console.log(data);
+
       await dispatch(getUser(data));
     } catch (error) {
       console.log(error);
     }
   };
 }
-export const { getUser, createUser } = userSlice.actions;
+
+export function loginuserdata(userdata, Callback) {
+  return async function Loginthunk(dispatch) {
+    try {
+      const { data } = await backendApi.post("/auth/signin", userdata);
+      await dispatch(getUser(data));
+      Callback(-1);
+    } catch (error) {
+      console.log(error.response);
+      Callback(error.response.data);
+    }
+  };
+}
+
+export function logoutUserData() {
+  return async function logoutthunk(dispatch) {
+    localStorage.removeItem("authtoken");
+    dispatch(logoutUser());
+  };
+}
+export const { getUser, createUser, logoutUser } = userSlice.actions;
 export default userSlice.reducer;
