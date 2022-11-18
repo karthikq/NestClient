@@ -93,7 +93,7 @@ const Auth = ({ state }) => {
           behavior: "smooth",
         });
 
-        toast.error("Passwords doesn't match");
+        return toast.error("Passwords doesn't match");
       }
 
       const data = userdetails;
@@ -113,7 +113,15 @@ const Auth = ({ state }) => {
     }
   };
 
-  console.log(backendError);
+  console.log(
+    backendError?.map((err) =>
+      typeof err.message !== "string"
+        ? err.message?.find((messages) =>
+            messages.includes("username") ? true : false
+          )
+        : err?.message?.includes("username")
+    )
+  );
   return (
     <div className="auth-container">
       {loaderState && (
@@ -137,7 +145,7 @@ const Auth = ({ state }) => {
           {backendError.length !== 0 && (
             <div ref={errDiv} className="errors-list">
               {backendError?.map((err) =>
-                err?.message?.length > 0 ? (
+                typeof err.message !== "string" ? (
                   err.message?.map((messages) => <span>{"* " + messages}</span>)
                 ) : (
                   <span>{"* " + err.message}</span>
@@ -158,14 +166,13 @@ const Auth = ({ state }) => {
                 inputRef={inputRef}
                 errclass={
                   error.type === "username" ||
-                  (backendError.length !== 0 &&
-                    backendError?.map((err) =>
-                      err?.message?.length > 0
-                        ? err.message?.find((messages) =>
-                            messages.includes("username")
-                          )
-                        : err?.message?.includes("username")
-                    ))
+                  backendError?.map((err) =>
+                    typeof err.message !== "string"
+                      ? err.message?.find((messages) =>
+                          messages.includes("username") ? true : false
+                        )
+                      : err?.message?.includes("username")
+                  )[0]
                     ? "input-err"
                     : ""
                 }
@@ -182,14 +189,13 @@ const Auth = ({ state }) => {
               setBackendError={setBackendError}
               errclass={
                 error.type === "email" ||
-                (backendError.length !== 0 &&
-                  backendError?.map((err) =>
-                    err?.message?.length > 0
-                      ? err.message?.find((messages) =>
-                          messages.includes("email")
-                        )
-                      : err?.message?.includes("email")
-                  ))
+                backendError?.map((err) =>
+                  typeof err.message !== "string"
+                    ? err.message?.find((messages) =>
+                        messages.includes("email")
+                      )
+                    : err?.message?.includes("email")
+                )[0]
                   ? "input-err"
                   : ""
               }
@@ -203,14 +209,13 @@ const Auth = ({ state }) => {
               type="password"
               errclass={
                 error.type === "password" ||
-                (backendError.length !== 0 &&
-                  backendError?.map((err) =>
-                    err?.message?.length > 0
-                      ? err.message?.find((messages) =>
-                          messages.includes("password")
-                        )
-                      : err?.message?.includes("password")
-                  ))
+                backendError?.map((err) =>
+                  typeof err.message !== "string"
+                    ? err.message?.find((messages) =>
+                        messages.includes("password")
+                      )
+                    : err?.message?.includes("password")
+                )[0]
                   ? "input-err"
                   : ""
               }
