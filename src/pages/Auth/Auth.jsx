@@ -12,7 +12,7 @@ import CustomAvatar from "../../components/Avatar/Avatar";
 import { createUserdata } from "../../store/userSlice";
 import { CreateNewFile } from "../../firebase/upload";
 import { useNavigate } from "react-router-dom";
-const Auth = () => {
+const Auth = ({ state }) => {
   const [userdetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -95,26 +95,29 @@ const Auth = () => {
       <div className="auth-contents">
         <div className="auth-form">
           <div className="auth-form-header">
-            <h2>Sign up</h2>
-            <CustomAvatar
-              imageRef={imageRef}
-              username={userdetails?.username}
-              url={userdetails?.profileUrl}
-              setuserimage={setUserImage}
-            />
+            <h2>{state ? "Sign In" : "Sign up"}</h2>
+            {!state && (
+              <CustomAvatar
+                imageRef={imageRef}
+                username={userdetails?.username}
+                url={userdetails?.profileUrl}
+                setuserimage={setUserImage}
+              />
+            )}
           </div>
           <form onSubmit={onSubmit}>
-            <Inputbar
-              setUserDetails={setUserDetails}
-              userdetails={userdetails}
-              name={"username"}
-              label={"Username"}
-              type="text"
-              setError={setError}
-              inputRef={inputRef}
-              errclass={error.type === "username" ? "input-err" : ""}
-            />
-
+            {!state && (
+              <Inputbar
+                setUserDetails={setUserDetails}
+                userdetails={userdetails}
+                name={"username"}
+                label={"Username"}
+                type="text"
+                setError={setError}
+                inputRef={inputRef}
+                errclass={error.type === "username" ? "input-err" : ""}
+              />
+            )}
             <Inputbar
               setUserDetails={setUserDetails}
               userdetails={userdetails}
@@ -135,26 +138,30 @@ const Auth = () => {
               setError={setError}
               inputRef={inputRef}
             />
-            <Inputbar
-              setUserDetails={setUserDetails}
-              userdetails={userdetails}
-              name={"cpassword"}
-              label={"Confirm password"}
-              type="password"
-              errclass={error.type === "password" ? "input-err" : ""}
-              setError={setError}
-              inputRef={inputRef}
-            />
-            <Inputbar
-              setUserDetails={setUserDetails}
-              userdetails={userdetails}
-              name={"profileUrl"}
-              label={"Porfile image"}
-              type="file"
-              setError={setError}
-              inputRef={inputRef}
-              imageRef={imageRef}
-            />
+            {!state && (
+              <Inputbar
+                setUserDetails={setUserDetails}
+                userdetails={userdetails}
+                name={"cpassword"}
+                label={"Confirm password"}
+                type="password"
+                errclass={error.type === "password" ? "input-err" : ""}
+                setError={setError}
+                inputRef={inputRef}
+              />
+            )}
+            {!state && (
+              <Inputbar
+                setUserDetails={setUserDetails}
+                userdetails={userdetails}
+                name={"profileUrl"}
+                label={"Porfile image"}
+                type="file"
+                setError={setError}
+                inputRef={inputRef}
+                imageRef={imageRef}
+              />
+            )}
             <div className="auth-btn-wrapper">
               <button>Submit</button>
             </div>

@@ -7,7 +7,6 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  border-radius: 15px;
 }
 .image-wrapper {
   position: relative;
@@ -15,5 +14,6 @@
 }
 .myswiper {
   width: 100% !important;
-  height: 280px !important;
+  height: 260px !important;
+  border-radius: 15px !important;
 }

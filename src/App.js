@@ -19,7 +19,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create/post" element={<Create />} />
-          <Route path="/auth/login" element={<Auth />} />
+          <Route path="/auth/login" element={<Auth state={true} />} />
+          <Route path="/auth/register" element={<Auth state={false} />} />
         </Routes>
         <Toaster />
       </Router>
