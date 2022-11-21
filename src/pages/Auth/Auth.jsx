@@ -261,8 +261,16 @@ const Auth = ({ state }) => {
             <span>Or</span>
             <span>Continue with </span>
             <div className="social-item">
-              <GoogleIcon className="social-icon" />
-              <GitHubIcon className="social-icon" />
+              <a
+                href="http://localhost:5000/auth/google/login"
+                style={{ color: "inherit" }}>
+                <GoogleIcon className="social-icon" />
+              </a>
+              <a
+                href="http://localhost:5000/auth/google/login"
+                style={{ color: "inherit" }}>
+                <GitHubIcon className="social-icon" />
+              </a>
             </div>
           </div>
         </div>

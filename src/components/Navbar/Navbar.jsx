@@ -36,7 +36,7 @@ const Navbar = () => {
               sx={{ width: 24, height: 24 }}
             />
             <span className="profile-name">
-              {userData ? userData.username : ""}{" "}
+              {userData.username ? userData.username.substring(0, 9) : ""}{" "}
             </span>
             <ArrowDropDownIcon className="profile-img-arrow" />
           </div>
