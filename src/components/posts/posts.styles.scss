@@ -11,10 +11,15 @@
   width: 100%;
   margin-bottom: 25px;
 
-  background: #22313b;
+  background: #202e38;
   padding: 0 3.2rem;
   padding-right: 3.5rem;
   border-radius: 15px;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  border: 2px solid rgba(255, 255, 255, 0.021);
+  &:hover {
+    border: 2px solid rgba(255, 255, 255, 0.233);
+  }
 }
 .post-wrapper {
   display: flex;
@@ -67,7 +72,7 @@
   font-size: 17px;
   font-weight: 600;
   font-family: "Open Sans", sans-serif;
-  color: rgba(9, 140, 247, 0.918);
+  color: rgba(9, 140, 247, 0.966);
   text-transform: capitalize;
   letter-spacing: 0.4px;
 }
