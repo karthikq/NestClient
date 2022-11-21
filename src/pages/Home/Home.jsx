@@ -16,6 +16,7 @@ import queryString from "query-string";
 const Home = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.posts);
+  const user = useSelector((state) => state?.user);
   useEffect(() => {
     fetchPosts();
   }, [window.location]);
@@ -52,7 +53,9 @@ const Home = () => {
             <AuthorStatus />
           </div>
           {sortedArr.length !== 0 &&
-            sortedArr.map((item) => <Posts item={item} key={item.id} />)}
+            sortedArr.map((item) => (
+              <Posts item={item} key={item.id} user={user && user} />
+            ))}
         </div>
       </div>
       <div className="home-userdetails"></div>

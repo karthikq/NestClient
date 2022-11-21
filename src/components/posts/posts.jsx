@@ -9,7 +9,7 @@ import Comments from "../../Comments/Comments";
 import Slider from "../Slider/Slider";
 import { Avatar } from "@mui/material";
 
-const Posts = ({ item }) => {
+const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
   const ref = useRef();
 
@@ -67,7 +67,7 @@ const Posts = ({ item }) => {
             />
           </div>
         </div>
-        {openComments && <Comments item={item} />}{" "}
+        {openComments && <Comments item={item} user={user} />}
       </div>
     </div>
   );

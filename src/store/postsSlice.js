@@ -14,7 +14,6 @@ const postsSlice = createSlice({
       state.push(action.payload);
     },
     updatePost: (state, action) => {
-      console.log(action.payload);
       return state.map((item) => {
         return item.id === action.payload.id ? action.payload : item;
       });
@@ -49,7 +48,20 @@ export function createComment(message, postid) {
       const { data } = await backendApi.patch("/comment/post/" + postid, {
         message,
       });
-      console.log(data);
+
+      dispatch(updatePost(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function deleteComment(commentId, postId) {
+  return async function deleteCommentThunk(dispatch) {
+    try {
+      const { data } = await backendApi.delete(
+        "/comment/post/delete/" + postId + "?commentId=" + commentId
+      );
       dispatch(updatePost(data));
     } catch (error) {
       console.log(error);

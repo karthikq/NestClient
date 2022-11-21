@@ -3,16 +3,16 @@
 import React, { useRef, useState } from "react";
 import "./comments.styles.scss";
 import AddCommentIcon from "@mui/icons-material/AddComment";
-import { createComment } from "../store/postsSlice";
-import { useDispatch } from "react-redux";
+import { createComment, deleteComment } from "../store/postsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import TimeAgo from "react-timeago";
 import { useEffect } from "react";
 import { Avatar } from "@mui/material";
 
-const Comments = ({ item }) => {
+const Comments = ({ item, user }) => {
   const [userComment, setUserComment] = useState("");
   const [preComments, setPrevComments] = useState(item.comments);
-
+  const userData = useSelector((state) => state.user);
   const commentRef = useRef();
   const dispatch = useDispatch();
 
@@ -22,20 +22,24 @@ const Comments = ({ item }) => {
     e.preventDefault();
     if (userComment) {
       dispatch(createComment(userComment, item.id));
-      commentRef.current.scrollTop = 0;
+      if (commentRef.current) {
+        commentRef.current.scrollTop = 0;
+      }
+      setUserComment("");
       const el = document.querySelectorAll(".comment-details-wrapper")[0];
       el.style.background = "rgba(255, 255, 255, 0.065)";
       setTimeout(() => {
         el.style.background = "rgba(255, 255, 255, 0.01)";
       }, 1000);
-      setUserComment("");
     }
   };
 
   const sortedComments = [...data].sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
-
+  const handleDeleteComment = (commentId, postId) => {
+    dispatch(deleteComment(commentId, postId));
+  };
   return (
     <div className="post-comments-wrapper">
       {item?.comments.length > 0 && (
@@ -56,7 +60,15 @@ const Comments = ({ item }) => {
                     <span className="comment-time">
                       <TimeAgo date={new Date(comment.date)} />
                     </span>
-                    <span className="comment-delete">delete</span>
+                    {comment.user.userId === user?.userId && (
+                      <span
+                        className="comment-delete"
+                        onClick={() =>
+                          handleDeleteComment(comment.id, item.id)
+                        }>
+                        delete
+                      </span>
+                    )}
                   </span>
                 </div>
                 <p>{comment.message}</p>
