@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import TimeAgo from "react-timeago";
 import { useEffect } from "react";
 import { Avatar } from "@mui/material";
+import { current } from "@reduxjs/toolkit";
 
-const Comments = ({ item, user }) => {
+const Comments = ({ item, user, openComments }) => {
   const [userComment, setUserComment] = useState("");
   const [preComments, setPrevComments] = useState(item.comments);
   const userData = useSelector((state) => state.user);
@@ -27,9 +28,9 @@ const Comments = ({ item, user }) => {
       }
       setUserComment("");
       const el = document.querySelectorAll(".comment-details-wrapper")[0];
-      el.style.background = "rgba(255, 255, 255, 0.065)";
+      el.style.background = "rgba(102, 51, 153, 0.09)";
       setTimeout(() => {
-        el.style.background = "rgba(255, 255, 255, 0.01)";
+        el.style.background = "rgba(102, 51, 153, 0.03)";
       }, 1000);
     }
   };
@@ -40,6 +41,7 @@ const Comments = ({ item, user }) => {
   const handleDeleteComment = (commentId, postId) => {
     dispatch(deleteComment(commentId, postId));
   };
+
   return (
     <div className="post-comments-wrapper">
       {item?.comments.length > 0 && (

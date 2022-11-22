@@ -18,12 +18,6 @@ const Postinteraction = ({ setOpenComments, openComments }) => {
             : "post-interaction"
         }>
         <FavoriteIcon className="interaction-icon" />
-        <span
-          onClick={() => {
-            setselectedState("like");
-          }}>
-          Like
-        </span>
       </div>
       <div
         className={
@@ -33,7 +27,6 @@ const Postinteraction = ({ setOpenComments, openComments }) => {
           setOpenComments((preValue) => !preValue);
         }}>
         <ChatBubbleOutlineIcon className="interaction-icon" />
-        <span>Comment</span>
       </div>
     </div>
   );

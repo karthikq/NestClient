@@ -10,6 +10,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUserData } from "../../store/userSlice";
 import listenForOutsideClicks from "./listenForOutsideClicks";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 const Navbar = () => {
   const [dropDownState, setDropdownState] = useState(false);
@@ -48,6 +49,14 @@ const Navbar = () => {
                 : "profile-dropdown"
             }>
             <ul>
+              {userData.userId && (
+                <li>
+                  <Link to={"/notifications/" + userData.userId}>
+                    <NotificationsActiveIcon className="dropdown-list_icon" />{" "}
+                    Notifications
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link
                   to="/create/post"

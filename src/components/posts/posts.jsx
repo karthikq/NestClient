@@ -67,7 +67,9 @@ const Posts = ({ item, user }) => {
             />
           </div>
         </div>
-        {openComments && <Comments item={item} user={user} />}
+        {openComments && (
+          <Comments item={item} user={user} openComments={openComments} />
+        )}
       </div>
     </div>
   );

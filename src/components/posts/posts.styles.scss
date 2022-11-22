@@ -11,7 +11,7 @@
   width: 100%;
   margin-bottom: 25px;
 
-  background: #202e38;
+  background: #fff;
   padding: 0 3.2rem;
   padding-right: 3.5rem;
   border-radius: 15px;
@@ -29,7 +29,7 @@
 }
 .post-details {
   margin: 0px 0 20px;
-  color: white;
+  color: rgb(0, 0, 0);
   flex-shrink: 0 !important;
   width: 100%;
 }
@@ -72,7 +72,7 @@
   font-size: 17px;
   font-weight: 600;
   font-family: "Open Sans", sans-serif;
-  color: rgba(9, 140, 247, 0.966);
+  color: rebeccapurple;
   text-transform: capitalize;
   letter-spacing: 0.4px;
 }
@@ -91,9 +91,8 @@
   font-family: "Open Sans", sans-serif;
   span {
     font-size: 14px;
-    color: #9b9b9b;
-  }
-  span:nth-child(2) {
-    color: #59758c;
+    color: #222222;
+    opacity: 0.9;
+    font-weight: 500;
   }
 }

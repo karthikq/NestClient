@@ -8,15 +8,15 @@
   gap: 0 1.2rem;
 }
 .post-interaction {
-  width: 135px;
-  border-radius: 10px;
+  padding: 0 0.4rem;
+  border-radius: 50%;
   display: flex;
   gap: 0 0.3rem;
   align-items: center;
   justify-content: center;
-  background-color: #424f558c;
-  padding: 0.55em 0.45rem;
-  padding-left: 0.4rem;
+  background-color: rgb(124, 63, 186);
+  padding: 0.6rem;
+  color: white;
   font-family: "Open Sans", sans-serif;
   cursor: pointer;
   span {
@@ -30,8 +30,7 @@
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.897);
-    color: black;
+    background-color: rgba(0, 0, 0, 0.897);
     box-shadow: 0px 0px 20px #dbeaee2c;
   }
   &:active {
@@ -39,7 +38,7 @@
   }
 }
 .post-int-active {
-  background-color: rgba(255, 255, 255, 0.897);
-  color: black;
+  background-color: rgba(0, 0, 0, 0.897);
+
   box-shadow: 0px 0px 20px #dbeaee2c;
 }
