@@ -13,6 +13,8 @@ import { createUserdata, loginuserdata } from "../../store/userSlice";
 import { CreateNewFile } from "../../firebase/upload";
 import { Link, useNavigate } from "react-router-dom";
 import CustomrLottie from "../../components/Lottie/Lottie";
+import FacebookIcon from "@mui/icons-material/Facebook";
+
 const Auth = ({ state }) => {
   const [userdetails, setUserDetails] = useState({
     email: "",
@@ -267,9 +269,9 @@ const Auth = ({ state }) => {
                 <GoogleIcon className="social-icon" />
               </a>
               <a
-                href="http://localhost:5000/auth/google/login"
+                href="http://localhost:5000/auth/facebook/login"
                 style={{ color: "inherit" }}>
-                <GitHubIcon className="social-icon" />
+                <FacebookIcon className="social-icon" />
               </a>
             </div>
           </div>
