@@ -16,8 +16,8 @@
   transform: translate(-50%, -50%);
   width: 400px;
   min-height: 120px;
-  color: hsl(0, 0%, 100%);
-  background: #202e38;
+  color: #5814d6;
+  background: #f8f8f8;
   border-radius: 15px;
   padding: 0.7rem 1rem;
   padding-left: 0.8rem;
@@ -25,15 +25,16 @@
   box-shadow: 0px 0px 50px #202e38;
 
   h1 {
-    font-family: "Poppins", sans-serif;
+    font-family: "Open sans", sans-serif;
     font-size: 30px;
     margin-bottom: 18px;
     margin-top: 7px;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.2px;
     text-align: center;
     font-weight: 700;
   }
   form {
+    padding-top: 6px;
     .fileinput {
       display: block;
       width: 70px;
@@ -41,8 +42,8 @@
       margin: 0 auto;
       border-radius: 10px;
 
-      border: 2px solid #c4c3c36b;
-      color: #161616;
+      border: 2px solid #5814d6;
+      color: #5814d6;
       text-align: center;
       display: flex;
       justify-content: center;
@@ -57,19 +58,20 @@
       margin-bottom: 0px;
       cursor: pointer;
       .upload-icon {
-        color: #c4c4c4;
+        color: #5814d6;
         font-size: 19px;
       }
       &:active {
         transform: scale(0.95);
       }
       &:hover {
-        box-shadow: 0px 0px 20px #0000001a;
-        border: 2px solid rgba(255, 255, 255, 0.295);
+        box-shadow: 0px 0px 20px #5814d65e;
+        border: 2px solid #5814d6;
         transform: translateY(-2px);
 
+        background: #5814d6;
         .upload-icon {
-          color: white;
+          color: rgb(255, 255, 255);
         }
       }
     }
@@ -87,6 +89,9 @@
       font-family: "Open Sans", sans-serif;
       font-weight: 600;
       color: black;
+      border: 2px solid #5814d649;
+      border-radius: 10px;
+      outline: 0;
     }
   }
 }

@@ -17,7 +17,7 @@ const Comments = ({ item, user, openComments }) => {
   const commentRef = useRef();
   const dispatch = useDispatch();
 
-  const data = item.comments;
+  const data = item.comments?.length > 0 ? item?.comments : [];
 
   const handleComment = (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const Comments = ({ item, user, openComments }) => {
     }
   };
 
-  const sortedComments = [...data].sort((a, b) => {
+  const sortedComments = [...data]?.sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
   const handleDeleteComment = (commentId, postId) => {
@@ -44,7 +44,7 @@ const Comments = ({ item, user, openComments }) => {
 
   return (
     <div className="post-comments-wrapper">
-      {item?.comments.length > 0 && (
+      {item && item?.comments?.length > 0 && (
         <div ref={commentRef} className="comments">
           {sortedComments.map((comment) => (
             <div className="comment-details-wrapper">

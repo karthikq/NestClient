@@ -156,8 +156,8 @@ const AuthorStatus = () => {
       {items.names.length !== 0 && (
         <p className="upload-item-status">
           {activeClose
-            ? " You can upload upto 3 Images & videos"
-            : "Uploading please wait"}
+            ? " You can upload upto 3 files."
+            : "Uploading please wait..."}
         </p>
       )}
       <div className="uploaded-items-wrapper">
