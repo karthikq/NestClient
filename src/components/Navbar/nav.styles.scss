@@ -16,7 +16,7 @@
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.116);
   padding: 5px;
   position: absolute;
-  background: #424f55;
+  background: #fafafa;
   border-radius: 5px;
   top: 120%;
   left: 0rem;
@@ -42,26 +42,37 @@
   padding-bottom: 8px;
   ul {
     display: block;
+    box-sizing: border-box;
+    padding: 0.8rem 0.1rem;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
   }
 }
 
 .profile-dropdown ul li {
   list-style-type: none;
-  margin: 12px 0;
+  margin: 0.5px 0;
   font-family: "Open Sans", sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
 
   &:hover {
-    opacity: 0.7;
+    background-color: #15161610;
   }
 
   a {
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: #5814d6;
     display: flex;
     align-items: center;
-    gap: 0 0.4rem;
+    justify-content: flex-start;
+    gap: 0 0.55rem;
+    padding: 0.38rem 0.6rem;
   }
   .dropdown-list_icon {
     font-size: 20px;
@@ -70,7 +81,7 @@
 
 .profile-img-wrapper {
   width: 100%;
-  background: #424f55;
+  background: #ffffff;
   padding: 0.35rem 0.65rem;
   border-radius: 50px;
   display: flex;
@@ -82,12 +93,12 @@
   position: relative;
   z-index: 1;
   &:hover {
-    box-shadow: 0px 0px 20px #424f55;
+    box-shadow: 0px 0px 20px #5814d638;
   }
 }
 
 .profile-img-arrow {
-  color: white;
+  color: #5814d6;
   margin-top: 0.4px;
 }
 

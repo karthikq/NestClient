@@ -8,6 +8,7 @@ import Postinteraction from "../PostInteraction/Post-interaction";
 import Comments from "../../Comments/Comments";
 import Slider from "../Slider/Slider";
 import { Avatar } from "@mui/material";
+import Postdropdown from "../postdropdown/Postdropdown";
 
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
@@ -65,6 +66,9 @@ const Posts = ({ item, user }) => {
               setOpenComments={setOpenComments}
               openComments={openComments}
             />
+          </div>
+          <div className="post-action">
+            <Postdropdown />
           </div>
         </div>
         {openComments && (

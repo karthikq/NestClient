@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUserData } from "../../store/userSlice";
 import listenForOutsideClicks from "./listenForOutsideClicks";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-
+import HomeIcon from "@mui/icons-material/Home";
 const Navbar = () => {
   const [dropDownState, setDropdownState] = useState(false);
   const userData = useSelector((state) => state.user);
@@ -57,6 +57,11 @@ const Navbar = () => {
                   </Link>
                 </li>
               )}
+              <li>
+                <Link to="/" onClick={() => setDropdownState(!dropDownState)}>
+                  <HomeIcon className="dropdown-list_icon" /> Home
+                </Link>
+              </li>
               <li>
                 <Link
                   to="/create/post"
