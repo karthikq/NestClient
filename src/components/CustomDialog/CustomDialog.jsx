@@ -6,21 +6,24 @@ import CloseIcon from "@mui/icons-material/Close";
 import { CreateNewFile } from "../../firebase/upload";
 import UploadIcon from "@mui/icons-material/Upload";
 
-const CustomDialog = ({ setOpen, setItems }) => {
+const CustomDialog = ({ setOpen, setItems, open }) => {
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
   const [localUrl, setLocalUrl] = useState("");
 
   const handleFile = (file) => {
+    console.log(file);
     setFile(file);
     setFileName(file.name);
 
-    const fileUrl = URL.createObjectURL(file);
-    setLocalUrl(fileUrl);
-    setItems((preValue) => ({
-      ...preValue,
-      urls: [...preValue.urls, fileUrl],
-    }));
+    if (open.type === "image") {
+      const fileUrl = URL.createObjectURL(file);
+      setLocalUrl(fileUrl);
+      setItems((preValue) => ({
+        ...preValue,
+        urls: [...preValue.urls, fileUrl],
+      }));
+    }
   };
   const handleUpload = (e) => {
     e.preventDefault();
@@ -30,7 +33,10 @@ const CustomDialog = ({ setOpen, setItems }) => {
         files: [...preValue.files, file],
         names: [...preValue.names, fileName],
       }));
-      setOpen(false);
+      setOpen({
+        type: "",
+        state: false,
+      });
     }
   };
 
@@ -42,13 +48,24 @@ const CustomDialog = ({ setOpen, setItems }) => {
           <label className="fileinput" htmlFor="fileinput">
             <UploadIcon className="upload-icon" />
           </label>
-          <input
-            onChange={(e) => handleFile(e.target.files[0])}
-            type="file"
-            accept=".jpg,.png,.jpeg"
-            id="fileinput"
-            placeholder="Choose a file"
-          />
+          {open.type === "image" && (
+            <input
+              onChange={(e) => handleFile(e.target.files[0])}
+              type="file"
+              accept=".jpg,.png,.jpeg"
+              id="fileinput"
+              placeholder="Choose a file"
+            />
+          )}
+          {open.type === "video" && (
+            <input
+              onChange={(e) => handleFile(e.target.files[0])}
+              type="file"
+              accept=".mp4"
+              id="fileinput"
+              placeholder="Choose a file"
+            />
+          )}
           {localUrl ? (
             <input
               type="text"
@@ -80,7 +97,15 @@ const CustomDialog = ({ setOpen, setItems }) => {
         </form>
 
         <div className="close-wrapper">
-          <CloseIcon onClick={() => setOpen(false)} className="close_icon" />
+          <CloseIcon
+            onClick={() =>
+              setOpen({
+                type: "",
+                state: false,
+              })
+            }
+            className="close_icon"
+          />
         </div>
       </div>
     </div>

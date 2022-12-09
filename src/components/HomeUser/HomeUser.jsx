@@ -2,22 +2,24 @@
 
 import { Avatar } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
 import "./homeuser.styles.scss";
 
 const HomeUser = () => {
+  const user = useSelector((state) => state.user);
+
   return (
     <div className="homeuser-container">
       <div className="homeuser-contents">
         <div className="homeuser-image">
           <div className="homeuser-avatar">
-            {" "}
-            <Avatar src="" sx={{ width: 40, height: 40 }} />
+            <Avatar src={user.url} sx={{ width: 40, height: 40 }} />
           </div>
         </div>
         <div className="homeuser-details">
-          <p>Author name</p>
-          <span>@author</span>
-          <span>Status</span>
+          <p>{user.username}</p>
+          <span>@{user.username}</span>
+          <span> </span>
         </div>
         <div className="homeuser-follows">
           <div>

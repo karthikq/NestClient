@@ -24,10 +24,10 @@ const Navbar = () => {
     listenForOutsideClicks(listening, setListening, menuRef, setDropdownState)
   );
   return (
-    <div ref={menuRef} className="nav">
+    <div className="nav">
       <div className="nav-left"></div>
       <div className="nav-right">
-        <div className="profile-nav">
+        <div ref={menuRef} className="profile-nav">
           <div
             className="profile-img-wrapper"
             onClick={() => setDropdownState(!dropDownState)}>
@@ -49,6 +49,11 @@ const Navbar = () => {
                 : "profile-dropdown"
             }>
             <ul>
+              <li>
+                <Link to="/" onClick={() => setDropdownState(!dropDownState)}>
+                  <HomeIcon className="dropdown-list_icon" /> Home
+                </Link>
+              </li>
               {userData.userId && (
                 <li>
                   <Link to={"/notifications/" + userData.userId}>
@@ -57,11 +62,6 @@ const Navbar = () => {
                   </Link>
                 </li>
               )}
-              <li>
-                <Link to="/" onClick={() => setDropdownState(!dropDownState)}>
-                  <HomeIcon className="dropdown-list_icon" /> Home
-                </Link>
-              </li>
               <li>
                 <Link
                   to="/create/post"

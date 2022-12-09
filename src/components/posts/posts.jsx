@@ -9,7 +9,7 @@ import Comments from "../../Comments/Comments";
 import Slider from "../Slider/Slider";
 import { Avatar } from "@mui/material";
 import Postdropdown from "../postdropdown/Postdropdown";
-
+import TimeAgo from "react-timeago";
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
   const ref = useRef();
@@ -44,7 +44,8 @@ const Posts = ({ item, user }) => {
             <div>
               <p className="author-name">{item.user.username}</p>
               <span className="post-duration">
-                {new Date().toLocaleDateString()}
+                {" "}
+                <TimeAgo date={new Date(item.created_at)} />
               </span>
             </div>
 

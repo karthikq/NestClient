@@ -16,7 +16,8 @@
   padding-right: 3.5rem;
   border-radius: 15px;
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-  border: 2px solid rgba(255, 255, 255, 0.021);
+  border: 2px solid rgba(255, 255, 255, 0.336);
+  box-shadow: rgba(17, 12, 46, 0.021) 0px 12px 50px 0px;
   &:hover {
     border: 2px solid rgba(255, 255, 255, 0.233);
   }

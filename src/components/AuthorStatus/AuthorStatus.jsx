@@ -21,9 +21,14 @@ import { Box } from "@mui/system";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostdata, fetchposts } from "../../store/postsSlice";
+import CustomrLottie from "../Lottie/Lottie";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const AuthorStatus = () => {
-  const [openDialogbox, setOpenDialogBox] = useState(false);
+  const [openDialogbox, setOpenDialogBox] = useState({
+    state: false,
+    type: "",
+  });
   const [userstatus, setUserStatus] = useState("");
   const [contentErr, setContentErr] = useState(false);
   const [activeClose, setactiveClose] = useState(true);
@@ -68,7 +73,27 @@ const AuthorStatus = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     toast.dismiss();
-
+    if (!userData.userId) {
+      return toast(
+        (t) => (
+          <span>
+            Please login to continue
+            <a href="/auth/login">
+              <button className="toast-btn" onClick={() => toast.dismiss(t.id)}>
+                Click here
+              </button>
+            </a>
+          </span>
+        ),
+        {
+          icon: (
+            <ErrorIcon
+              style={{ color: "#5814d6", position: "relative", left: 3 }}
+            />
+          ),
+        }
+      );
+    }
     if (!userstatus) {
       return setContentErr(true);
     } else {
@@ -87,9 +112,7 @@ const AuthorStatus = () => {
       });
     }
   };
-  const handleUploadprogres = (val) => {
-    console.log(val);
-  };
+
   useEffect(() => {
     if (
       uploadedUrl?.length !== 0 &&
@@ -114,6 +137,11 @@ const AuthorStatus = () => {
   }, [uploadedUrl, items]);
   return (
     <div className="author-status-wrapper">
+      {backdropstate && (
+        <div className="create-post-lottie">
+          <CustomrLottie />
+        </div>
+      )}
       <Backdrop
         open={backdropstate}
         sx={{
@@ -150,8 +178,12 @@ const AuthorStatus = () => {
       {items.files.length < 3 && (
         <Uploaditems open={openDialogbox} setOpen={setOpenDialogBox} />
       )}
-      {openDialogbox && (
-        <CustomDialog setOpen={setOpenDialogBox} setItems={setItems} />
+      {openDialogbox.state && (
+        <CustomDialog
+          setOpen={setOpenDialogBox}
+          open={openDialogbox}
+          setItems={setItems}
+        />
       )}
       {items.names.length !== 0 && (
         <p className="upload-item-status">
