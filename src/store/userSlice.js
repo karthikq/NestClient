@@ -49,6 +49,7 @@ export function loginuserdata(userdata, Callback) {
   return async function Loginthunk(dispatch) {
     try {
       const { data } = await backendApi.post("/auth/signin", userdata);
+      localStorage.setItem("authtoken", data.access_token);
       await dispatch(getUser(data));
       Callback(-1);
     } catch (error) {

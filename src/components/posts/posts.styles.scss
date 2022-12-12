@@ -97,6 +97,11 @@
     color: #222222;
     opacity: 0.9;
     font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: black;
+    }
   }
 }
 .post-action {

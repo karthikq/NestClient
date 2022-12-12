@@ -68,5 +68,16 @@ export function deleteComment(commentId, postId) {
     }
   };
 }
+export function likePost(postId) {
+  return async function likePostthunk(dispatch) {
+    try {
+      const { data } = await backendApi.patch("/like/post/" + postId);
+      console.log(data);
+      dispatch(updatePost(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 export const { getPosts, createPost, updatePost } = postsSlice.actions;
 export default postsSlice.reducer;

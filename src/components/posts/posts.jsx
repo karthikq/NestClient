@@ -10,8 +10,13 @@ import Slider from "../Slider/Slider";
 import { Avatar } from "@mui/material";
 import Postdropdown from "../postdropdown/Postdropdown";
 import TimeAgo from "react-timeago";
+import PostDialogbox from "../PostDialogbox/PostDialogbox";
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
+  const [postDialog, setPostDialog] = useState({
+    state: "",
+    data: [],
+  });
   const ref = useRef();
 
   useEffect(() => {
@@ -29,8 +34,22 @@ const Posts = ({ item, user }) => {
 
   let parsedImage = imagelist && imagelist.map((el) => JSON.parse(el));
 
+  const handlePostdialog = (state, items) => {
+    console.log(item);
+    setPostDialog({
+      state: state,
+      data: items,
+    });
+  };
   return (
     <div ref={ref} className="post-container">
+      {postDialog.state && (
+        <PostDialogbox
+          item={postDialog.data}
+          postDialog={postDialog}
+          setPostDialog={setPostDialog}
+        />
+      )}
       <div className="post-contents">
         <div className="post-wrapper">
           <div className="author">
@@ -44,7 +63,6 @@ const Posts = ({ item, user }) => {
             <div>
               <p className="author-name">{item.user.username}</p>
               <span className="post-duration">
-                {" "}
                 <TimeAgo date={new Date(item.created_at)} />
               </span>
             </div>
@@ -60,12 +78,18 @@ const Posts = ({ item, user }) => {
             </div>
 
             <div className="post-likes-wrapper">
-              <span>likes</span>
-              <span>{item?.comments?.length} comments</span>
+              <span onClick={() => handlePostdialog("likes", item.likes)}>
+                {item?.likes?.length} likes
+              </span>
+              <span onClick={() => handlePostdialog("comments", item.comments)}>
+                {item?.comments?.length} comments
+              </span>
             </div>
             <Postinteraction
               setOpenComments={setOpenComments}
               openComments={openComments}
+              post={item}
+              user={user}
             />
           </div>
           <div className="post-action">
