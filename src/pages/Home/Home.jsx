@@ -3,35 +3,25 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { backendApi } from "../../Api";
+
 import AuthorStatus from "../../components/AuthorStatus/AuthorStatus";
 import HomeUser from "../../components/HomeUser/HomeUser";
-import Navbar from "../../components/Navbar/Navbar";
+
 import Posts from "../../components/posts/posts";
 import { fetchposts } from "../../store/postsSlice";
-import { getUserData } from "../../store/userSlice";
+
 import "./home.styles.scss";
-import queryString from "query-string";
 
 const Home = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state?.posts);
-  const user = useSelector((state) => state?.user);
+  const { user } = useSelector((state) => state?.user);
   useEffect(() => {
     fetchPosts();
   }, [window.location]);
   const fetchPosts = async () => {
     try {
       await dispatch(fetchposts());
-
-      await dispatch(getUserData());
-
-      const { token } = queryString.parse(window.location.search);
-      if (token) {
-        localStorage.setItem("authtoken", token);
-        window.history.pushState({}, "", "/");
-        await dispatch(getUserData());
-      }
     } catch (error) {
       console.log(error);
     }

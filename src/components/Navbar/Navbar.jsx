@@ -14,7 +14,7 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import HomeIcon from "@mui/icons-material/Home";
 const Navbar = () => {
   const [dropDownState, setDropdownState] = useState(false);
-  const userData = useSelector((state) => state.user);
+  const userData = useSelector(({ user }) => user.user);
   const dispatch = useDispatch();
   const menuRef = useRef(null);
 

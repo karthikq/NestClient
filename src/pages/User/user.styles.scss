@@ -1,0 +1,116 @@
+/** @format */
+
+.user-container {
+  max-width: 70%;
+  height: 100%;
+  margin: 0 auto;
+}
+.user-contents {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  gap: 0 0.8rem;
+
+  align-items: center;
+}
+.user-image-container {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  background-color: azure;
+
+  .user-profile-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgb(24, 23, 23);
+  }
+  .user-nav-wrapper {
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+
+    .user-nav {
+      ul {
+        display: flex;
+        gap: 0 1.6rem;
+        font-family: "Open sans", sans-serif;
+        background-color: rgba(15, 15, 15, 0.979);
+        padding: 0.2rem 0.5rem;
+        border-radius: 15px;
+        justify-content: space-around;
+        width: 100%;
+        li {
+          color: rgb(255, 255, 255);
+          padding: 0.4rem 0.6rem;
+          cursor: pointer;
+          font-size: 14px;
+          list-style-type: none;
+          display: flex;
+          align-items: center;
+
+          gap: 0 0.2rem;
+          .user-nav-icon {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.user-details {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+.user-items {
+  width: 80%;
+  margin: 4rem auto;
+  .user-form {
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem 0;
+      .user-form-item {
+        display: flex;
+        flex-direction: column;
+        font-family: "Open sans", sans-serif;
+        label {
+          margin: 8px 0;
+          font-size: 16px;
+          color: #42198f;
+          font-weight: 500;
+        }
+        .change-btn {
+          background-color: #5814d6;
+          color: white;
+          padding: 0.4rem 0.4rem 0.5rem;
+          width: 120px;
+          display: flex;
+          justify-content: center;
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+          &:active {
+            transform: scale(0.95);
+          }
+        }
+      }
+      input {
+        font-family: "Open sans", sans-serif;
+        padding: 0.6rem 0.4rem;
+        box-sizing: border-box;
+        color: black;
+        &::placeholder {
+          color: black;
+        }
+      }
+    }
+  }
+}

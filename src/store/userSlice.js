@@ -5,16 +5,22 @@ import { backendApi } from "../Api";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {},
+  initialState: {
+    user: {},
+    fetchedUser: {},
+  },
   reducers: {
     getUser: (state, action) => {
-      return (state = action.payload);
+      state.user = action.payload;
     },
     createUser: (state, action) => {
-      return (state = action.payload);
+      state.user = action.payload;
     },
     logoutUser: (state, action) => {
-      return (state = {});
+      state.user = {};
+    },
+    updateFecthedUser: (state, action) => {
+      state.fetchedUser = action.payload;
     },
   },
 });
@@ -65,5 +71,17 @@ export function logoutUserData() {
     dispatch(logoutUser());
   };
 }
-export const { getUser, createUser, logoutUser } = userSlice.actions;
+
+export function getUserbyId(userId) {
+  return async function getUserByIdthunk(dispatch) {
+    try {
+      const { data } = await backendApi.get("/user/" + userId);
+      dispatch(updateFecthedUser(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export const { getUser, createUser, logoutUser, updateFecthedUser } =
+  userSlice.actions;
 export default userSlice.reducer;

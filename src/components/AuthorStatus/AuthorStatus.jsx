@@ -37,7 +37,7 @@ const AuthorStatus = () => {
   const [buffer, setBuffer] = useState(0);
   const [uploadedUrl, setUploadedUrl] = useState([]);
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.user);
+  const userData = useSelector(({ user }) => user.user);
   const [items, setItems] = useState({
     files: [],
     urls: [],

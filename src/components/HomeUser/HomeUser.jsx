@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import "./homeuser.styles.scss";
 
 const HomeUser = () => {
-  const user = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
 
   return (
     <div className="homeuser-container">
