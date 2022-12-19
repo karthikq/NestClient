@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./user.styles.scss";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -8,10 +8,21 @@ import CommentIcon from "@mui/icons-material/Comment";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserbyId } from "../../store/userSlice";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { CreateNewFile } from "../../firebase/upload";
 const User = () => {
+  const [changeImage, setChangeImage] = useState(false);
+
   const { id } = useParams();
   const dispatch = useDispatch();
   const fetchedUser = useSelector((state) => state.user.fetchedUser);
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    url: "",
+  });
+  const [imageFile, setImageFile] = useState("");
+
   useEffect(() => {
     fetchUser(id);
   }, [id]);
@@ -23,7 +34,31 @@ const User = () => {
       console.log(error);
     }
   };
-  console.log(fetchedUser);
+
+  useEffect(() => {
+    if (fetchedUser) {
+      setUserData({
+        username: fetchedUser?.username,
+        email: fetchedUser?.email,
+        url: fetchedUser?.url,
+      });
+    }
+  }, [fetchedUser]);
+
+  const handleChangeImage = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+    const localUrl = URL.createObjectURL(file);
+    setUserData(() => ({ ...userData, url: localUrl }));
+  };
+  const formSubmit = (e) => {
+    e.preventDefault();
+    console.log(imageFile);
+    if (imageFile) {
+      const uploadcallback = (url) => {};
+      CreateNewFile(imageFile, imageFile.name, "", "", uploadcallback);
+    }
+  };
   return (
     <div className="user-container">
       <div className="user-contents">
@@ -31,7 +66,7 @@ const User = () => {
           <div className="user-image-container">
             <div className="user-nav-wrapper">
               <div className="user-profile-img">
-                <img src="" alt="err" />
+                <img src={userData && userData.url} alt="err" />
               </div>
               <div className="user-nav">
                 <ul>
@@ -52,21 +87,64 @@ const User = () => {
           </div>
           <div className="user-items">
             <div className="user-form">
-              <form>
+              <form onSubmit={formSubmit}>
                 <div className="user-form-item">
                   <label>Username</label>
-                  <input type="text" placeholder="text" />
+                  <input
+                    type="text"
+                    placeholder="text"
+                    value={userData.username ? userData.username : ""}
+                    onChange={(e) =>
+                      setUserData(() => ({
+                        ...userData,
+                        username: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
-                <div className="user-form-item">
+                <div
+                  className="user-form-item"
+                  style={{ opacity: "0.7", cursor: "not-allowed" }}>
                   <label>Email</label>
-                  <input type="text" placeholder="text" />
+                  <input
+                    type="email"
+                    placeholder="text"
+                    readOnly
+                    value={userData.email ? userData.email : ""}
+                    onChange={(e) =>
+                      setUserData(() => ({
+                        ...userData,
+                        email: e.target.value,
+                      }))
+                    }
+                  />
                 </div>
+
+                {!changeImage ? (
+                  <div className="user-form-item">
+                    <span
+                      className="change-btn"
+                      onClick={() => setChangeImage(!changeImage)}>
+                      Change image
+                    </span>
+                  </div>
+                ) : (
+                  <div className="user-form-item">
+                    <label
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}>
+                      Profile image
+                      <span onClick={() => setChangeImage(false)}>
+                        <CancelIcon className="cancel-icon" /> cancel change
+                      </span>
+                    </label>
+                    <input type="file" onChange={handleChangeImage} />
+                  </div>
+                )}
                 <div className="user-form-item">
-                  <label>Profile image</label>
-                  <input type="file" />
-                </div>
-                <div className="user-form-item">
-                  <span className="change-btn">Change image</span>
+                  <button>Submit</button>
                 </div>
               </form>
             </div>

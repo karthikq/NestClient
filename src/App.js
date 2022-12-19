@@ -12,13 +12,13 @@ import Auth from "./pages/Auth/Auth";
 import User from "./pages/User/User";
 import { useDispatch } from "react-redux";
 import { getUserData } from "./store/userSlice";
-import { querystring } from "@firebase/util";
+import querystring from "query-string";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [window.location]);
   const fetchUser = async () => {
     await dispatch(getUserData());
 

@@ -76,6 +76,7 @@ export function getUserbyId(userId) {
   return async function getUserByIdthunk(dispatch) {
     try {
       const { data } = await backendApi.get("/user/" + userId);
+      console.log(data);
       dispatch(updateFecthedUser(data));
     } catch (error) {
       console.log(error);
