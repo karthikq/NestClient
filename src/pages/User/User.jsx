@@ -7,12 +7,15 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserbyId } from "../../store/userSlice";
+import { getUserbyId, updateUserdata } from "../../store/userSlice";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { CreateNewFile } from "../../firebase/upload";
+import CustomrLottie from "../../components/Lottie/Lottie";
+import { async } from "@firebase/util";
+import toast from "react-hot-toast";
 const User = () => {
   const [changeImage, setChangeImage] = useState(false);
-
+  const [isUpdating, setisUpdating] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
   const fetchedUser = useSelector((state) => state.user.fetchedUser);
@@ -51,16 +54,43 @@ const User = () => {
     const localUrl = URL.createObjectURL(file);
     setUserData(() => ({ ...userData, url: localUrl }));
   };
+  const cb = (val) => {
+    setisUpdating(false);
+    setChangeImage(false);
+    if (val === 1) {
+      toast.success("Your data has been updated");
+    }
+  };
+
   const formSubmit = (e) => {
     e.preventDefault();
-    console.log(imageFile);
+    if (
+      userData.username === fetchedUser.username &&
+      userData.url === fetchedUser.url
+    ) {
+      toast.error("Nothing to update");
+      return setisUpdating(false);
+    }
+    setisUpdating(true);
     if (imageFile) {
-      const uploadcallback = (url) => {};
+      const uploadcallback = async (url) => {
+        if (url) {
+          const newData = userData;
+          newData.url = url;
+
+          await dispatch(updateUserdata(id, newData, cb));
+        }
+      };
       CreateNewFile(imageFile, imageFile.name, "", "", uploadcallback);
     }
   };
   return (
     <div className="user-container">
+      {isUpdating && (
+        <div className="loader-wrapper ">
+          <CustomrLottie />
+        </div>
+      )}
       <div className="user-contents">
         <div className="user-details">
           <div className="user-image-container">

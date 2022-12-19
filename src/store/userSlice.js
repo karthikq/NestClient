@@ -22,6 +22,9 @@ const userSlice = createSlice({
     updateFecthedUser: (state, action) => {
       state.fetchedUser = action.payload;
     },
+    updateUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -83,6 +86,28 @@ export function getUserbyId(userId) {
     }
   };
 }
-export const { getUser, createUser, logoutUser, updateFecthedUser } =
-  userSlice.actions;
+
+export function updateUserdata(userId, userData, cb) {
+  return async function updateUserthunk(dispatch) {
+    console.log(userId, userData);
+    try {
+      const { data } = await backendApi.patch("/user/" + userId, userData);
+
+      dispatch(updateUser(data));
+      dispatch(updateFecthedUser(data));
+      cb(1);
+    } catch (error) {
+      cb(-1);
+      console.log(error);
+    }
+  };
+}
+
+export const {
+  getUser,
+  createUser,
+  logoutUser,
+  updateFecthedUser,
+  updateUser,
+} = userSlice.actions;
 export default userSlice.reducer;
