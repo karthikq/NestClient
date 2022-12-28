@@ -62,18 +62,16 @@ const Navbar = () => {
                   </Link>
                 </li>
               )}
-              <li>
-                <Link
-                  to="/create/post"
-                  onClick={() => setDropdownState(!dropDownState)}>
-                  <AddIcon className="dropdown-list_icon" /> Create post
-                </Link>
-              </li>
-              <li>
-                <Link to="" onClick={() => setDropdownState(!dropDownState)}>
-                  <SettingsIcon className="dropdown-list_icon" /> Settings
-                </Link>
-              </li>
+
+              {userData?.userId && (
+                <li>
+                  <Link
+                    to={"/user/" + userData.userId}
+                    onClick={() => setDropdownState(!dropDownState)}>
+                    <SettingsIcon className="dropdown-list_icon" /> Settings
+                  </Link>
+                </li>
+              )}
               <li>
                 {!userData.username ? (
                   <Link
