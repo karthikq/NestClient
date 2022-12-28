@@ -1,7 +1,7 @@
 /** @format */
 
 .post-container {
-  width: 92%;
+  width: 90%;
   height: 100%;
   box-sizing: border-box;
 }
@@ -12,8 +12,8 @@
   margin-bottom: 25px;
 
   background: #fff;
-  padding: 0 3.2rem;
-  padding-right: 3.5rem;
+  padding: 0.5rem 3rem;
+  padding-right: 5rem;
   border-radius: 15px;
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   border: 2px solid rgba(255, 255, 255, 0.336);
@@ -61,12 +61,14 @@
   align-items: flex-start;
   gap: 0 0.7rem;
   color: white;
+  position: relative;
+  bottom: 9px;
 }
 .author .author-image {
-  width: 42px;
-  height: 42px;
+  width: 43px;
+  height: 43px;
 
-  border-radius: 50%;
+  border-radius: 10px;
 }
 
 .author-name {

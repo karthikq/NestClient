@@ -3,6 +3,7 @@
 import { Avatar } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "./homeuser.styles.scss";
 
 const HomeUser = () => {
@@ -13,7 +14,10 @@ const HomeUser = () => {
       <div className="homeuser-contents">
         <div className="homeuser-image">
           <div className="homeuser-avatar">
-            <Avatar src={user.url} sx={{ width: 40, height: 40 }} />
+            <Avatar
+              src={user.url}
+              style={{ width: 43, height: 43, borderRadius: 10 }}
+            />
           </div>
         </div>
         <div className="homeuser-details">
@@ -32,7 +36,7 @@ const HomeUser = () => {
           </div>
         </div>
         <div className="homeuser-link">
-          <a href="/user">My Profile</a>
+          <Link to={"/user/" + user.userId + "#post"}>My Profile</Link>
         </div>
       </div>
     </div>

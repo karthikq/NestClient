@@ -66,7 +66,7 @@ const Navbar = () => {
               {userData?.userId && (
                 <li>
                   <Link
-                    to={"/user/" + userData.userId}
+                    to={"/user/" + userData.userId + "#settings"}
                     onClick={() => setDropdownState(!dropDownState)}>
                     <SettingsIcon className="dropdown-list_icon" /> Settings
                   </Link>

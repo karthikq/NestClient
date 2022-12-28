@@ -4,9 +4,10 @@ import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { loginuserdata } from "../../store/userSlice";
+import UserLottie from "../Lottie/UserLottie";
 import listenForOutsideClicks from "../Navbar/listenForOutsideClicks";
 import "./postdialogbox.styles.scss";
-
+import Timeago from "react-timeago";
 const PostDialogbox = ({ item, postDialog, setPostDialog }) => {
   const menuRef = useRef();
   console.log(item);
@@ -25,16 +26,26 @@ const PostDialogbox = ({ item, postDialog, setPostDialog }) => {
     <div className="postdialogbox-wrapper" onClick={handleOutsideclick}>
       <div ref={menuRef} className="postdialogbox-contents">
         <div className="postdialogbox-box">
-          {item.map((list) => (
-            <a href={"/user/" + list.user.userId}>
-              <div className="postdialogbox-item">
-                <Avatar src={list.user.url} style={{ width: 40, height: 40 }} />
-                <div>
-                  <span>{list.user.username}</span>
+          {item.length > 0 ? (
+            item.map((list) => (
+              <a href={"/user/" + list.user.userId + "#settings"}>
+                <div className="postdialogbox-item">
+                  <Avatar
+                    src={list.user.url}
+                    style={{ width: 43, height: 43, borderRadius: 10 }}
+                  />
+                  <div className="postdialog-items-list">
+                    <span>{list.user.username}</span>
+                    <span>
+                      <Timeago date={new Date(list?.date && list.date)} />
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            ))
+          ) : (
+            <UserLottie />
+          )}
         </div>
       </div>
     </div>

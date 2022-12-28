@@ -156,7 +156,10 @@ const AuthorStatus = () => {
             ? "author-status-contents author-no-status"
             : "author-status-contents"
         }>
-        <Avatar src={userData?.url ? userData.url : ""} />
+        <Avatar
+          src={userData?.url ? userData.url : ""}
+          style={{ borderRadius: "10px" }}
+        />
         <form onSubmit={handleFormSubmit}>
           <input
             type="text"

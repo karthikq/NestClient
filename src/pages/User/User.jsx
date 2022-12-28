@@ -11,10 +11,12 @@ import { getUserbyId, updateUserdata } from "../../store/userSlice";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { CreateNewFile } from "../../firebase/upload";
 import CustomrLottie from "../../components/Lottie/Lottie";
-import { async } from "@firebase/util";
+
 import toast from "react-hot-toast";
 import UserLottie from "../../components/Lottie/UserLottie";
 import Useractions from "../../components/Useractions/Useractions";
+import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 const User = () => {
   const [changeImage, setChangeImage] = useState(false);
   const [isUpdating, setisUpdating] = useState(false);
@@ -93,6 +95,7 @@ const User = () => {
       setLocationHash(window.location.hash.split("#")[1]);
     }
   }, [window.location.hash]);
+
   return (
     <div className="user-container">
       {isUpdating && (
@@ -103,6 +106,9 @@ const User = () => {
       <div className="user-contents">
         <div className="user-details">
           <div className="user-image-container">
+            <div className="user-bgimage">
+              <img src={"https://picsum.photos/800/200"} alt="bgimage" />
+            </div>
             <div className="user-nav-wrapper">
               <div className="user-profile-img">
                 <img src={userData && userData.url} alt="err" />
@@ -110,25 +116,29 @@ const User = () => {
               <div className="user-nav">
                 <ul>
                   <Link to="#settings">
-                    <li>
+                    <li
+                      className={
+                        locationHash === "settings" ? "li-active" : ""
+                      }>
                       <SettingsIcon className="user-nav-icon" />
                       Setting's
                     </li>
                   </Link>
                   <Link to="#liked">
-                    <li>
-                      <FavoriteIcon className="user-nav-icon" /> Liked posts
+                    <li className={locationHash === "liked" ? "li-active" : ""}>
+                      <FavoriteIcon className="user-nav-icon" /> Liked
                     </li>
                   </Link>
                   <Link to="#comment">
-                    <li>
+                    <li
+                      className={locationHash === "comment" ? "li-active" : ""}>
                       <CommentIcon className="user-nav-icon" />
                       Comments
                     </li>
                   </Link>{" "}
                   <Link to="#post">
-                    <li>
-                      <CommentIcon className="user-nav-icon" />
+                    <li className={locationHash === "post" ? "li-active" : ""}>
+                      <DynamicFeedIcon className="user-nav-icon" />
                       posts
                     </li>
                   </Link>
@@ -177,7 +187,7 @@ const User = () => {
                       <span
                         className="change-btn"
                         onClick={() => setChangeImage(!changeImage)}>
-                        Change image
+                        Change profile image
                       </span>
                     </div>
                   ) : (
@@ -206,7 +216,9 @@ const User = () => {
               {locationHash === "liked" && (
                 <div>
                   {fetchedUser?.likes?.length > 0 ? (
-                    ""
+                    fetchedUser?.likes.map((item) => (
+                      <Useractions item={item.post} key={item.id} />
+                    ))
                   ) : (
                     <>
                       <UserLottie />
@@ -228,7 +240,15 @@ const User = () => {
               {locationHash === "comment" && (
                 <div>
                   {fetchedUser?.comments?.length > 0 ? (
-                    ""
+                    fetchedUser?.comments
+                      ?.filter(
+                        (value, index, self) =>
+                          index ===
+                          self.findIndex((t) => t.post.id === value.post.id)
+                      )
+                      .map((item) => (
+                        <Useractions item={item.post} key={item.id} />
+                      ))
                   ) : (
                     <>
                       <UserLottie />
@@ -250,7 +270,9 @@ const User = () => {
               {locationHash === "post" && (
                 <div>
                   {fetchedUser?.posts?.length > 0 ? (
-                    <Useractions data={fetchedUser?.posts} />
+                    fetchedUser.posts.map((item) => (
+                      <Useractions item={item} key={item.id} />
+                    ))
                   ) : (
                     <>
                       <UserLottie />
