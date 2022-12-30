@@ -13,6 +13,7 @@ import TimeAgo from "react-timeago";
 import PostDialogbox from "../PostDialogbox/PostDialogbox";
 import { useContext } from "react";
 import { Usercontextobj } from "../context/Usercontext";
+import PostAction from "../PostActions/PostAction";
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
   const [postDialog, setPostDialog] = useState({
@@ -91,12 +92,15 @@ const Posts = ({ item, user }) => {
                 {item?.comments?.length} comments
               </span>
             </div>
-            <Postinteraction
-              setOpenComments={setOpenComments}
-              openComments={openComments}
-              post={item}
-              user={user}
-            />
+            <div className="post-useraction">
+              <Postinteraction
+                setOpenComments={setOpenComments}
+                openComments={openComments}
+                post={item}
+                user={user}
+              />
+              <PostAction post={item} />
+            </div>
           </div>
           <div className="post-action">
             <Postdropdown />

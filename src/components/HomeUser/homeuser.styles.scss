@@ -20,6 +20,14 @@
   background-color: black;
   width: 100%;
   position: relative;
+  border-radius: 10px 10px 0 0;
+  .homeuser-bgimage {
+    width: 100%;
+    img {
+      border-radius: 10px 10px 0 0;
+      object-fit: cover;
+    }
+  }
 }
 .homeuser-avatar {
   position: absolute;
@@ -29,11 +37,11 @@
 }
 .homeuser-details {
   margin-top: 10px;
-  color: #5e0ef3;
+  color: #590aee;
   font-family: "Open Sans", sans-serif;
   text-align: center;
   p {
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 3px;
     font-size: 18px;
   }
@@ -79,8 +87,10 @@
   a {
     text-decoration: none;
     color: rgb(10, 10, 10);
+    font-weight: 400;
     &:hover {
       color: #5814d6;
+      text-decoration: underline;
     }
   }
 }

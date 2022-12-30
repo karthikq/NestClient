@@ -1,15 +1,27 @@
 /** @format */
 .nav {
   display: flex;
-  justify-content: space-between;
-  max-width: 1000px;
-  margin: 0 auto;
+  justify-content: flex-end;
+
   align-items: center;
   padding: 1rem 0;
   height: 50px;
+  width: 90%;
+  margin: 1rem auto;
+  box-sizing: border-box;
 }
 .profile-nav {
   position: relative;
+}
+@media screen and (max-width: 1024px) {
+  .nav {
+    position: relative;
+    right: 0rem;
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+  }
 }
 
 .profile-dropdown {

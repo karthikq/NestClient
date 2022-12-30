@@ -18,6 +18,9 @@ const postsSlice = createSlice({
         return item.id === action.payload.id ? action.payload : item;
       });
     },
+    deletePost: (state, action) => {
+      return state.filter((el) => el.postId !== action.payload);
+    },
   },
 });
 
@@ -79,5 +82,18 @@ export function likePost(postId) {
     }
   };
 }
-export const { getPosts, createPost, updatePost } = postsSlice.actions;
+
+export function deletePostReducer(postId) {
+  return async function deletePostthunk(dispatch) {
+    try {
+      await backendApi.delete("/post/" + postId);
+
+      dispatch(deletePost(postId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export const { getPosts, createPost, updatePost, deletePost } =
+  postsSlice.actions;
 export default postsSlice.reducer;

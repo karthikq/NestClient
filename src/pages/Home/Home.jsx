@@ -48,7 +48,6 @@ const Home = () => {
             ))}
         </div>
       </div>
-      <div className="home-userdetails"></div>
     </div>
   );
 };

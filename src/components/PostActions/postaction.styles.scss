@@ -1,0 +1,30 @@
+/** @format */
+
+.post-edit-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 0.55rem;
+  position: relative;
+  top: 0.5rem;
+}
+
+.post-action-icon {
+  background-color: rgba(97, 96, 96, 0.164);
+  border-radius: 50%;
+  padding: 0.4rem;
+  color: rgba(0, 0, 0, 0.795);
+  font-size: 1.35rem !important;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  &:active {
+    transform: scale(0.9);
+  }
+}
+.post-deleteicon,
+.post-editicon {
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+}

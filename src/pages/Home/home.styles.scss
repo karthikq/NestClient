@@ -4,11 +4,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap");
 
 .home-container {
-  width: 90%;
+  width: 95%;
+
   margin: 0 auto;
   display: flex;
   gap: 0 1rem;
+  box-sizing: border-box;
 }
 .home-center {
-  width: 58%;
+  width: 75%;
+}
+.home-userdetails {
+  width: 20%;
+  height: 600px;
+  background-color: white;
+}
+@media screen and (max-width: 1024px) {
+  .home-user_details {
+    display: none;
+  }
+  .home-center {
+    width: 100%;
+    max-width: 100%;
+  }
 }

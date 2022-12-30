@@ -34,6 +34,10 @@ const User = () => {
 
   useEffect(() => {
     fetchUser(id);
+    setisUpdating(true);
+    setTimeout(() => {
+      setisUpdating(false);
+    }, 1000);
   }, [id]);
 
   const fetchUser = async (id) => {

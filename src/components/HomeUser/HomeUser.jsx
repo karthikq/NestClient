@@ -28,10 +28,18 @@ const HomeUser = () => {
     <div className="homeuser-container">
       <div className="homeuser-contents">
         <div className="homeuser-image">
+          <div className="homeuser-bgimage">
+            <img src={"https://picsum.photos/320/100"} alt="bgimage" />
+          </div>
           <div className="homeuser-avatar">
             <Avatar
               src={userDetails.url}
-              style={{ width: 43, height: 43, borderRadius: 10 }}
+              style={{
+                width: 45,
+                height: 45,
+                borderRadius: 10,
+                boxShadow: "0px 10px 20px rgb(0,0,0,0.15)",
+              }}
             />
           </div>
         </div>
