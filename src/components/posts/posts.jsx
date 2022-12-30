@@ -11,6 +11,8 @@ import { Avatar } from "@mui/material";
 import Postdropdown from "../postdropdown/Postdropdown";
 import TimeAgo from "react-timeago";
 import PostDialogbox from "../PostDialogbox/PostDialogbox";
+import { useContext } from "react";
+import { Usercontextobj } from "../context/Usercontext";
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
   const [postDialog, setPostDialog] = useState({
@@ -18,6 +20,7 @@ const Posts = ({ item, user }) => {
     data: [],
   });
   const ref = useRef();
+  const updateSelUser = useContext(Usercontextobj);
 
   useEffect(() => {
     function handleClickoutside(e) {
@@ -35,7 +38,6 @@ const Posts = ({ item, user }) => {
   let parsedImage = imagelist && imagelist.map((el) => JSON.parse(el));
 
   const handlePostdialog = (state, items) => {
-    console.log(item);
     setPostDialog({
       state: state,
       data: items,
@@ -61,7 +63,11 @@ const Posts = ({ item, user }) => {
           </div>
           <div className="post-details">
             <div>
-              <p className="author-name">{item.user.username}</p>
+              <p
+                className="author-name"
+                onClick={() => updateSelUser.setValue(item.user)}>
+                {item.user.username}
+              </p>
               <span className="post-duration">
                 <TimeAgo date={new Date(item.created_at)} />
               </span>

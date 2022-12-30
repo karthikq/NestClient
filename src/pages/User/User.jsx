@@ -23,6 +23,7 @@ const User = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const fetchedUser = useSelector((state) => state.user.fetchedUser);
+  const { user } = useSelector((state) => state.user);
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -115,27 +116,36 @@ const User = () => {
               </div>
               <div className="user-nav">
                 <ul>
-                  <Link to="#settings">
-                    <li
-                      className={
-                        locationHash === "settings" ? "li-active" : ""
-                      }>
-                      <SettingsIcon className="user-nav-icon" />
-                      Setting's
-                    </li>
-                  </Link>
-                  <Link to="#liked">
-                    <li className={locationHash === "liked" ? "li-active" : ""}>
-                      <FavoriteIcon className="user-nav-icon" /> Liked
-                    </li>
-                  </Link>
-                  <Link to="#comment">
-                    <li
-                      className={locationHash === "comment" ? "li-active" : ""}>
-                      <CommentIcon className="user-nav-icon" />
-                      Comments
-                    </li>
-                  </Link>{" "}
+                  {user.userId === fetchedUser.userId && (
+                    <>
+                      <Link to="#settings">
+                        <li
+                          className={
+                            locationHash === "settings" ? "li-active" : ""
+                          }>
+                          <SettingsIcon className="user-nav-icon" />
+                          Setting's
+                        </li>
+                      </Link>
+                      <Link to="#liked">
+                        <li
+                          className={
+                            locationHash === "liked" ? "li-active" : ""
+                          }>
+                          <FavoriteIcon className="user-nav-icon" /> Liked
+                        </li>
+                      </Link>
+                      <Link to="#comment">
+                        <li
+                          className={
+                            locationHash === "comment" ? "li-active" : ""
+                          }>
+                          <CommentIcon className="user-nav-icon" />
+                          Comments
+                        </li>
+                      </Link>{" "}
+                    </>
+                  )}
                   <Link to="#post">
                     <li className={locationHash === "post" ? "li-active" : ""}>
                       <DynamicFeedIcon className="user-nav-icon" />
@@ -147,71 +157,72 @@ const User = () => {
             </div>{" "}
           </div>
           <div className="user-items">
-            {locationHash === "settings" && (
-              <div className="user-form">
-                <form onSubmit={formSubmit}>
-                  <div className="user-form-item">
-                    <label>Username</label>
-                    <input
-                      type="text"
-                      placeholder="text"
-                      value={userData.username ? userData.username : ""}
-                      onChange={(e) =>
-                        setUserData(() => ({
-                          ...userData,
-                          username: e.target.value,
-                        }))
-                      }
-                    />
-                  </div>
-                  <div
-                    className="user-form-item"
-                    style={{ opacity: "0.7", cursor: "not-allowed" }}>
-                    <label>Email</label>
-                    <input
-                      type="email"
-                      placeholder="text"
-                      readOnly
-                      value={userData.email ? userData.email : ""}
-                      onChange={(e) =>
-                        setUserData(() => ({
-                          ...userData,
-                          email: e.target.value,
-                        }))
-                      }
-                    />
-                  </div>
-
-                  {!changeImage ? (
+            {user.userId === fetchedUser.userId &&
+              locationHash === "settings" && (
+                <div className="user-form">
+                  <form onSubmit={formSubmit}>
                     <div className="user-form-item">
-                      <span
-                        className="change-btn"
-                        onClick={() => setChangeImage(!changeImage)}>
-                        Change profile image
-                      </span>
+                      <label>Username</label>
+                      <input
+                        type="text"
+                        placeholder="text"
+                        value={userData.username ? userData.username : ""}
+                        onChange={(e) =>
+                          setUserData(() => ({
+                            ...userData,
+                            username: e.target.value,
+                          }))
+                        }
+                      />
                     </div>
-                  ) : (
-                    <div className="user-form-item">
-                      <label
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}>
-                        Profile image
-                        <span onClick={() => setChangeImage(false)}>
-                          <CancelIcon className="cancel-icon" /> cancel change
+                    <div
+                      className="user-form-item"
+                      style={{ opacity: "0.7", cursor: "not-allowed" }}>
+                      <label>Email</label>
+                      <input
+                        type="email"
+                        placeholder="text"
+                        readOnly
+                        value={userData.email ? userData.email : ""}
+                        onChange={(e) =>
+                          setUserData(() => ({
+                            ...userData,
+                            email: e.target.value,
+                          }))
+                        }
+                      />
+                    </div>
+
+                    {!changeImage ? (
+                      <div className="user-form-item">
+                        <span
+                          className="change-btn"
+                          onClick={() => setChangeImage(!changeImage)}>
+                          Change profile image
                         </span>
-                      </label>
-                      <input type="file" onChange={handleChangeImage} />
-                    </div>
-                  )}
+                      </div>
+                    ) : (
+                      <div className="user-form-item">
+                        <label
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}>
+                          Profile image
+                          <span onClick={() => setChangeImage(false)}>
+                            <CancelIcon className="cancel-icon" /> cancel change
+                          </span>
+                        </label>
+                        <input type="file" onChange={handleChangeImage} />
+                      </div>
+                    )}
 
-                  <div className="user-form-item">
-                    <button>Update</button>
-                  </div>
-                </form>
-              </div>
-            )}{" "}
+                    <div className="user-form-item">
+                      <button>Update</button>
+                    </div>
+                  </form>
+                </div>
+              )}{" "}
             <div className="useractions-wrapper">
               {locationHash === "liked" && (
                 <div>
