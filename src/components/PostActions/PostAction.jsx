@@ -9,8 +9,10 @@ import { deletePostReducer } from "../../store/postsSlice";
 import { toast } from "react-hot-toast";
 import { Backdrop } from "@mui/material";
 import { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
-const PostAction = ({ post }) => {
+const PostAction = ({ post, setEditState, editState,handleUpload }) => {
   const dispatch = useDispatch();
   const [deleteState, setDeleteState] = useState(false);
   const handleDelete = (postId) => {
@@ -33,7 +35,8 @@ const PostAction = ({ post }) => {
               borderRadius: 5,
               border: 0,
               cursor: "pointer",
-            }}>
+            }}
+          >
             Yes
           </button>{" "}
           <button
@@ -48,7 +51,8 @@ const PostAction = ({ post }) => {
               borderRadius: 5,
               border: 0,
               cursor: "pointer",
-            }}>
+            }}
+          >
             No
           </button>{" "}
         </span>
@@ -66,9 +70,23 @@ const PostAction = ({ post }) => {
         open={deleteState}
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}></Backdrop>
-      <EditIcon className="post-editicon post-action-icon" />
-      <DeleteOutlineIcon
+        }}
+      ></Backdrop>
+      {editState && (
+        <FileUploadIcon titleAccess="upload changes" className="post-editicon post-action-icon" onClick={()=>handleUpload()} />
+      )}
+      {editState ? (
+        <CloseIcon
+          className="post-editicon post-action-icon" titleAccess="Cancel Edit"
+          onClick={() => setEditState(false)}
+        />
+      ) : (
+        <EditIcon
+          className="post-editicon post-action-icon" titleAccess="Edit Post"
+          onClick={() => setEditState(true)}
+        />
+      )}
+      <DeleteOutlineIcon titleAccess="Delete Post"
         onClick={() => handleDelete(post.postId)}
         className="post-deleteicon post-action-icon"
       />

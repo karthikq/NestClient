@@ -15,7 +15,7 @@ const postsSlice = createSlice({
     },
     updatePost: (state, action) => {
       return state.map((item) => {
-        return item.id === action.payload.id ? action.payload : item;
+        return item.postId === action.payload.postId ? action.payload : item;
       });
     },
     deletePost: (state, action) => {
@@ -75,7 +75,7 @@ export function likePost(postId) {
   return async function likePostthunk(dispatch) {
     try {
       const { data } = await backendApi.patch("/like/post/" + postId);
-      console.log(data);
+
       dispatch(updatePost(data));
     } catch (error) {
       console.log(error);
@@ -89,6 +89,17 @@ export function deletePostReducer(postId) {
       await backendApi.delete("/post/" + postId);
 
       dispatch(deletePost(postId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function EditPost(postId, postData) {
+  return async function editpostThunk(dispatch) {
+    try {
+      const {data} = await backendApi.patch("/post/" + postId, postData);
+      console.log(data);
+      dispatch(updatePost(data));
     } catch (error) {
       console.log(error);
     }

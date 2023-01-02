@@ -12,7 +12,7 @@ const CustomDialog = ({ setOpen, setItems, open }) => {
   const [localUrl, setLocalUrl] = useState("");
 
   const handleFile = (file) => {
-    console.log(file);
+    
     setFile(file);
     setFileName(file.name);
 

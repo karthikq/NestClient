@@ -49,10 +49,25 @@
   margin: 18px 0;
 }
 .post-text {
-  margin-top: 10px;
+  margin-top: 12px;
   margin-bottom: 4px;
   @media screen and (max-width: 1024px) {
     margin-top: 25px;
+  }
+  input {
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    border: 2px solid rgba(110, 34, 250, 0.199);
+    width: 90%;
+    outline: 0;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);  font-family: "Open Sans", sans-serif;
+    font-weight:500;
+    &:active {
+      border: 2px solid rgba(110, 34, 250, 0.527);
+    }
+    &:focus {
+      border: 2px solid rgba(110, 34, 250, 0.548);
+    }
   }
 }
 .post-title {

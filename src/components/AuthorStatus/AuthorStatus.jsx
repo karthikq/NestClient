@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPostdata, fetchposts } from "../../store/postsSlice";
 import CustomrLottie from "../Lottie/Lottie";
 import ErrorIcon from "@mui/icons-material/Error";
+import UploadedFiles from "../UploadedFiles/Uploadedfiles";
 
 const AuthorStatus = () => {
   const [openDialogbox, setOpenDialogBox] = useState({
@@ -195,26 +196,7 @@ const AuthorStatus = () => {
             : "Uploading please wait..."}
         </p>
       )}
-      <div className="uploaded-items-wrapper">
-        {items?.names?.map((item, index) => (
-          <div className="uploaded-item ">
-            <div className="upload-progress-status"></div>
-            <div className="uploaded-checkicon">
-              <img src="https://i.ibb.co/9YWkXTT/accept.png" alt="tickmark" />
-            </div>
-            <img className="uploaded-img" src={items?.urls[index]} alt="err" />
-            <div className="uploaded-item-details">
-              {activeClose && (
-                <CloseIcon
-                  className="cancel-upload-icon"
-                  onClick={() => handleRemove(index)}
-                />
-              )}
-              <p>{item.substring(0, 18)}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <UploadedFiles items={items} handleRemove={handleRemove} activeClose={true} />
     </div>
   );
 };

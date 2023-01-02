@@ -14,14 +14,24 @@ import PostDialogbox from "../PostDialogbox/PostDialogbox";
 import { useContext } from "react";
 import { Usercontextobj } from "../context/Usercontext";
 import PostAction from "../PostActions/PostAction";
+import UploadedFiles from "../UploadedFiles/Uploadedfiles";
+import { useDispatch } from "react-redux";
+import { EditPost } from "../../store/postsSlice";
+
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
   const [postDialog, setPostDialog] = useState({
     state: "",
     data: [],
   });
+  const [editState, setEditState] = useState(false);
+  const [editPostData, setEditPostData] = useState({});
+  const [activeClose, setactiveClose] = useState(true);
+  const [uploadedImages, setUploadedImages] = useState({});
+
   const ref = useRef();
   const updateSelUser = useContext(Usercontextobj);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     function handleClickoutside(e) {
@@ -34,9 +44,16 @@ const Posts = ({ item, user }) => {
       document.removeEventListener("click", handleClickoutside);
     };
   }, []);
-  let imagelist = item.images.length > 0 && item.images;
 
-  let parsedImage = imagelist && imagelist.map((el) => JSON.parse(el));
+  useEffect(() => {
+    if (editState) {
+      setEditPostData({
+        title: item.title,
+        images: item.images,
+      });
+      setUploadedImages(item.images);
+    }
+  }, [editState]);
 
   const handlePostdialog = (state, items) => {
     setPostDialog({
@@ -44,6 +61,35 @@ const Posts = ({ item, user }) => {
       data: items,
     });
   };
+
+  const handleRemove = (itemIndex) => {
+    const newUrls = editPostData.images.filter(
+      (item, index) => index !== itemIndex
+    );
+    const newNames = editPostData.images.filter(
+      (item, index) => index !== itemIndex
+    );
+
+    setUploadedImages({
+      urls: newUrls,
+      names: newNames,
+    });
+    console.log(uploadedImages);
+  };
+
+  let imagelist = editState
+    ? uploadedImages.length > 0 && uploadedImages
+    : item.images.length > 0 && item.images;
+  let parsedImage = imagelist && imagelist.map((el) => JSON.parse(el));
+
+  const handleUpload = async () => {
+    const data = {
+      title: editPostData.title,
+      images: uploadedImages.length > 0 ? uploadedImages : [],
+    };
+    dispatch(EditPost(item.postId, data));
+  };
+
   return (
     <div ref={ref} className="post-container">
       {postDialog.state && (
@@ -66,7 +112,8 @@ const Posts = ({ item, user }) => {
             <div>
               <p
                 className="author-name"
-                onClick={() => updateSelUser.setValue(item.user)}>
+                onClick={() => updateSelUser.setValue(item.user)}
+              >
                 {item.user.username}
               </p>
               <span className="post-duration">
@@ -75,13 +122,31 @@ const Posts = ({ item, user }) => {
             </div>
 
             <div className="post-text">
-              <h2 className="post-title">{item.title}</h2>
+              {editState ? (
+                <input
+                  value={editPostData ? editPostData.title : ""}
+                  placeholder="text"
+                  onChange={(e) =>
+                    setEditPostData({ ...editPostData, title: e.target.value })
+                  }
+                />
+              ) : (
+                <h2 className="post-title">{item.title}</h2>
+              )}
               <span className="post-createdate"></span>
               <span className="post-update"></span>
             </div>
 
             <div className="post-image-wrapper">
-              <Slider images={parsedImage} />
+              {editState ? (
+                <UploadedFiles
+                  items={parsedImage}
+                  handleRemove={handleRemove}
+                  editState={true} setUploadedImages={setUploadedImages}
+                />
+              ) : (
+                <Slider images={parsedImage} />
+              )}
             </div>
 
             <div className="post-likes-wrapper">
@@ -99,7 +164,12 @@ const Posts = ({ item, user }) => {
                 post={item}
                 user={user}
               />
-              <PostAction post={item} />
+              <PostAction
+                post={item}
+                setEditState={setEditState}
+                editState={editState}
+                handleUpload={handleUpload} 
+              />
             </div>
           </div>
           <div className="post-action">
@@ -107,7 +177,7 @@ const Posts = ({ item, user }) => {
           </div>
         </div>
         {openComments && (
-          <Comments item={item} user={user} openComments={openComments} />
+          <Comments item={item} user={user} openComments={openComments}  />
         )}
       </div>
     </div>

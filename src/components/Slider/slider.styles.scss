@@ -1,19 +1,18 @@
 /** @format */
 
 .post-image {
-  height: 100%;
   width: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  height: 360px;
+  aspect-ratio: 16/9;
 }
+
 .image-wrapper {
   position: relative;
-  padding-top: 56.25%;
+  height: 80%;
 }
+
 .myswiper {
   width: 100% !important;
-  max-height: 280px !important;
+  height: 60%;
   border-radius: 15px !important;
 }
