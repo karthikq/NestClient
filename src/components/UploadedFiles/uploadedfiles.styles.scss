@@ -103,8 +103,8 @@
   align-items: center;
   gap: 0 1rem;
   .add-icon {
-    background-color: rgb(238, 238, 238);
-    color: rgba(20, 20, 20, 0.897);
+    background-color: rgba(238, 238, 238, 0.76);
+    color: #5814d6;
     padding: 0.5rem;
     border-radius: 50%;
     cursor: pointer;
@@ -118,4 +118,9 @@
       transform: scale(0.95);
     }
   }
+}
+.edit-post-contents {
+  display: flex;
+  align-items: center;
+  gap: 0 1rem;
 }
