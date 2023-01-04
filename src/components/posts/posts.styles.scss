@@ -5,7 +5,13 @@
   height: 100%;
   box-sizing: border-box;
 }
-
+.update-lottie {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+}
 .post-contents {
   margin-top: 25px;
   width: 100%;
@@ -60,8 +66,9 @@
     border: 2px solid rgba(110, 34, 250, 0.199);
     width: 90%;
     outline: 0;
-    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);  font-family: "Open Sans", sans-serif;
-    font-weight:500;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    font-family: "Open Sans", sans-serif;
+    font-weight: 500;
     &:active {
       border: 2px solid rgba(110, 34, 250, 0.527);
     }

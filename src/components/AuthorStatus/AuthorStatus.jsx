@@ -148,7 +148,8 @@ const AuthorStatus = () => {
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}>
+        }}
+      >
         <CircularProgress color="inherit" />
       </Backdrop>
       <div
@@ -156,7 +157,8 @@ const AuthorStatus = () => {
           contentErr && userstatus.length === 0
             ? "author-status-contents author-no-status"
             : "author-status-contents"
-        }>
+        }
+      >
         <Avatar
           src={userData?.url ? userData.url : ""}
           style={{ borderRadius: "10px" }}
@@ -196,7 +198,11 @@ const AuthorStatus = () => {
             : "Uploading please wait..."}
         </p>
       )}
-      <UploadedFiles items={items} handleRemove={handleRemove} activeClose={true} />
+      <UploadedFiles
+        items={items}
+        handleRemove={handleRemove}
+        activeClose={true}
+      />
     </div>
   );
 };

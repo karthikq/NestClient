@@ -12,7 +12,14 @@ import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 
-const PostAction = ({ post, setEditState, editState,handleUpload }) => {
+const PostAction = ({
+  post,
+  setEditState,
+  editState,
+  handleUpload,
+  submitState,
+  setSubmitState,
+}) => {
   const dispatch = useDispatch();
   const [deleteState, setDeleteState] = useState(false);
   const handleDelete = (postId) => {
@@ -73,20 +80,34 @@ const PostAction = ({ post, setEditState, editState,handleUpload }) => {
         }}
       ></Backdrop>
       {editState && (
-        <FileUploadIcon titleAccess="upload changes" className="post-editicon post-action-icon" onClick={()=>handleUpload()} />
+        <FileUploadIcon
+          titleAccess="upload changes"
+          className={
+            submitState
+              ? "post-editicon post-action-icon post-upload-icon btn-disable"
+              : "post-editicon post-action-icon post-upload-icon"
+          }
+          onClick={() => handleUpload()}
+        />
       )}
       {editState ? (
         <CloseIcon
-          className="post-editicon post-action-icon" titleAccess="Cancel Edit"
-          onClick={() => setEditState(false)}
+          className="post-editicon post-action-icon"
+          titleAccess="Cancel Edit"
+          onClick={() => {
+            setEditState(false);
+            setSubmitState(false);
+          }}
         />
       ) : (
         <EditIcon
-          className="post-editicon post-action-icon" titleAccess="Edit Post"
+          className="post-editicon post-action-icon"
+          titleAccess="Edit Post"
           onClick={() => setEditState(true)}
         />
       )}
-      <DeleteOutlineIcon titleAccess="Delete Post"
+      <DeleteOutlineIcon
+        titleAccess="Delete Post"
         onClick={() => handleDelete(post.postId)}
         className="post-deleteicon post-action-icon"
       />

@@ -94,12 +94,13 @@ export function deletePostReducer(postId) {
     }
   };
 }
-export function EditPost(postId, postData) {
+export function EditPost(postId, postData, cb) {
   return async function editpostThunk(dispatch) {
     try {
-      const {data} = await backendApi.patch("/post/" + postId, postData);
+      const { data } = await backendApi.patch("/post/" + postId, postData);
       console.log(data);
-      dispatch(updatePost(data));
+      await dispatch(updatePost(data));
+      cb();
     } catch (error) {
       console.log(error);
     }

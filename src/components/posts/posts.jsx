@@ -7,7 +7,7 @@ import Postinteraction from "../PostInteraction/Post-interaction";
 
 import Comments from "../../Comments/Comments";
 import Slider from "../Slider/Slider";
-import { Avatar } from "@mui/material";
+import { Avatar, Backdrop, CircularProgress } from "@mui/material";
 import Postdropdown from "../postdropdown/Postdropdown";
 import TimeAgo from "react-timeago";
 import PostDialogbox from "../PostDialogbox/PostDialogbox";
@@ -17,6 +17,9 @@ import PostAction from "../PostActions/PostAction";
 import UploadedFiles from "../UploadedFiles/Uploadedfiles";
 import { useDispatch } from "react-redux";
 import { EditPost } from "../../store/postsSlice";
+import { CreateNewFile } from "../../firebase/upload";
+import { toast } from "react-hot-toast";
+import CustomrLottie from "../Lottie/Lottie";
 
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
@@ -27,7 +30,17 @@ const Posts = ({ item, user }) => {
   const [editState, setEditState] = useState(false);
   const [editPostData, setEditPostData] = useState({});
   const [activeClose, setactiveClose] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [loader, setLoader] = useState(false);
+
   const [uploadedImages, setUploadedImages] = useState({});
+  const [images, setImages] = useState({
+    files: [],
+    urls: [],
+    names: [],
+  });
+  const [uploadedUrl, setUploadedUrl] = useState([]);
+  const [submitState, setSubmitState] = useState(false);
 
   const ref = useRef();
   const updateSelUser = useContext(Usercontextobj);
@@ -63,18 +76,21 @@ const Posts = ({ item, user }) => {
   };
 
   const handleRemove = (itemIndex) => {
-    const newUrls = editPostData.images.filter(
-      (item, index) => index !== itemIndex
-    );
-    const newNames = editPostData.images.filter(
-      (item, index) => index !== itemIndex
-    );
+    const images = uploadedImages.filter((item, index) => index !== itemIndex);
 
-    setUploadedImages({
+    setUploadedImages(images);
+  };
+
+  const handleEditPostRemove = (itemIndex) => {
+    const newFiles = images.files.filter((item, index) => index !== itemIndex);
+    const newUrls = images.urls.filter((item, index) => index !== itemIndex);
+    const newNames = images.names.filter((item, index) => index !== itemIndex);
+
+    setImages({
+      files: newFiles,
       urls: newUrls,
       names: newNames,
     });
-    console.log(uploadedImages);
   };
 
   let imagelist = editState
@@ -82,14 +98,94 @@ const Posts = ({ item, user }) => {
     : item.images.length > 0 && item.images;
   let parsedImage = imagelist && imagelist.map((el) => JSON.parse(el));
 
-  const handleUpload = async () => {
-    const data = {
-      title: editPostData.title,
-      images: uploadedImages.length > 0 ? uploadedImages : [],
-    };
-    dispatch(EditPost(item.postId, data));
+  const handleCallback = (val) => {
+    setProgress(val);
+  };
+  const callback = async (url, name) => {
+    if (parsedImage.length > 0) {
+      setUploadedUrl((prevalue) => [
+        ...prevalue,
+        ...parsedImage,
+        { name, url },
+      ]);
+    } else {
+      setUploadedUrl((prevalue) => [...prevalue, { name, url }]);
+    }
   };
 
+  const totalImagesLength = uploadedImages.length + images.names.length;
+
+  const cbEdit = () => {
+    if (progress === 100) {
+      setEditState(false);
+      setSubmitState(false);
+      setUploadedUrl([]);
+
+      setSubmitState(false);
+    }
+    setTimeout(() => {
+      setLoader(false);
+    }, 500);
+    setImages({
+      files: [],
+      urls: [],
+      names: [],
+    });
+  };
+
+  useEffect(() => {
+    if (
+      submitState &&
+      totalImagesLength > 0 &&
+      uploadedUrl?.length > 0 &&
+      uploadedUrl.length === totalImagesLength
+    ) {
+      const data = {
+        title: editPostData.title,
+        images: uploadedUrl.length > 0 ? uploadedUrl : uploadedImages,
+      };
+
+      dispatch(EditPost(item.postId, data, cbEdit));
+    }
+  }, [submitState, uploadedUrl]);
+
+  const handleUpload = async () => {
+    await setSubmitState(true);
+    setLoader(true);
+
+    if (images.names?.length > 0 && images.names?.length < 3) {
+      images.names.map(async (item, index) => {
+        await CreateNewFile(
+          images.files[index],
+          item,
+          handleCallback,
+          callback,
+          true
+        );
+      });
+    } else {
+      console.log("====================================");
+      console.log(
+        "as",
+        submitState,
+        uploadedImages.length,
+        editPostData.images?.length
+      );
+      console.log("====================================");
+      if (uploadedImages.length !== editPostData.images?.length) {
+        const data = {
+          title: editPostData.title,
+          images: uploadedImages,
+        };
+
+        await dispatch(EditPost(item.postId, data, cbEdit));
+        setEditState(false);
+      }
+    }
+  };
+  console.log("====================================");
+  console.log(images);
+  console.log("====================================");
   return (
     <div ref={ref} className="post-container">
       {postDialog.state && (
@@ -99,6 +195,20 @@ const Posts = ({ item, user }) => {
           setPostDialog={setPostDialog}
         />
       )}
+      {loader && (
+        <div className="update-lottie">
+          <CustomrLottie />
+        </div>
+      )}
+      <Backdrop
+        open={loader}
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div className="post-contents">
         <div className="post-wrapper">
           <div className="author">
@@ -124,7 +234,7 @@ const Posts = ({ item, user }) => {
             <div className="post-text">
               {editState ? (
                 <input
-                  value={editPostData ? editPostData.title : ""}
+                  value={editPostData.title ? editPostData.title : ""}
                   placeholder="text"
                   onChange={(e) =>
                     setEditPostData({ ...editPostData, title: e.target.value })
@@ -141,8 +251,12 @@ const Posts = ({ item, user }) => {
               {editState ? (
                 <UploadedFiles
                   items={parsedImage}
-                  handleRemove={handleRemove}
-                  editState={true} setUploadedImages={setUploadedImages}
+                  handleEditPostimages={handleRemove}
+                  editState={true}
+                  setUploadedImages={setUploadedImages}
+                  images={images}
+                  handleRemove={handleEditPostRemove}
+                  setImages={setImages}
                 />
               ) : (
                 <Slider images={parsedImage} />
@@ -168,7 +282,9 @@ const Posts = ({ item, user }) => {
                 post={item}
                 setEditState={setEditState}
                 editState={editState}
-                handleUpload={handleUpload} 
+                handleUpload={handleUpload}
+                submitState={submitState}
+                setSubmitState={setSubmitState}
               />
             </div>
           </div>
@@ -177,7 +293,7 @@ const Posts = ({ item, user }) => {
           </div>
         </div>
         {openComments && (
-          <Comments item={item} user={user} openComments={openComments}  />
+          <Comments item={item} user={user} openComments={openComments} />
         )}
       </div>
     </div>

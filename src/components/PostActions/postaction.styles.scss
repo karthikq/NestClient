@@ -21,6 +21,13 @@
     transform: scale(0.9);
   }
 }
+.post-upload-icon {
+  color: white !important;
+  background-color: #5814d6 !important;
+}
+.btn-disabled {
+  opacity: 0.6;
+}
 .post-deleteicon,
 .post-editicon {
   &:hover {

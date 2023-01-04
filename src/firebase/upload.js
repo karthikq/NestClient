@@ -13,7 +13,6 @@ fireBaseApp();
 export const CreateNewFile = async (
   file,
   name,
-  index,
   progressCallback,
   uploadcallback,
   state
@@ -39,14 +38,16 @@ export const CreateNewFile = async (
     "state_changed",
     (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
+
       if (state) {
         progressCallback(progress);
-        document.querySelectorAll(".upload-progress-status")[
-          index
-        ].style.height = progress + "%";
-        document.querySelectorAll(".uploaded-checkicon")[index].style.display =
-          "none";
+        document
+          .querySelectorAll("#upload-scroller")
+          .forEach((el) => (el.style.height = progress + "%"));
+
+        document
+          .querySelectorAll("#upload-checkicon")
+          .forEach((el) => (el.style.display = "none"));
       }
     },
     (error) => {
@@ -54,17 +55,13 @@ export const CreateNewFile = async (
       // Handle unsuccessful uploads
     },
     () => {
-      // Handle successful uploads on complete
-      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log(document.querySelector(".uploaded-items-wrapper"));
         if (state) {
           if (downloadURL) {
-            document.querySelectorAll(".uploaded-checkicon")[
-              index
-            ].style.display = "block";
+            document
+              .querySelectorAll("#upload-checkicon")
+              .forEach((el) => (el.style.display = "block"));
           }
-          console.log("File available at", downloadURL);
         }
 
         uploadcallback(downloadURL, name);
