@@ -18,8 +18,9 @@ import UploadedFiles from "../UploadedFiles/Uploadedfiles";
 import { useDispatch } from "react-redux";
 import { EditPost } from "../../store/postsSlice";
 import { CreateNewFile } from "../../firebase/upload";
-import { toast } from "react-hot-toast";
+
 import CustomrLottie from "../Lottie/Lottie";
+import querystrimg from "query-string";
 
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
@@ -45,9 +46,16 @@ const Posts = ({ item, user }) => {
   const ref = useRef();
   const updateSelUser = useContext(Usercontextobj);
   const dispatch = useDispatch();
+  const { postId } = querystrimg.parse(window.location.search);
 
   useEffect(() => {
     function handleClickoutside(e) {
+      if (postId) {
+        setTimeout(() => {
+          window.history.pushState("", {}, "/");
+        }, 500);
+      }
+
       if (ref.current && !ref.current.contains(e.target)) {
         setOpenComments(false);
       }
@@ -67,6 +75,14 @@ const Posts = ({ item, user }) => {
       setUploadedImages(item.images);
     }
   }, [editState]);
+
+  useEffect(() => {
+    if (postId) {
+      document.getElementById(postId).scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [postId]);
 
   const handlePostdialog = (state, items) => {
     setPostDialog({
@@ -164,14 +180,6 @@ const Posts = ({ item, user }) => {
         );
       });
     } else {
-      console.log("====================================");
-      console.log(
-        "as",
-        submitState,
-        uploadedImages.length,
-        editPostData.images?.length
-      );
-      console.log("====================================");
       if (uploadedImages.length !== editPostData.images?.length) {
         const data = {
           title: editPostData.title,
@@ -180,14 +188,22 @@ const Posts = ({ item, user }) => {
 
         await dispatch(EditPost(item.postId, data, cbEdit));
         setEditState(false);
+      } else {
+        if (editPostData.title !== item.title) {
+          const data = {
+            title: editPostData.title,
+            images: uploadedImages?.length > 0 ? uploadedImages : [],
+          };
+
+          await dispatch(EditPost(item.postId, data, cbEdit));
+          setEditState(false);
+        }
       }
     }
   };
-  console.log("====================================");
-  console.log(images);
-  console.log("====================================");
+
   return (
-    <div ref={ref} className="post-container">
+    <div id={item?.postId} ref={ref} className="post-container">
       {postDialog.state && (
         <PostDialogbox
           item={postDialog.data}

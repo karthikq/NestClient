@@ -17,6 +17,7 @@ import UserLottie from "../../components/Lottie/UserLottie";
 import Useractions from "../../components/Useractions/Useractions";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import { fetchposts } from "../../store/postsSlice";
 const User = () => {
   const [changeImage, setChangeImage] = useState(false);
   const [isUpdating, setisUpdating] = useState(false);
@@ -35,11 +36,15 @@ const User = () => {
   useEffect(() => {
     fetchUser(id);
     setisUpdating(true);
+    fetchPostDetails();
     setTimeout(() => {
       setisUpdating(false);
     }, 1000);
   }, [id]);
 
+  const fetchPostDetails = async () => {
+    await dispatch(fetchposts());
+  };
   const fetchUser = async (id) => {
     try {
       await dispatch(getUserbyId(id));
@@ -101,6 +106,12 @@ const User = () => {
     }
   }, [window.location.hash]);
 
+  const sortedarrPost =
+    fetchedUser.posts?.length > 0 &&
+    [...fetchedUser.posts]?.sort(function (a, b) {
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+
   return (
     <div className="user-container">
       {isUpdating && (
@@ -126,7 +137,8 @@ const User = () => {
                         <li
                           className={
                             locationHash === "settings" ? "li-active" : ""
-                          }>
+                          }
+                        >
                           <SettingsIcon className="user-nav-icon" />
                           Setting's
                         </li>
@@ -135,7 +147,8 @@ const User = () => {
                         <li
                           className={
                             locationHash === "liked" ? "li-active" : ""
-                          }>
+                          }
+                        >
                           <FavoriteIcon className="user-nav-icon" /> Liked
                         </li>
                       </Link>
@@ -143,7 +156,8 @@ const User = () => {
                         <li
                           className={
                             locationHash === "comment" ? "li-active" : ""
-                          }>
+                          }
+                        >
                           <CommentIcon className="user-nav-icon" />
                           Comments
                         </li>
@@ -181,7 +195,8 @@ const User = () => {
                     </div>
                     <div
                       className="user-form-item"
-                      style={{ opacity: "0.7", cursor: "not-allowed" }}>
+                      style={{ opacity: "0.7", cursor: "not-allowed" }}
+                    >
                       <label>Email</label>
                       <input
                         type="email"
@@ -201,7 +216,8 @@ const User = () => {
                       <div className="user-form-item">
                         <span
                           className="change-btn"
-                          onClick={() => setChangeImage(!changeImage)}>
+                          onClick={() => setChangeImage(!changeImage)}
+                        >
                           Change profile image
                         </span>
                       </div>
@@ -211,7 +227,8 @@ const User = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                          }}>
+                          }}
+                        >
                           Profile image
                           <span onClick={() => setChangeImage(false)}>
                             <CancelIcon className="cancel-icon" /> cancel change
@@ -245,7 +262,8 @@ const User = () => {
                           fontWeight: "500",
                           position: "relative",
                           bottom: 15,
-                        }}>
+                        }}
+                      >
                         Nothing Found
                       </p>
                     </>
@@ -275,7 +293,8 @@ const User = () => {
                           fontWeight: "500",
                           position: "relative",
                           bottom: 15,
-                        }}>
+                        }}
+                      >
                         Nothing Found
                       </p>
                     </>
@@ -285,7 +304,7 @@ const User = () => {
               {locationHash === "post" && (
                 <div>
                   {fetchedUser?.posts?.length > 0 ? (
-                    fetchedUser.posts.map((item) => (
+                    sortedarrPost.map((item) => (
                       <Useractions item={item} key={item.id} />
                     ))
                   ) : (
@@ -299,7 +318,8 @@ const User = () => {
                           fontWeight: "500",
                           position: "relative",
                           bottom: 15,
-                        }}>
+                        }}
+                      >
                         Nothing Found
                       </p>
                     </>

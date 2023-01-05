@@ -28,7 +28,10 @@
     font-size: 18px;
   }
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  &:active {
+    transform: scale(0.95);
+  }
   &:hover {
     background-color: rgba(0, 0, 0, 0.897);
     box-shadow: 0px 0px 20px #dbeaee2c;

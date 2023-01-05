@@ -98,22 +98,38 @@ const AuthorStatus = () => {
     if (!userstatus) {
       return setContentErr(true);
     } else {
-      toast.loading("Creating post");
+      const toastID = toast.loading("Creating post");
       setBackdropstate(true);
       setactiveClose(false);
-      items.names.map(async (item, index) => {
-        await CreateNewFile(
-          items.files[index],
-          item,
-          index,
-          handleCallback,
-          callback,
-          true
-        );
-      });
+
+      if (items.names.length > 0) {
+        items.names.map(async (item, index) => {
+          await CreateNewFile(
+            items.files[index],
+            item,
+            handleCallback,
+            callback,
+            true
+          );
+        });
+      } else {
+        const data = {
+          title: userstatus,
+          desp: "test",
+          images: [],
+        };
+        dispatch(createPostdata(data));
+        setBackdropstate(false);
+        toast.success("Post created", {
+          id: toastID,
+        });
+        setUserStatus("");
+      }
     }
   };
-
+  console.log("====================================");
+  console.log(uploadedUrl);
+  console.log("====================================");
   useEffect(() => {
     if (
       uploadedUrl?.length !== 0 &&
@@ -132,7 +148,10 @@ const AuthorStatus = () => {
         items: [],
         names: [],
       });
-      setUserStatus("");
+      setTimeout(() => {
+        setUserStatus("");
+      }, 200);
+
       toast.success("Post created");
     }
   }, [uploadedUrl, items]);

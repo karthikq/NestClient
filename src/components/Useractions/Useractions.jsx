@@ -7,22 +7,36 @@ import Slider from "../Slider/Slider";
 import { backendApi } from "../../Api";
 import { useState } from "react";
 import PostDialogbox from "../PostDialogbox/PostDialogbox";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchposts } from "../../store/postsSlice";
+import { useNavigate } from "react-router-dom";
+
 const Useractions = ({ item }) => {
   let imagelist = item.images.length > 0 && item.images;
   let parsedImage = imagelist && imagelist.map((el) => JSON.parse(el));
+
   const [postData, setPostData] = useState({});
   const [postDialog, setPostDialog] = useState({
     state: "",
     data: [],
   });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const posts = useSelector((state) => state.posts);
 
   useEffect(() => {
-    fetchPostDetails(item.id);
+    fetchPostDetails(item.postId);
   }, [item.id]);
 
   const fetchPostDetails = async (id) => {
-    const { data } = await backendApi.get("/post/" + item.id);
-    setPostData(data);
+    const sortedarr = [...posts].sort(function (a, b) {
+      return new Date(a.created_at) - new Date(b.created_at);
+    });
+
+    const filterdPost = sortedarr.find((el) => el.postId === id);
+
+    setPostData(filterdPost);
   };
   const handlePostdialog = (state, items) => {
     console.log(item);
@@ -31,6 +45,10 @@ const Useractions = ({ item }) => {
       data: items,
     });
   };
+  const handlePostEdit = (postId) => {
+    navigate("/?postId=" + postId);
+  };
+
   return (
     <div className="useraction-wrapper">
       {postDialog.state && (
@@ -55,7 +73,10 @@ const Useractions = ({ item }) => {
           </span>
         </div>
         <div className="useraction-post-details">
-          Posted <TimeAgo date={new Date(postData.created_at)} />
+          <span>
+            Posted <TimeAgo date={new Date(postData.created_at)} />
+          </span>
+          <p onClick={() => handlePostEdit(postData.postId)}>Edit Post</p>
         </div>
       </div>
     </div>
