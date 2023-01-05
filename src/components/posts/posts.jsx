@@ -52,7 +52,7 @@ const Posts = ({ item, user }) => {
     function handleClickoutside(e) {
       if (postId) {
         setTimeout(() => {
-          window.history.pushState("", {}, "/");
+          window.history.pushState({}, "", "/");
         }, 500);
       }
 
@@ -68,6 +68,9 @@ const Posts = ({ item, user }) => {
 
   useEffect(() => {
     if (editState) {
+      ref.current?.scrollIntoView({
+        behavior: "smooth",
+      });
       setEditPostData({
         title: item.title,
         images: item.images,

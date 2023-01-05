@@ -38,11 +38,28 @@
   }
 }
 .useraction-post-details {
-  margin-top: 14px;
+  margin-top: 10px;
   font-size: 12px;
   opacity: 0.8;
   color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.user-post_edit-icon {
+  background-color: #5814d6;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-content: center;
+  color: rgb(255, 255, 255);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  &:active {
+    transform: scale(0.9);
+  }
+  .user-edit-icon {
+    font-size: 18px;
+  }
 }

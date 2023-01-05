@@ -5,6 +5,7 @@ import "./useractions.styles.scss";
 import TimeAgo from "react-timeago";
 import Slider from "../Slider/Slider";
 import { backendApi } from "../../Api";
+import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import PostDialogbox from "../PostDialogbox/PostDialogbox";
 import { useDispatch, useSelector } from "react-redux";
@@ -76,7 +77,12 @@ const Useractions = ({ item }) => {
           <span>
             Posted <TimeAgo date={new Date(postData.created_at)} />
           </span>
-          <p onClick={() => handlePostEdit(postData.postId)}>Edit Post</p>
+          <p
+            className="user-post_edit-icon"
+            onClick={() => handlePostEdit(postData.postId)}
+          >
+            <EditIcon className="user-edit-icon" />
+          </p>
         </div>
       </div>
     </div>

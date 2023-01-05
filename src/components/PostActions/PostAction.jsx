@@ -33,6 +33,9 @@ const PostAction = ({
               dispatch(deletePostReducer(postId));
               setDeleteState(false);
               toast.dismiss(t.id);
+              setTimeout(() => {
+                toast.success("Post deleted");
+              }, 500);
             }}
             style={{
               marginLeft: 5,
