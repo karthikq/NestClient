@@ -1,12 +1,10 @@
 /** @format */
 
 import axios from "axios";
+import { backendUrl } from "./backendUrl";
 
 export const backendApi = axios.create({
-  baseURL:
-    process.env.NODE_ENV !== "production"
-      ? "http://localhost:5000"
-      : "https://testingnestjs2.onrender.com",
+  baseURL: backendUrl(),
   transformRequest: [
     function (data, headers) {
       headers["Authorization"] = `Bearer  ${localStorage.getItem("authtoken")}`;

@@ -14,6 +14,7 @@ import { CreateNewFile } from "../../firebase/upload";
 import { Link, useNavigate } from "react-router-dom";
 import CustomrLottie from "../../components/Lottie/Lottie";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import { backendUrl } from "../../Api/backendUrl";
 
 const Auth = ({ state }) => {
   const [userdetails, setUserDetails] = useState({
@@ -117,7 +118,7 @@ const Auth = ({ state }) => {
       }
     }
   };
-
+  const url = backendUrl();
   return (
     <div className="auth-container">
       {loaderState && (
@@ -263,14 +264,13 @@ const Auth = ({ state }) => {
             <span>Or</span>
             <span>Continue with </span>
             <div className="social-item">
-              <a
-                href="http://localhost:5000/auth/google/login"
-                style={{ color: "inherit" }}>
+              <a href={url + "/auth/google/login"} style={{ color: "inherit" }}>
                 <GoogleIcon className="social-icon" />
               </a>
               <a
-                href="http://localhost:5000/auth/facebook/login"
-                style={{ color: "inherit" }}>
+                href={url + "/auth/facebook/login"}
+                style={{ color: "inherit" }}
+              >
                 <FacebookIcon className="social-icon" />
               </a>
             </div>
