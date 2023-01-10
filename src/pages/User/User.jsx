@@ -115,7 +115,7 @@ const User = () => {
   return (
     <div className="user-container">
       {isUpdating && (
-        <div className="loader-wrapper ">
+        <div className="loader-wrapper">
           <LoaderLottie />
         </div>
       )}
