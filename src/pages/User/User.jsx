@@ -10,13 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserbyId, updateUserdata } from "../../store/userSlice";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { CreateNewFile } from "../../firebase/upload";
-import CustomrLottie from "../../components/Lottie/Lottie";
 
 import toast from "react-hot-toast";
 import UserLottie from "../../components/Lottie/UserLottie";
 import Useractions from "../../components/Useractions/Useractions";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
-import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+
 import { fetchposts } from "../../store/postsSlice";
 import LoaderLottie from "../../components/Lottie/Loader";
 const User = () => {
@@ -38,9 +37,6 @@ const User = () => {
     fetchUser(id);
     setisUpdating(true);
     fetchPostDetails();
-    setTimeout(() => {
-      setisUpdating(false);
-    }, 1000);
   }, [id]);
 
   const fetchPostDetails = async () => {
@@ -61,6 +57,9 @@ const User = () => {
         email: fetchedUser?.email,
         url: fetchedUser?.url,
       });
+      setTimeout(() => {
+        setisUpdating(false);
+      }, 1000);
     }
   }, [fetchedUser]);
 

@@ -16,7 +16,7 @@
   align-items: center;
 }
 .homeuser-image {
-  height: 100px;
+  height: 120px;
   background-color: black;
   width: 100%;
   position: relative;
@@ -82,15 +82,16 @@
 }
 .homeuser-link {
   width: 100%;
-  padding: 15px 0 20px;
+  padding: 15px 0 15px;
   text-align: center;
   a {
     text-decoration: none;
-    color: rgb(10, 10, 10);
+    color: #5814d6;
     font-weight: 400;
+    font-size: 14px;
+    text-decoration: underline;
     &:hover {
-      color: #5814d6;
-      text-decoration: underline;
+      color: #0c0c0c;
     }
   }
 }

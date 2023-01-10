@@ -15,9 +15,7 @@ const HomeUser = () => {
   const [userDetails, setUserDetails] = useState("");
 
   useEffect(() => {
-    console.log(selUser.val);
     if (selUser.val) {
-      console.log("s");
       setUserDetails(selUser.val);
     } else {
       setUserDetails(user);
@@ -29,7 +27,7 @@ const HomeUser = () => {
       <div className="homeuser-contents">
         <div className="homeuser-image">
           <div className="homeuser-bgimage">
-            <img src={"https://picsum.photos/320/100"} alt="bgimage" />
+            <img src={"https://picsum.photos/320/120"} alt="bgimage" />
           </div>
           <div className="homeuser-avatar">
             <Avatar
@@ -48,7 +46,7 @@ const HomeUser = () => {
           <span>@{userDetails.username}</span>
           <span> </span>
         </div>
-        <div className="homeuser-follows">
+        {/* <div className="homeuser-follows">
           <div>
             <p>1000</p>
             <span>Following</span>
@@ -57,10 +55,18 @@ const HomeUser = () => {
             <p>1000</p>
             <span>Following</span>
           </div>
-        </div>
-        <div className="homeuser-link">
-          <Link to={"/user/" + userDetails.userId + "#post"}>User Profile</Link>
-        </div>
+        </div> */}
+        {
+          <div className="homeuser-link">
+            {userDetails.userId ? (
+              <Link to={"/user/" + userDetails.userId + "#post"}>
+                Visit {userDetails.username + "'s"} profile
+              </Link>
+            ) : (
+              <Link to="/auth/login">Login</Link>
+            )}
+          </div>
+        }
       </div>
     </div>
   );

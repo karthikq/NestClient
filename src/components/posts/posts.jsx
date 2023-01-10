@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./posts.styles.scss";
 
 import Postinteraction from "../PostInteraction/Post-interaction";
-
+import { isMobile } from "react-device-detect";
 import Comments from "../../Comments/Comments";
 import Slider from "../Slider/Slider";
 import { Avatar, Backdrop, CircularProgress } from "@mui/material";
@@ -23,6 +23,7 @@ import CustomrLottie from "../Lottie/Lottie";
 import querystrimg from "query-string";
 import LoaderLottie from "../Lottie/Loader";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
@@ -264,12 +265,23 @@ const Posts = ({ item, user }) => {
           </div>
           <div className="post-details">
             <div>
-              <p
-                className="author-name"
-                onClick={() => updateSelUser.setValue(item.user)}
-              >
-                {item.user.username}
-              </p>
+              {!isMobile ? (
+                <p
+                  className="author-name"
+                  onClick={() => updateSelUser.setValue(item.user)}
+                >
+                  {item.user.username}
+                </p>
+              ) : (
+                <p className="author-name">
+                  <Link
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    to={"/user/" + user.userId + "#post"}
+                  >
+                    {item.user.username}
+                  </Link>
+                </p>
+              )}
               <span className="post-duration">
                 <TimeAgo date={new Date(item.created_at)} />
               </span>
