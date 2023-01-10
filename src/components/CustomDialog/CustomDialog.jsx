@@ -13,7 +13,6 @@ const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
   const [fileExists, setFileExists] = useState(false);
 
   function checkFileNameexists(filetocheck) {
-    console.log(items, images, filetocheck, "asdasd");
     const check1 = images.names?.find((name) => name === filetocheck);
     const check2 = items?.find(({ name }) => name === filetocheck);
 
@@ -30,9 +29,10 @@ const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
     setFile(file);
     setFileName(file.name);
 
-    const resl = checkFileNameexists(file.name);
+    const resl = images && checkFileNameexists(file.name);
     const fileUrl = URL.createObjectURL(file);
     setLocalUrl(fileUrl);
+
     if (resl) {
       setFileExists(true);
     } else {
@@ -149,6 +149,9 @@ const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
       </div>
     </div>
   );
+};
+CustomDialog.defaultProps = {
+  items: [],
 };
 
 export default CustomDialog;

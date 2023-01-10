@@ -63,6 +63,9 @@
   margin-top: 14px;
   font-weight: 500;
   letter-spacing: 0.3px;
+  @media screen and (max-width: 720px) {
+    padding-left: 0.5rem;
+  }
 }
 
 .error-content {

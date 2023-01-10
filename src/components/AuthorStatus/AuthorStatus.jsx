@@ -208,6 +208,7 @@ const AuthorStatus = () => {
           setOpen={setOpenDialogBox}
           open={openDialogbox}
           setItems={setItems}
+          images={items}
         />
       )}
       {items.names.length !== 0 && (
