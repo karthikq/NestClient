@@ -37,6 +37,9 @@ const User = () => {
     fetchUser(id);
     setisUpdating(true);
     fetchPostDetails();
+    setTimeout(() => {
+      setisUpdating(false);
+    }, 1000);
   }, [id]);
 
   const fetchPostDetails = async () => {
@@ -57,9 +60,6 @@ const User = () => {
         email: fetchedUser?.email,
         url: fetchedUser?.url,
       });
-      setTimeout(() => {
-        setisUpdating(false);
-      }, 1000);
     }
   }, [fetchedUser]);
 
