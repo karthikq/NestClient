@@ -8,6 +8,10 @@
   margin-top: 14.2px;
   gap: 0 0.7rem;
   margin-top: 14px;
+  @media screen and (max-width: 720px) {
+    padding-left: 0;
+    width: auto;
+  }
   .upload-item {
     color: #000000;
     padding: 0.4rem 0.8rem;

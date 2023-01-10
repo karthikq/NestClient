@@ -21,6 +21,8 @@ import { CreateNewFile } from "../../firebase/upload";
 
 import CustomrLottie from "../Lottie/Lottie";
 import querystrimg from "query-string";
+import LoaderLottie from "../Lottie/Loader";
+import { toast } from "react-hot-toast";
 
 const Posts = ({ item, user }) => {
   const [openComments, setOpenComments] = useState(false);
@@ -47,7 +49,7 @@ const Posts = ({ item, user }) => {
   const updateSelUser = useContext(Usercontextobj);
   const dispatch = useDispatch();
   const { postId } = querystrimg.parse(window.location.search);
-
+  var count = 0;
   useEffect(() => {
     function handleClickoutside(e) {
       if (postId) {
@@ -120,13 +122,20 @@ const Posts = ({ item, user }) => {
   const handleCallback = (val) => {
     setProgress(val);
   };
+
   const callback = async (url, name) => {
+    count++;
+
     if (parsedImage.length > 0) {
-      setUploadedUrl((prevalue) => [
-        ...prevalue,
-        ...parsedImage,
-        { name, url },
-      ]);
+      if (count === images.names.length) {
+        setUploadedUrl((prevalue) => [
+          ...prevalue,
+          ...parsedImage,
+          { name, url },
+        ]);
+      } else {
+        setUploadedUrl((prevalue) => [...prevalue, { name, url }]);
+      }
     } else {
       setUploadedUrl((prevalue) => [...prevalue, { name, url }]);
     }
@@ -139,8 +148,11 @@ const Posts = ({ item, user }) => {
       setEditState(false);
       setSubmitState(false);
       setUploadedUrl([]);
-
-      setSubmitState(false);
+      setImages({
+        files: [],
+        urls: [],
+        names: [],
+      });
     }
     setTimeout(() => {
       setLoader(false);
@@ -150,6 +162,7 @@ const Posts = ({ item, user }) => {
       urls: [],
       names: [],
     });
+    setUploadedUrl([]);
   };
 
   useEffect(() => {
@@ -200,6 +213,18 @@ const Posts = ({ item, user }) => {
 
           await dispatch(EditPost(item.postId, data, cbEdit));
           setEditState(false);
+          setImages({
+            files: [],
+            urls: [],
+            names: [],
+          });
+          setUploadedUrl([]);
+        } else {
+          setLoader(false);
+          setSubmitState(false);
+          toast.error("Nothing to upload", {
+            position: "bottom-center",
+          });
         }
       }
     }
@@ -216,14 +241,14 @@ const Posts = ({ item, user }) => {
       )}
       {loader && (
         <div className="update-lottie">
-          <CustomrLottie />
+          <LoaderLottie />
         </div>
       )}
       <Backdrop
         open={loader}
         sx={{
           color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
+          zIndex: 2000,
         }}
       >
         <CircularProgress color="inherit" />
@@ -297,14 +322,17 @@ const Posts = ({ item, user }) => {
                 post={item}
                 user={user}
               />
-              <PostAction
-                post={item}
-                setEditState={setEditState}
-                editState={editState}
-                handleUpload={handleUpload}
-                submitState={submitState}
-                setSubmitState={setSubmitState}
-              />
+              {user.userId === item?.user?.userId && (
+                <PostAction
+                  post={item}
+                  setEditState={setEditState}
+                  editState={editState}
+                  handleUpload={handleUpload}
+                  submitState={submitState}
+                  setSubmitState={setSubmitState}
+                  user={user}
+                />
+              )}
             </div>
           </div>
           <div className="post-action">

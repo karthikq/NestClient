@@ -18,6 +18,7 @@ import Useractions from "../../components/Useractions/Useractions";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import { fetchposts } from "../../store/postsSlice";
+import LoaderLottie from "../../components/Lottie/Loader";
 const User = () => {
   const [changeImage, setChangeImage] = useState(false);
   const [isUpdating, setisUpdating] = useState(false);
@@ -116,7 +117,7 @@ const User = () => {
     <div className="user-container">
       {isUpdating && (
         <div className="loader-wrapper ">
-          <CustomrLottie />
+          <LoaderLottie />
         </div>
       )}
       <div className="user-contents">
@@ -249,7 +250,12 @@ const User = () => {
                 <div>
                   {fetchedUser?.likes?.length > 0 ? (
                     fetchedUser?.likes.map((item) => (
-                      <Useractions item={item.post} key={item.id} />
+                      <Useractions
+                        item={item.post}
+                        key={item.id}
+                        user={user}
+                        fetchedUser={fetchedUser}
+                      />
                     ))
                   ) : (
                     <>
@@ -280,7 +286,12 @@ const User = () => {
                           self.findIndex((t) => t.post.id === value.post.id)
                       )
                       .map((item) => (
-                        <Useractions item={item.post} key={item.id} />
+                        <Useractions
+                          item={item.post}
+                          key={item.id}
+                          user={user}
+                          fetchedUser={fetchedUser}
+                        />
                       ))
                   ) : (
                     <>
@@ -305,7 +316,12 @@ const User = () => {
                 <div>
                   {fetchedUser?.posts?.length > 0 ? (
                     sortedarrPost.map((item) => (
-                      <Useractions item={item} key={item.id} />
+                      <Useractions
+                        item={item}
+                        key={item.id}
+                        user={user}
+                        fetchedUser={fetchedUser}
+                      />
                     ))
                   ) : (
                     <>

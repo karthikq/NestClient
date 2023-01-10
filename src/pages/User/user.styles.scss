@@ -1,9 +1,15 @@
 /** @format */
 
 .user-container {
-  max-width: 65%;
+  max-width: 75%;
   height: 100%;
   margin: 0 auto;
+  @media screen and (max-width: 1200px) {
+    max-width: 85%;
+  }
+  @media screen and (max-width: 720px) {
+    max-width: 90%;
+  }
 }
 .user-contents {
   width: 100%;
@@ -13,29 +19,38 @@
 
   align-items: center;
 }
+.user-details {
+  border-radius: 10px 10px 0 0;
+}
 .user-image-container {
   width: 100%;
   height: 200px;
   position: relative;
-  background-color: azure;
+  border-radius: 10px 10px 0 0;
   .user-bgimage {
     width: 100%;
     height: 100%;
     position: relative;
     &:before {
       position: absolute;
-      top: 35px;
+      top: 20px;
       bottom: 0;
       background: linear-gradient(0deg, #5814d617, #00000000);
       content: "";
       width: 100%;
       height: 100%;
       filter: blur(10px);
+      @media screen and (max-width: 720px) {
+        filter: blur(1px);
+        top: 0;
+        background: linear-gradient(0deg, #000000, #00000009);
+      }
     }
     img {
       width: 100%;
       object-fit: cover;
       height: 100%;
+      border-radius: 10px 10px 0 0;
     }
   }
   .user-profile-img {
@@ -49,31 +64,44 @@
       border-radius: 50%;
       object-fit: cover;
     }
+    @media screen and (max-width: 720px) {
+      width: 65px;
+      height: 65px;
+      border: 2px solid white;
+    }
   }
   .user-nav-wrapper {
     position: absolute;
-    bottom: -2rem;
+    bottom: -3rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 90%;
-
+    @media screen and (max-width: 720px) {
+      flex-direction: column;
+      gap: 0.5rem 0;
+    }
     .user-nav {
       ul {
         display: flex;
-        gap: 0 0.7rem;
+        gap: 0 0.2rem;
         font-family: "Open sans", sans-serif;
         background-color: rgb(255, 255, 255);
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.11);
-        padding: 0.25em 0.5rem;
+        padding: 0.15em 0.3rem;
         border-radius: 15px;
         justify-content: space-around;
         width: 100%;
-        border: 2px solid #5814d667;
+        border: 2px solid #5814d650;
         box-sizing: border-box;
         position: relative;
+        @media screen and (max-width: 720px) {
+          flex-wrap: wrap;
+          justify-content: space-between;
+          padding: 0.15rem 0.5rem;
+        }
 
         // &:before {
         //   content: "";
@@ -97,7 +125,7 @@
           display: flex;
           align-items: center;
           font-weight: 600;
-          gap: 0 0.2rem;
+          gap: 0 0.1rem;
           position: relative;
           z-index: 1;
           &:hover {
@@ -125,8 +153,12 @@
 }
 .user-items {
   width: 90%;
+
   margin: 5rem auto 4rem;
   min-height: 180px;
+  @media screen and (max-width: 1200px) {
+    margin-top: 4rem;
+  }
   .user-form {
     form {
       display: flex;

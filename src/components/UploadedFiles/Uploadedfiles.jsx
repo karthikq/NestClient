@@ -38,12 +38,14 @@ const UploadedFiles = ({
               setOpen={setOpenDialogBox}
               open={openDialogbox}
               setItems={setImages}
+              items={items}
+              images={images}
             />
           )}
           <div className="edit-post-contents">
             {items.length > 0 &&
               items?.map((item, index) => (
-                <div className="uploaded-item ">
+                <div key={index} className="uploaded-item ">
                   <div className="upload-progress-status"></div>
                   <div className="uploaded-checkicon">
                     <img

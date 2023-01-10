@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchposts } from "../../store/postsSlice";
 import { useNavigate } from "react-router-dom";
 
-const Useractions = ({ item }) => {
+const Useractions = ({ item, user, fetchedUser }) => {
   let imagelist = item.images.length > 0 && item.images;
   let parsedImage = imagelist && imagelist.map((el) => JSON.parse(el));
 
@@ -40,14 +40,13 @@ const Useractions = ({ item }) => {
     setPostData(filterdPost);
   };
   const handlePostdialog = (state, items) => {
-    console.log(item);
     setPostDialog({
       state: state,
       data: items,
     });
   };
-  const handlePostEdit = (postId) => {
-    navigate("/?postId=" + postId);
+  const handlePostEdit = (postId, state) => {
+    navigate("/?postId=" + postId + "&editquery=" + state);
   };
 
   return (
@@ -77,12 +76,22 @@ const Useractions = ({ item }) => {
           <span>
             Posted <TimeAgo date={new Date(postData.created_at)} />
           </span>
-          <p
-            className="user-post_edit-icon"
-            onClick={() => handlePostEdit(postData.postId)}
-          >
-            <EditIcon className="user-edit-icon" />
-          </p>
+          <div className="useraction-edit-wrapper">
+            {user.userId === fetchedUser.userId && (
+              <p
+                className="user-post_edit-icon"
+                onClick={() => handlePostEdit(postData.postId, true)}
+              >
+                <EditIcon className="user-edit-icon" />
+              </p>
+            )}
+            <p
+              className="add-comment"
+              onClick={() => handlePostEdit(postData.postId, false)}
+            >
+              Add Like & Comment
+            </p>
+          </div>
         </div>
       </div>
     </div>

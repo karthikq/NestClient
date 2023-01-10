@@ -245,7 +245,7 @@ const Auth = ({ state }) => {
               />
             )}
             <div className="auth-btn-wrapper">
-              <button>Submit</button>
+              <button>{state ? "Sign In" : "Sign Up"}</button>
             </div>
           </form>
           <div className="no-account">

@@ -5,7 +5,7 @@ const UploadedFileContents = ({ images, handleRemove }) => {
   return (
     <div className="uploadedcontents-wrapper">
       {images?.names?.map((item, index) => (
-        <div className="uploaded-item ">
+        <div key={item} className="uploaded-item ">
           <div id="upload-scroller" className="upload-progress-status"></div>
           <div id="upload-checkicon" className="uploaded-checkicon">
             <img src="https://i.ibb.co/9YWkXTT/accept.png" alt="tickmark" />

@@ -19,6 +19,7 @@ const PostAction = ({
   handleUpload,
   submitState,
   setSubmitState,
+  user,
 }) => {
   const dispatch = useDispatch();
   const [deleteState, setDeleteState] = useState(false);
@@ -26,49 +27,62 @@ const PostAction = ({
     setDeleteState(true);
     toast(
       (t) => (
-        <span>
-          Do you want to delete this Post{" "}
-          <button
-            onClick={() => {
-              dispatch(deletePostReducer(postId));
-              setDeleteState(false);
-              toast.dismiss(t.id);
-              setTimeout(() => {
-                toast.success("Post deleted");
-              }, 500);
-            }}
-            style={{
-              marginLeft: 5,
-              background: "black",
-              color: "white",
-              padding: "0.2rem 0.5rem",
-              borderRadius: 5,
-              border: 0,
-              cursor: "pointer",
-            }}
-          >
-            Yes
-          </button>{" "}
-          <button
-            onClick={() => {
-              toast.dismiss(t.id);
-              setDeleteState(false);
-            }}
-            style={{
-              background: "red",
-              color: "white",
-              padding: "0.2rem 0.5rem",
-              borderRadius: 5,
-              border: 0,
-              cursor: "pointer",
-            }}
-          >
-            No
-          </button>{" "}
+        <span
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.4rem 0",
+            fontWeight: 500,
+            fontSize: 18,
+          }}
+        >
+          Do you want to delete this Post ?
+          <div style={{ margin: "0 auto" }}>
+            <button
+              onClick={() => {
+                dispatch(deletePostReducer(postId));
+                setDeleteState(false);
+                toast.dismiss(t.id);
+                setTimeout(() => {
+                  toast.success("Post deleted");
+                }, 500);
+              }}
+              style={{
+                background: "black",
+                color: "white",
+                padding: "0.3rem 0.5rem",
+                borderRadius: 5,
+                border: 0,
+                cursor: "pointer",
+                marginTop: 12,
+                width: 45,
+              }}
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => {
+                toast.dismiss(t.id);
+                setDeleteState(false);
+              }}
+              style={{
+                background: "red",
+                color: "white",
+                padding: "0.3rem 0.5rem",
+                borderRadius: 5,
+                border: 0,
+                cursor: "pointer",
+                width: 45,
+                marginLeft: 8,
+              }}
+            >
+              No
+            </button>
+          </div>
         </span>
       ),
       {
-        duration: 6000,
+        duration: "6000",
         position: "bottom-center",
       }
     );

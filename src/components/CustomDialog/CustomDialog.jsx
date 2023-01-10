@@ -6,33 +6,62 @@ import CloseIcon from "@mui/icons-material/Close";
 import { CreateNewFile } from "../../firebase/upload";
 import UploadIcon from "@mui/icons-material/Upload";
 
-const CustomDialog = ({ setOpen, setItems, open }) => {
+const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
   const [localUrl, setLocalUrl] = useState("");
+  const [fileExists, setFileExists] = useState(false);
 
-  const handleFile = (file) => {
-    
+  function checkFileNameexists(filetocheck) {
+    console.log(items, images, filetocheck, "asdasd");
+    const check1 = images.names?.find((name) => name === filetocheck);
+    const check2 = items?.find(({ name }) => name === filetocheck);
+
+    if (check1) {
+      return true;
+    }
+    if (check2) {
+      return true;
+    }
+    return false;
+  }
+
+  const handleFile = async (file) => {
     setFile(file);
     setFileName(file.name);
 
-    if (open.type === "image") {
-      const fileUrl = URL.createObjectURL(file);
-      setLocalUrl(fileUrl);
-      setItems((preValue) => ({
-        ...preValue,
-        urls: [...preValue.urls, fileUrl],
-      }));
+    const resl = checkFileNameexists(file.name);
+    const fileUrl = URL.createObjectURL(file);
+    setLocalUrl(fileUrl);
+    if (resl) {
+      setFileExists(true);
+    } else {
+      if (open.type === "image") {
+        setItems((preValue) => ({
+          ...preValue,
+          urls: [...preValue.urls, fileUrl],
+        }));
+      }
     }
   };
   const handleUpload = (e) => {
     e.preventDefault();
-    if (fileName) {
-      setItems((preValue) => ({
-        ...preValue,
-        files: [...preValue.files, file],
-        names: [...preValue.names, fileName],
-      }));
+    if (!fileExists) {
+      if (fileName) {
+        setItems((preValue) => ({
+          ...preValue,
+          files: [...preValue.files, file],
+          names: [...preValue.names, fileName],
+        }));
+        setOpen({
+          type: "",
+          state: false,
+        });
+      }
+    } else {
+      setFileName("");
+      setFile("");
+      setLocalUrl("");
       setOpen({
         type: "",
         state: false,
@@ -43,14 +72,18 @@ const CustomDialog = ({ setOpen, setItems, open }) => {
   return (
     <div className="custom-dialog_wrapper">
       <div className="custom-dialog-contents">
-        <h1> {file ? "Choose another file" : "Choose a file to upload"}</h1>
+        <h1> {file ? "File Selected" : "Choose a file to upload"}</h1>
         <form onSubmit={handleUpload}>
-          <label className="fileinput" htmlFor="fileinput">
-            <UploadIcon className="upload-icon" />
-          </label>
+          {!file && (
+            <label className="fileinput" htmlFor="fileinput">
+              <UploadIcon className="upload-icon" />
+            </label>
+          )}
           {open.type === "image" && (
             <input
-              onChange={(e) => handleFile(e.target.files[0])}
+              onChange={(e) => {
+                handleFile(e.target.files[0]);
+              }}
               type="file"
               accept=".jpg,.png,.jpeg"
               id="fileinput"
@@ -80,6 +113,9 @@ const CustomDialog = ({ setOpen, setItems, open }) => {
           {file && !fileName && (
             <span className="error-span">filename is required</span>
           )}
+          {fileExists && (
+            <span className="error-span">file already exists!</span>
+          )}
           {localUrl && (
             <div className="uploaded-file">
               <img src={localUrl} alt="err" />
@@ -98,12 +134,15 @@ const CustomDialog = ({ setOpen, setItems, open }) => {
 
         <div className="close-wrapper">
           <CloseIcon
-            onClick={() =>
+            onClick={() => {
+              setFileName("");
+              setFile("");
+              setLocalUrl("");
               setOpen({
                 type: "",
                 state: false,
-              })
-            }
+              });
+            }}
             className="close_icon"
           />
         </div>

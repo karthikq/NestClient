@@ -25,12 +25,19 @@ const Navbar = () => {
   );
   return (
     <div className="nav">
-      <div className="nav-left"></div>
+      <div className="nav-left">
+        <div className="nav-left-item">
+          <Link to="/">
+            <HomeIcon className="nav-left-home" />
+          </Link>
+        </div>
+      </div>
       <div className="nav-right">
         <div ref={menuRef} className="profile-nav">
           <div
             className="profile-img-wrapper"
-            onClick={() => setDropdownState(!dropDownState)}>
+            onClick={() => setDropdownState(!dropDownState)}
+          >
             <Avatar
               src={userData ? userData.url : ""}
               alt="text"
@@ -47,7 +54,8 @@ const Navbar = () => {
               dropDownState
                 ? "profile-dropdown profile-dropdown_active"
                 : "profile-dropdown"
-            }>
+            }
+          >
             <ul>
               <li>
                 <Link to="/" onClick={() => setDropdownState(!dropDownState)}>
@@ -67,7 +75,8 @@ const Navbar = () => {
                 <li>
                   <Link
                     to={"/user/" + userData.userId + "#settings"}
-                    onClick={() => setDropdownState(!dropDownState)}>
+                    onClick={() => setDropdownState(!dropDownState)}
+                  >
                     <SettingsIcon className="dropdown-list_icon" /> Settings
                   </Link>
                 </li>
@@ -76,7 +85,8 @@ const Navbar = () => {
                 {!userData.username ? (
                   <Link
                     to="/auth/login"
-                    onClick={() => setDropdownState(!dropDownState)}>
+                    onClick={() => setDropdownState(!dropDownState)}
+                  >
                     <LoginIcon className="dropdown-list_icon" /> Login
                   </Link>
                 ) : (
@@ -85,7 +95,8 @@ const Navbar = () => {
                     onClick={() => {
                       setDropdownState(!dropDownState);
                       dispatch(logoutUserData());
-                    }}>
+                    }}
+                  >
                     <LoginIcon className="dropdown-list_icon" /> Logout
                   </Link>
                 )}
