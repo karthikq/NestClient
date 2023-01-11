@@ -218,11 +218,13 @@ const AuthorStatus = () => {
             : "Uploading please wait..."}
         </p>
       )}
-      <UploadedFiles
-        items={items}
-        handleRemove={handleRemove}
-        activeClose={true}
-      />
+      {items.names.length > 0 && (
+        <UploadedFiles
+          items={items}
+          handleRemove={handleRemove}
+          activeClose={true}
+        />
+      )}
     </div>
   );
 };

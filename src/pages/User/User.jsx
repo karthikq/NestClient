@@ -97,6 +97,10 @@ const User = () => {
         }
       };
       CreateNewFile(imageFile, imageFile.name, "", uploadcallback);
+    } else {
+      const newData = userData;
+
+      dispatch(updateUserdata(id, newData, cb));
     }
   };
 
@@ -123,11 +127,17 @@ const User = () => {
         <div className="user-details">
           <div className="user-image-container">
             <div className="user-bgimage">
-              <img src={"https://picsum.photos/800/200"} alt="bgimage" />
+              <img
+                src={
+                  "https://i.picsum.photos/id/970/800/200.jpg?hmac=1zuCtAsoGGsPl94JiEOFzH6T8-lDfLYVXfTQFnC2Vls"
+                }
+                alt="bgimage"
+              />
             </div>
             <div className="user-nav-wrapper">
               <div className="user-profile-img">
                 <img src={userData && userData.url} alt="err" />
+                <p>{user && user.username}</p>
               </div>
               <div className="user-nav">
                 <ul>

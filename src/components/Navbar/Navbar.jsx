@@ -62,14 +62,14 @@ const Navbar = () => {
                   <HomeIcon className="dropdown-list_icon" /> Home
                 </Link>
               </li>
-              {userData.userId && (
+              {/* {userData.userId && (
                 <li>
                   <Link to={"/notifications/" + userData.userId}>
                     <NotificationsActiveIcon className="dropdown-list_icon" />{" "}
                     Notifications
                   </Link>
                 </li>
-              )}
+              )} */}
 
               {userData?.userId && (
                 <li>

@@ -7,7 +7,7 @@ import { createComment, deleteComment } from "../store/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import TimeAgo from "react-timeago";
 import { useEffect } from "react";
-import { Avatar } from "@mui/material";
+import { Avatar, Link } from "@mui/material";
 import { current } from "@reduxjs/toolkit";
 
 const Comments = ({ item, user, openComments }) => {
@@ -57,7 +57,12 @@ const Comments = ({ item, user, openComments }) => {
               <div className="comment-details">
                 <div className="comment-details-header">
                   <span className="comment-user">
-                    {comment.user.username}
+                    <Link
+                      style={{ textDecoration: "none" }}
+                      to={"/user/" + comment.user.userId + "#post"}
+                    >
+                      {comment.user.username}
+                    </Link>
 
                     <span className="comment-time">
                       <TimeAgo date={new Date(comment.date)} />
@@ -65,9 +70,8 @@ const Comments = ({ item, user, openComments }) => {
                     {comment.user.userId === user?.userId && (
                       <span
                         className="comment-delete"
-                        onClick={() =>
-                          handleDeleteComment(comment.id, item.id)
-                        }>
+                        onClick={() => handleDeleteComment(comment.id, item.id)}
+                      >
                         delete
                       </span>
                     )}
