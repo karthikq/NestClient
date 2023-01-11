@@ -180,7 +180,7 @@ const AuthorStatus = () => {
       >
         <Avatar
           src={userData?.url ? userData.url : ""}
-          style={{ borderRadius: "10px" }}
+          style={{ borderRadius: "10px", width: 45, height: 45 }}
         />
         <form onSubmit={handleFormSubmit}>
           <input
