@@ -2,7 +2,7 @@
 
 export const backendUrl = () => {
   if (process.env.NODE_ENV === "production") {
-    return "https://testingnestjs2.onrender.com";
+    return "https://viridian-bee-tie.cyclic.app";
   } else {
     return "http://localhost:5000";
   }
