@@ -82,7 +82,7 @@ const Useractions = ({ item, user, fetchedUser }) => {
                 className="user-post_edit-icon"
                 onClick={() => handlePostEdit(postData.postId, true)}
               >
-                <EditIcon className="user-edit-icon" />
+                <EditIcon titleAccess="Edit Post" className="user-edit-icon" />
               </p>
             )}
             <p
