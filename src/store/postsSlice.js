@@ -38,7 +38,7 @@ export function createPostdata(postdata) {
   return async function Createpostthunk(dispatch, getState) {
     try {
       const { data } = await backendApi.post("/post/create", postdata);
-      dispatch(createPost(data));
+      if (data) dispatch(createPost(data));
     } catch (error) {
       console.log(error.response.data);
     }

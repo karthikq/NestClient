@@ -52,6 +52,7 @@ const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
           ...preValue,
           files: [...preValue.files, file],
           names: [...preValue.names, fileName],
+          type: [...preValue.type, open.type],
         }));
         setOpen({
           type: "",
@@ -94,7 +95,7 @@ const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
             <input
               onChange={(e) => handleFile(e.target.files[0])}
               type="file"
-              accept=".mp4"
+              accept=".mp4,.mkv"
               id="fileinput"
               placeholder="Choose a file"
             />
@@ -112,6 +113,9 @@ const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
           )}
           {file && !fileName && (
             <span className="error-span">filename is required</span>
+          )}
+          {open.type && (
+            <span className="error-span">file already exists!</span>
           )}
           {fileExists && (
             <span className="error-span">file already exists!</span>

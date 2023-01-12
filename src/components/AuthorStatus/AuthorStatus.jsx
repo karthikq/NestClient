@@ -37,23 +37,27 @@ const AuthorStatus = () => {
   const [progress, setProgress] = useState(0);
   const [buffer, setBuffer] = useState(0);
   const [uploadedUrl, setUploadedUrl] = useState([]);
+  const [uploadedvideoUrl, setUploadedvideoUrl] = useState([]);
+
   const dispatch = useDispatch();
   const userData = useSelector(({ user }) => user.user);
   const [items, setItems] = useState({
     files: [],
     urls: [],
     names: [],
+    type: [],
   });
 
   const handleRemove = (itemIndex) => {
     const newFiles = items.files.filter((item, index) => index !== itemIndex);
     const newUrls = items.urls.filter((item, index) => index !== itemIndex);
     const newNames = items.names.filter((item, index) => index !== itemIndex);
-
+    const filterType = items.type.filter((item, index) => index !== itemIndex);
     setItems({
       files: newFiles,
       urls: newUrls,
       names: newNames,
+      type: filterType,
     });
     console.log(items);
   };
@@ -67,10 +71,14 @@ const AuthorStatus = () => {
       setBuffer(val + 10);
     }
   };
-  const callback = (url, name) => {
-    setUploadedUrl((prevalue) => [...prevalue, { name, url }]);
+  const callback = (url, name, type) => {
+    if (type === "image") {
+      setUploadedUrl((prevalue) => [...prevalue, { name, url }]);
+    } else {
+      setUploadedvideoUrl((prevalue) => [...prevalue, { name, url }]);
+    }
   };
-
+  console.log(items);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     toast.dismiss();
@@ -109,7 +117,8 @@ const AuthorStatus = () => {
             item,
             handleCallback,
             callback,
-            true
+            true,
+            items.type[index]
           );
         });
       } else {
@@ -128,33 +137,40 @@ const AuthorStatus = () => {
     }
   };
   console.log("====================================");
-  console.log(uploadedUrl);
+  console.log(uploadedUrl, items, uploadedvideoUrl);
   console.log("====================================");
   useEffect(() => {
     if (
-      uploadedUrl?.length !== 0 &&
-      uploadedUrl?.length === items?.files?.length
+      (uploadedUrl?.length !== 0 &&
+        uploadedUrl?.length === items?.files?.length) ||
+      (uploadedvideoUrl?.length !== 0 &&
+        uploadedvideoUrl?.length === items?.files?.length)
     ) {
       setBackdropstate(false);
       toast.dismiss();
-      const data = {
+      let data = {
         title: userstatus,
         desp: "qweqw eqweq weqwe qwewqe",
         images: uploadedUrl,
+        videoUrl: uploadedvideoUrl[0].url,
       };
+
       dispatch(createPostdata(data));
       setItems({
         files: [],
         items: [],
         names: [],
+        type: [],
       });
+      setUploadedUrl([]);
+      setUploadedvideoUrl([]);
       setTimeout(() => {
         setUserStatus("");
       }, 200);
 
       toast.success("Post created");
     }
-  }, [uploadedUrl, items]);
+  }, [uploadedUrl, items, uploadedvideoUrl]);
   return (
     <div className="author-status-wrapper">
       {backdropstate && (

@@ -9,7 +9,12 @@
     height: 180px;
   }
 }
-
+.video-player {
+  height: 360px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
 .image-wrapper {
   position: relative;
   height: 80%;

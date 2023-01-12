@@ -315,7 +315,7 @@ const Posts = ({ item, user }) => {
                   setImages={setImages}
                 />
               ) : (
-                <Slider images={parsedImage} />
+                <Slider images={parsedImage} videoUrl={item.videoUrl} />
               )}
             </div>
 

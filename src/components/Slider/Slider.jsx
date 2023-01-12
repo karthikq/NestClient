@@ -12,11 +12,16 @@ import "react-image-lightbox/style.css";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { useState } from "react";
 
-const Slider = ({ images }) => {
+const Slider = ({ images, videoUrl }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   return (
     <>
+      {videoUrl && (
+        <video className="video-player" autoPlay={false} controls={true}>
+          <source src={videoUrl}></source>
+        </video>
+      )}
       <Swiper
         pagination={true}
         modules={[Pagination, EffectCreative]}

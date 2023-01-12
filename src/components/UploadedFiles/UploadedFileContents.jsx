@@ -10,7 +10,9 @@ const UploadedFileContents = ({ images, handleRemove }) => {
           <div id="upload-checkicon" className="uploaded-checkicon">
             <img src="https://i.ibb.co/9YWkXTT/accept.png" alt="tickmark" />
           </div>
-          <img className="uploaded-img" src={images?.urls[index]} alt="err" />
+          {images[index]?.type === "image" && (
+            <img className="uploaded-img" src={images?.urls[index]} alt="err" />
+          )}
           <div className="uploaded-item-details">
             <CloseIcon
               className="cancel-upload-icon"

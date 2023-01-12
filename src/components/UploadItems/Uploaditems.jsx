@@ -23,8 +23,12 @@ const Uploaditems = ({ open, setOpen }) => {
       </div>
       <div
         className="upload-item"
-        style={{ opacity: 0.6 }}
-        onClick={() => toast.error("Not available currently")}
+        onClick={() =>
+          setOpen({
+            type: "video",
+            state: true,
+          })
+        }
       >
         <img src="https://i.ibb.co/4N5QpWK/play.png" alt="err" />
         Video
