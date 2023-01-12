@@ -15,24 +15,28 @@ export const CreateNewFile = async (
   name,
   progressCallback,
   uploadcallback,
-  state
+  state,
+  type
 ) => {
   const storage = getStorage();
   const storageRef = ref(storage, name);
   const metadata = {
     contentType: "image/jpeg",
   };
-  const compressedImage = await imageCompression(file, {
-    maxSizeMB: 0.5,
-    maxWidthOrHeight: 1280,
-    useWebWorker: true,
-    initialQuality: 1,
-  });
-  const uploadTask = uploadBytesResumable(
-    storageRef,
-    compressedImage,
-    metadata
-  );
+  let compressedFile;
+
+  if (type === "image") {
+    compressedFile = await imageCompression(file, {
+      maxSizeMB: 0.5,
+      maxWidthOrHeight: 1280,
+      useWebWorker: true,
+      initialQuality: 1,
+    });
+  } else {
+    compressedFile = file;
+  }
+
+  const uploadTask = uploadBytesResumable(storageRef, compressedFile, metadata);
 
   uploadTask.on(
     "state_changed",
@@ -63,8 +67,8 @@ export const CreateNewFile = async (
               .forEach((el) => (el.style.display = "block"));
           }
         }
-
-        uploadcallback(downloadURL, name);
+        console.log(type);
+        uploadcallback(downloadURL, name, type);
       });
     }
   );

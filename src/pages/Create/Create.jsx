@@ -9,7 +9,6 @@ const Create = () => {
   });
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(postData);
   };
 
   return (

@@ -45,6 +45,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 720px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 15px;
+  }
 }
 .user-post_edit-icon {
   background-color: #5814d6;
@@ -62,11 +67,19 @@
   .user-edit-icon {
     font-size: 18px;
   }
+  @media screen and (max-width: 720px) {
+    width: 30px;
+    height: 30px;
+  }
 }
 .useraction-edit-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  @media screen and (max-width: 720px) {
+    align-items: flex-start;
+    margin-top: 10px;
+  }
   p {
     margin: 5px 0;
   }

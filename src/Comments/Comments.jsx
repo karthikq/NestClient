@@ -52,6 +52,7 @@ const Comments = ({ item, user, openComments }) => {
                 <Avatar
                   src={comment.user?.url ? comment.user.url : ""}
                   alt="err"
+                  style={{ width: 45, height: 45, borderRadius: 10 }}
                 />
               </div>
               <div className="comment-details">
@@ -61,12 +62,9 @@ const Comments = ({ item, user, openComments }) => {
                       style={{ textDecoration: "none" }}
                       to={"/user/" + comment.user.userId + "#post"}
                     >
-                      {comment.user.username}
+                      {comment.user.username.substring(0, 7) + "."}
                     </Link>
 
-                    <span className="comment-time">
-                      <TimeAgo date={new Date(comment.date)} />
-                    </span>
                     {comment.user.userId === user?.userId && (
                       <span
                         className="comment-delete"
@@ -75,6 +73,9 @@ const Comments = ({ item, user, openComments }) => {
                         delete
                       </span>
                     )}
+                  </span>
+                  <span className="comment-time">
+                    <TimeAgo date={new Date(comment.date)} />
                   </span>
                 </div>
                 <p>{comment.message}</p>

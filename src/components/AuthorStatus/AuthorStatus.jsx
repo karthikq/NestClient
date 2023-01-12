@@ -37,25 +37,29 @@ const AuthorStatus = () => {
   const [progress, setProgress] = useState(0);
   const [buffer, setBuffer] = useState(0);
   const [uploadedUrl, setUploadedUrl] = useState([]);
+  const [uploadedvideoUrl, setUploadedvideoUrl] = useState([]);
+  const [count, setCount] = useState(0);
+
   const dispatch = useDispatch();
   const userData = useSelector(({ user }) => user.user);
   const [items, setItems] = useState({
     files: [],
     urls: [],
     names: [],
+    type: [],
   });
 
   const handleRemove = (itemIndex) => {
     const newFiles = items.files.filter((item, index) => index !== itemIndex);
     const newUrls = items.urls.filter((item, index) => index !== itemIndex);
     const newNames = items.names.filter((item, index) => index !== itemIndex);
-
+    const filterType = items.type.filter((item, index) => index !== itemIndex);
     setItems({
       files: newFiles,
       urls: newUrls,
       names: newNames,
+      type: filterType,
     });
-    console.log(items);
   };
 
   const handleCallback = (val) => {
@@ -67,8 +71,16 @@ const AuthorStatus = () => {
       setBuffer(val + 10);
     }
   };
-  const callback = (url, name) => {
-    setUploadedUrl((prevalue) => [...prevalue, { name, url }]);
+  var counter = 0;
+  const callback = (url, name, type) => {
+    counter++;
+    setCount(counter);
+
+    if (type === "image") {
+      setUploadedUrl((prevalue) => [...prevalue, { name, url }]);
+    } else {
+      setUploadedvideoUrl((prevalue) => [...prevalue, { name, url }]);
+    }
   };
 
   const handleFormSubmit = async (e) => {
@@ -109,7 +121,8 @@ const AuthorStatus = () => {
             item,
             handleCallback,
             callback,
-            true
+            true,
+            items.type[index]
           );
         });
       } else {
@@ -117,44 +130,47 @@ const AuthorStatus = () => {
           title: userstatus,
           desp: "test",
           images: [],
+          videoUrl: "",
         };
         dispatch(createPostdata(data));
         setBackdropstate(false);
         toast.success("Post created", {
           id: toastID,
         });
+        setContentErr(false);
         setUserStatus("");
       }
     }
   };
-  console.log("====================================");
-  console.log(uploadedUrl);
-  console.log("====================================");
+
   useEffect(() => {
-    if (
-      uploadedUrl?.length !== 0 &&
-      uploadedUrl?.length === items?.files?.length
-    ) {
+    if (count > 0 && count === items.files.length) {
       setBackdropstate(false);
       toast.dismiss();
-      const data = {
+      let data = {
         title: userstatus,
         desp: "qweqw eqweq weqwe qwewqe",
         images: uploadedUrl,
+        videoUrl: uploadedvideoUrl.length > 0 ? uploadedvideoUrl[0].url : "",
       };
+
       dispatch(createPostdata(data));
       setItems({
         files: [],
         items: [],
         names: [],
+        type: [],
       });
+      setUploadedUrl([]);
+      setUploadedvideoUrl([]);
       setTimeout(() => {
         setUserStatus("");
       }, 200);
-
+      setContentErr(false);
+      setCount(0);
       toast.success("Post created");
     }
-  }, [uploadedUrl, items]);
+  }, [uploadedUrl, count, uploadedvideoUrl]);
   return (
     <div className="author-status-wrapper">
       {backdropstate && (
@@ -200,8 +216,12 @@ const AuthorStatus = () => {
       {contentErr && userstatus.length === 0 && (
         <span className="error-content">Please add some content here</span>
       )}
-      {items.files.length < 3 && (
-        <Uploaditems open={openDialogbox} setOpen={setOpenDialogBox} />
+      {items.files.length <= 3 && (
+        <Uploaditems
+          open={openDialogbox}
+          setOpen={setOpenDialogBox}
+          videoType={items.type}
+        />
       )}
       {openDialogbox.state && (
         <CustomDialog
@@ -214,7 +234,7 @@ const AuthorStatus = () => {
       {items.names.length !== 0 && (
         <p className="upload-item-status">
           {activeClose
-            ? " You can upload upto 3 files."
+            ? " You can upload upto 4 files."
             : "Uploading please wait..."}
         </p>
       )}

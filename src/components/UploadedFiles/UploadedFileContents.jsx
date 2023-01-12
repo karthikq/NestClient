@@ -1,6 +1,7 @@
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import "./uploadedfiles.styles.scss";
+import Player from "../Video/Player";
 const UploadedFileContents = ({ images, handleRemove }) => {
   return (
     <div className="uploadedcontents-wrapper">
@@ -10,7 +11,12 @@ const UploadedFileContents = ({ images, handleRemove }) => {
           <div id="upload-checkicon" className="uploaded-checkicon">
             <img src="https://i.ibb.co/9YWkXTT/accept.png" alt="tickmark" />
           </div>
-          <img className="uploaded-img" src={images?.urls[index]} alt="err" />
+          {images?.type[index] === "image" && (
+            <img className="uploaded-img" src={images?.urls[index]} alt="err" />
+          )}
+          {images?.type[index] === "video" && (
+            <Player url={images?.urls[index]} />
+          )}
           <div className="uploaded-item-details">
             <CloseIcon
               className="cancel-upload-icon"

@@ -10,10 +10,8 @@ import "./postdialogbox.styles.scss";
 import Timeago from "react-timeago";
 const PostDialogbox = ({ item, postDialog, setPostDialog }) => {
   const menuRef = useRef();
-  console.log(item);
 
   const handleOutsideclick = (e) => {
-    console.log(e.target.contains(menuRef.current));
     if (!e.target.contains(menuRef.current)) {
       return;
     }
