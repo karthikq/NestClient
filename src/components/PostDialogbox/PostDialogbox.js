@@ -8,6 +8,7 @@ import UserLottie from "../Lottie/UserLottie";
 import listenForOutsideClicks from "../Navbar/listenForOutsideClicks";
 import "./postdialogbox.styles.scss";
 import Timeago from "react-timeago";
+import { Link } from "react-router-dom";
 const PostDialogbox = ({ item, postDialog, setPostDialog }) => {
   const menuRef = useRef();
 
@@ -26,7 +27,7 @@ const PostDialogbox = ({ item, postDialog, setPostDialog }) => {
         <div className="postdialogbox-box">
           {item.length > 0 ? (
             item.map((list) => (
-              <a href={"/user/" + list.user.userId + "#settings"}>
+              <Link to={"/user/" + list.user.userId + "#settings"}>
                 <div className="postdialogbox-item">
                   <Avatar
                     src={list.user.url}
@@ -39,7 +40,7 @@ const PostDialogbox = ({ item, postDialog, setPostDialog }) => {
                     </span>
                   </div>
                 </div>
-              </a>
+              </Link>
             ))
           ) : (
             <UserLottie />
