@@ -157,9 +157,9 @@ const AuthorStatus = () => {
       dispatch(createPostdata(data));
       setItems({
         files: [],
-        items: [],
         names: [],
         type: [],
+        urls: [],
       });
       setUploadedUrl([]);
       setUploadedvideoUrl([]);
