@@ -102,7 +102,7 @@ const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
             <input
               onChange={(e) => handleFile(e.target.files[0])}
               type="file"
-              accept=".mp4,.mkv"
+              accept=".mp4"
               id="fileinput"
               placeholder="Choose a file"
             />
