@@ -11,17 +11,13 @@ import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { useState } from "react";
+import Player from "../Video/Player";
 
 const Slider = ({ images, videoUrl }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   return (
     <>
-      {videoUrl && (
-        <video className="video-player" autoPlay={false} controls={true}>
-          <source src={videoUrl}></source>
-        </video>
-      )}
       <Swiper
         pagination={true}
         modules={[Pagination, EffectCreative]}
@@ -38,18 +34,29 @@ const Slider = ({ images, videoUrl }) => {
         className="myswiper"
       >
         {images &&
-          images?.map((item) => (
-            <SwiperSlide key={item.url}>
-              <div className="image-wrapper">
-                <img className="post-image" src={item.url} alt="err" />
-                <LaunchIcon
-                  onClick={() => setIsOpen(true)}
-                  titleAccess="Open Image"
-                  className="lightbox-link-icon"
-                />
-              </div>
+          images?.map((item, index) => (
+            <SwiperSlide key={index}>
+              <>
+                <div className="image-wrapper">
+                  <img className="post-image" src={item.url} alt="err" />
+                  <LaunchIcon
+                    onClick={() => setIsOpen(true)}
+                    titleAccess="Open Image"
+                    className="lightbox-link-icon"
+                  />
+                </div>
+              </>
             </SwiperSlide>
           ))}
+        {videoUrl && (
+          <SwiperSlide>
+            {videoUrl && (
+              <div className="video-player">
+                <Player url={videoUrl} />
+              </div>
+            )}
+          </SwiperSlide>
+        )}
       </Swiper>
       {isOpen && (
         <Lightbox

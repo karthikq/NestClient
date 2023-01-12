@@ -126,6 +126,13 @@
     min-height: 100px;
   }
 }
+.uploaded-video-file {
+  width: 100%;
+  height: 190px;
+  video {
+    border-radius: 10px;
+  }
+}
 .upload-btn-wrapper {
   text-align: right;
 }

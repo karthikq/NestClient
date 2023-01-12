@@ -42,6 +42,7 @@ const Posts = ({ item, user }) => {
     files: [],
     urls: [],
     names: [],
+    type: [],
   });
   const [uploadedUrl, setUploadedUrl] = useState([]);
   const [submitState, setSubmitState] = useState(false);
@@ -106,12 +107,15 @@ const Posts = ({ item, user }) => {
   const handleEditPostRemove = (itemIndex) => {
     const newFiles = images.files.filter((item, index) => index !== itemIndex);
     const newUrls = images.urls.filter((item, index) => index !== itemIndex);
+
     const newNames = images.names.filter((item, index) => index !== itemIndex);
+    const filterType = images.type.filter((item, index) => index !== itemIndex);
 
     setImages({
       files: newFiles,
       urls: newUrls,
       names: newNames,
+      type: filterType,
     });
   };
 
@@ -153,6 +157,7 @@ const Posts = ({ item, user }) => {
         files: [],
         urls: [],
         names: [],
+        type: [],
       });
     }
     setTimeout(() => {
@@ -162,6 +167,7 @@ const Posts = ({ item, user }) => {
       files: [],
       urls: [],
       names: [],
+      type: [],
     });
     setUploadedUrl([]);
   };
@@ -218,6 +224,7 @@ const Posts = ({ item, user }) => {
             files: [],
             urls: [],
             names: [],
+            type: [],
           });
           setUploadedUrl([]);
         } else {

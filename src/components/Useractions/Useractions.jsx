@@ -61,7 +61,7 @@ const Useractions = ({ item, user, fetchedUser }) => {
       <div className="useraction-contents">
         <h2>{postData.title}</h2>
         <div className="useraction-imagewrapper">
-          <Slider images={parsedImage} />
+          <Slider images={parsedImage} videoUrl={postData.videoUrl} />
         </div>
 
         <div className="useraction-likes">
