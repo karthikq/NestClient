@@ -1,0 +1,105 @@
+/** @format */
+
+.useraction-wrapper {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.useraction-contents {
+  .useraction-imagewrapper {
+    height: 100%;
+  }
+  h2 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 25px;
+    margin-top: 0;
+  }
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.082);
+  padding: 0.8rem 1.2rem 1.2rem;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.082);
+  @media screen and (max-width: 720px) {
+    padding: 0.8rem 0.8rem 1.1rem;
+  }
+}
+.useraction-likes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  span {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14.5px;
+    color: #420ba7fa;
+    text-decoration: underline;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    &:hover {
+      color: #121213;
+    }
+  }
+}
+.useraction-post-details {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.8;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: 720px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 15px;
+  }
+}
+.user-post_edit-icon {
+  background-color: #5814d6;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-content: center;
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  border: 2px solid #5814d6;
+  &:active {
+    transform: scale(0.9);
+  }
+  &:hover {
+    background: transparent;
+    color: #121213;
+  }
+  .user-edit-icon {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 720px) {
+    width: 32px;
+    height: 32px;
+  }
+}
+.useraction-edit-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  @media screen and (max-width: 720px) {
+    align-items: flex-start;
+    margin-top: 10px;
+  }
+  p {
+    margin: 5px 0;
+  }
+  .add-comment {
+    margin-top: 0px;
+    cursor: pointer;
+    color: rgb(231, 24, 24);
+    font-weight: 500;
+    font-size: 12.5px;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

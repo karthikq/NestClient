@@ -1,0 +1,134 @@
+/** @format */
+.nav {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  padding: 1rem 0;
+  height: 50px;
+  width: 90%;
+  margin: 1rem auto;
+  box-sizing: border-box;
+}
+.profile-nav {
+  position: relative;
+}
+.nav-left-item {
+  .nav-left-home {
+    padding: 0.35rem;
+    background-color: white;
+    border-radius: 50%;
+    color: #5814d6;
+    font-size: 22px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.103);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .nav {
+    position: relative;
+    right: 0rem;
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+  }
+}
+
+.profile-dropdown {
+  width: 100%;
+  height: auto;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.116);
+  padding: 5px;
+  position: absolute;
+  background: #fafafa;
+  border-radius: 5px;
+  top: 120%;
+  left: 0rem;
+  height: 0;
+  padding: 0;
+  z-index: 50;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  ul {
+    padding-left: 9px;
+    display: none;
+  }
+}
+
+.profile-nav {
+  width: auto;
+  min-width: 180px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.profile-dropdown_active {
+  height: auto;
+  padding-bottom: 8px;
+  ul {
+    display: block;
+    box-sizing: border-box;
+    padding: 0.8rem 0.4rem;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+  }
+}
+
+.profile-dropdown ul li {
+  list-style-type: none;
+  margin: 0.8px 0;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+
+  &:hover {
+    background-color: #15161610;
+  }
+
+  a {
+    text-decoration: none;
+    color: #5814d6;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0 0.55rem;
+    padding: 0.38rem 0.6rem;
+  }
+  .dropdown-list_icon {
+    font-size: 20px;
+  }
+}
+
+.profile-img-wrapper {
+  width: 100%;
+  background: #ffffff;
+  padding: 0.35rem 0.65rem;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0 0.2rem;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  &:hover {
+    box-shadow: 0px 0px 20px #5814d638;
+  }
+}
+
+.profile-img-arrow {
+  color: #5814d6;
+  margin-top: 0.4px;
+}
+
+.profile-name {
+  color: #5814d6;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+}

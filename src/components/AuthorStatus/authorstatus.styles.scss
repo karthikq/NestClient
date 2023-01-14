@@ -1,0 +1,120 @@
+/** @format */
+
+.author-status-wrapper {
+  width: 100%;
+  border-radius: 15px;
+  background: #ffffff;
+  min-height: 110px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 25px;
+  box-shadow: rgba(17, 12, 46, 0.041) 0px 12px 50px 0px;
+  box-sizing: border-box;
+}
+
+.author-status-contents {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0 0.8rem;
+  width: 100%;
+  margin: 0 auto 4px;
+  form {
+    width: 100%;
+    input {
+      border-radius: 10px;
+      outline: 0;
+      border: 0;
+      width: 100%;
+      background-color: #eeeeee;
+      padding: 0.75rem 1rem;
+      box-sizing: border-box;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 500;
+      color: #000000;
+      font-size: 15.5px;
+      border: 2px solid #5814d65d;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      &:active {
+        border: 2px solid #5814d6f5;
+      }
+      &:focus {
+        border: 2px solid #5814d6f5;
+      }
+    }
+  }
+}
+.author-no-status {
+  form {
+    input {
+      border: 2px solid rgba(255, 0, 0, 0.61);
+    }
+  }
+}
+.upload-item-status {
+  color: #000000;
+  font-size: 12.5px;
+  padding-left: 3rem;
+  font-family: "Open sans", sans-serif;
+  margin-top: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  @media screen and (max-width: 720px) {
+    padding-left: 0.5rem;
+  }
+}
+
+.error-content {
+  color: #ec3b0e;
+  font-size: 13.5px;
+  margin-top: 12px;
+  font-weight: 600;
+  padding-left: 3rem;
+  font-family: "Open sans", sans-serif;
+}
+.send-icon-wrapper {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.8rem;
+
+  button {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #5814d6;
+    &hover {
+      color: black;
+    }
+  }
+  .send-icon {
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}
+.create-post-lottie {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  z-index: 101;
+}
+.toast-btn {
+  font-family: "Open Sans", sans-serif;
+  background-color: #5814d6;
+  color: white;
+  margin-left: 4px;
+  border-radius: 20px;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  width: 80px;
+  padding: 0.1rem 0.2rem;
+}

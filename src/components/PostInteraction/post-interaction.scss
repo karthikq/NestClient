@@ -1,0 +1,48 @@
+/** @format */
+
+.post-interations-wrapper {
+  width: 100%;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 0 0.6rem;
+}
+.post-interaction {
+  padding: 0 0.4rem;
+  border-radius: 50%;
+  display: flex;
+  gap: 0 0.3rem;
+  align-items: center;
+  justify-content: center;
+  background-color: #5814d6;
+  padding: 0.6rem;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  cursor: pointer;
+  span {
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.3px;
+  }
+  .interaction-icon {
+    font-size: 18px;
+  }
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  &:active {
+    transform: scale(0.95);
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.897);
+    box-shadow: 0px 0px 20px #dbeaee2c;
+  }
+}
+.post-int-active {
+  background-color: #111111;
+
+  box-shadow: 0px 0px 20px #1312124f;
+}
+.post-int-active-com {
+  background-color: #0c0c0c;
+  box-shadow: 0px 0px 20px #dbeaee2c;
+}

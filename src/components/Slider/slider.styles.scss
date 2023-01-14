@@ -1,0 +1,85 @@
+/** @format */
+
+.post-image {
+  width: 100%;
+  height: 380px;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  @media screen and (max-width: 720px) {
+    height: 200px;
+  }
+}
+.video-player {
+  height: 380px;
+  width: 100%;
+  padding-bottom: 15px;
+
+  @media screen and (max-width: 720px) {
+    height: 200px;
+  }
+}
+.swiper-pagination {
+  bottom: -0px !important;
+}
+.image-wrapper {
+  position: relative;
+  height: 80%;
+  .lightbox-link-icon {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.89);
+    background-color: #3b3b3b4b;
+    padding: 0.3rem 0.3rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    &:active {
+      transform: scale(0.9);
+    }
+    &:hover {
+      color: rgba(255, 255, 255, 0.932);
+      background-color: #474747a2;
+    }
+    @media screen and (max-width: 720px) {
+      right: 0.5rem;
+      top: 0.5rem;
+      font-size: 16px;
+    }
+  }
+}
+
+.myswiper {
+  width: 100% !important;
+  height: 60%;
+  border-radius: 15px !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 40px !important;
+  position: relative;
+  bottom: 12px;
+  color: #5b0ceefb;
+  @media screen and (max-width: 720px) {
+    font-size: 36px !important;
+  }
+}
+
+.swiper-button-prev,
+.swiper-rtl .swiper-button-next {
+  left: 5px !important;
+  @media screen and (max-width: 720px) {
+    left: 2px !important;
+  }
+}
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+  right: 5px !important ;
+  @media screen and (max-width: 720px) {
+    right: 2px !important;
+  }
+}
