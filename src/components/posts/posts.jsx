@@ -280,14 +280,14 @@ const Posts = ({ item, user }) => {
                   {item.user.username}
                 </p>
               ) : (
-                <p className="author-name">
+                <span className="author-name">
                   <Link
                     style={{ textDecoration: "none", color: "inherit" }}
                     to={"/user/" + item.user.userId + "#post"}
                   >
                     {item.user.username}
                   </Link>
-                </p>
+                </span>
               )}
               <span className="post-duration">
                 <TimeAgo date={new Date(item.created_at)} />

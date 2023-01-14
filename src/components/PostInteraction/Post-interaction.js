@@ -15,7 +15,7 @@ const Postinteraction = ({ setOpenComments, openComments, post, user }) => {
 
   const dispatch = useDispatch();
 
-  const handlePostLike = async () => {
+  const handlePost = async (state) => {
     if (!user.userId) {
       return toast(
         (t) => (
@@ -38,15 +38,20 @@ const Postinteraction = ({ setOpenComments, openComments, post, user }) => {
       );
     }
     try {
-      await dispatch(likePost(post.id));
+      if (state) {
+        await dispatch(likePost(post.id));
+      } else {
+        setOpenComments((preValue) => !preValue);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div className="post-interations-wrapper">
       <div
-        onClick={handlePostLike}
+        onClick={() => handlePost(true)}
         className={
           user.userId && post.likes.some((el) => el.user.userId === user.userId)
             ? "post-interaction post-int-active"
@@ -55,7 +60,10 @@ const Postinteraction = ({ setOpenComments, openComments, post, user }) => {
       >
         {user.userId &&
         post.likes.some((el) => el.user.userId === user.userId) ? (
-          <FavoriteIcon className="interaction-icon" onClick={handlePostLike} />
+          <FavoriteIcon
+            className="interaction-icon"
+            onClick={() => handlePost(true)}
+          />
         ) : (
           <FavoriteBorderIcon className="interaction-icon" />
         )}
@@ -66,9 +74,7 @@ const Postinteraction = ({ setOpenComments, openComments, post, user }) => {
             ? "post-interaction post-int-active-com"
             : "post-interaction"
         }
-        onClick={(e) => {
-          setOpenComments((preValue) => !preValue);
-        }}
+        onClick={() => handlePost(false)}
       >
         <ChatBubbleOutlineIcon className="interaction-icon" />
       </div>

@@ -16,7 +16,8 @@ const CustomDialog = ({ setOpen, setItems, open, items, images }) => {
 
   function checkFileNameexists(filetocheck) {
     const check1 = images.names?.find((name) => name === filetocheck);
-    const check2 = items?.find(({ name }) => name === filetocheck);
+    const check2 =
+      items.length > 0 && items.find(({ name }) => name === filetocheck);
 
     if (check1) {
       return true;
