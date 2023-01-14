@@ -49,7 +49,11 @@ const PostAction = ({
                 toast.dismiss(t.id);
                 setTimeout(() => {
                   toast.success("Post deleted");
+                  toast.dismiss();
                 }, 500);
+                setTimeout(() => {
+                  toast.dismiss();
+                }, 700);
               }}
               style={{
                 background: "black",
